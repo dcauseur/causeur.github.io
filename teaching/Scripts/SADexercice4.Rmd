@@ -1,0 +1,173 @@
+---
+title: Statistique et Aide à la Décision 2020 - Exercice - Session 4
+author: David Causeur
+date: ''
+output:
+  html_document:
+    df_print: paged
+  word_document: default
+  pdf_document:
+    fig_caption: yes
+    fig_height: 6.181
+    fig_width: 10
+    highlight: haddock
+    number_sections: yes
+header-includes:
+- \onehalfspacing
+- \usepackage{floatpag}
+- \floatpagestyle{empty}
+- \usepackage{wrapfig}
+- \usepackage{subcaption}
+- \usepackage{caption}
+- \usepackage[font=small,labelfont=bf]{caption}
+linestretch: 0.8
+geometry: margin = 0.8in
+fontsize: 12pt
+vignette: null
+---
+
+```{r, setup, include = FALSE}
+options(digits = 6, show.signif.stars = TRUE)
+knitr::opts_chunk$set(
+  tidy = FALSE,     # display code as typed
+  tidy.opts = list(blank = FALSE, width.cutoff = 60),
+  size = "small",   # slightly smaller font for code
+  comment = "",
+  fig.align = "center",
+  cache = TRUE,
+  message = FALSE,
+  warning = FALSE)
+```
+
+```{r functions, include=FALSE}
+# A function for captioning and referencing images
+fig <- local({
+    i <- 0
+    ref <- list()
+    list(
+        cap=function(refName, text) {
+            i <<- i + 1
+            ref[[refName]] <<- i
+            paste("Figure ", i, ": ", text, sep="")
+        },
+        ref=function(refName) {
+            ref[[refName]]
+        })
+})
+``` 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+Install_and_Load <- function(packages) {
+  k <- packages[!(packages %in% installed.packages()[, "Package"])];
+  if(length(k)) {
+    install.packages(k, repos = "https://cran.rstudio.com/");
+  }
+  for(package_name in packages) {
+    library(package_name, character.only = TRUE, quietly = TRUE);
+  }
+}
+Install_and_Load(c("aod","questionr","bestglm","car","RcmdrMisc"))
+```
+
+**Nom Prénom :**
+
+**Impact d'un changement de régime alimentaire sur la qualité du lait produit**
+
+Pour étudier l'incidence de l'apport quotidien de méthionine protégée sur les performances de production laitière, 121 élevages ont été répartis en deux groupes par tirage au sort. Les éleveurs d'un groupe distribuent de la méthionine en complément de la ration habituellement utilisée dans l'élevage ; les éleveurs de l'autre groupe, qui sert de témoin, se
+contentent de distribuer la ration habituellement utilisée dans l'élevage.
+
+Les données de cet essai zootechnique sont la propriété de l'institut de l'élevage.
+
+Nous nous intéressons à l'évolution de la concentration en protéines dans le lait après 30 jours d'administration de la méthionine : si on observe un gain de plus de 1.7g/l, alors on considère que cette évolution est intéressante d'un point de vue économique. 
+
+Nous cherchons donc à expliquer une variable binaire appelée *Rendement* qui vaut 1 si l'apport de méthionine a été intéressant d'un point de vue économique, et 0 sinon.
+
+On importe les données de cet essai dans la session de travail à l'aide des commandes suivantes :
+```{r}
+methionine = read.table("methionine.txt",header=TRUE)
+# Convert Rendement into a two-level response variable
+methionine$Rendement = factor(methionine$Rendement)
+# Change the reference level of factor Groupe
+methionine$Groupe = relevel(methionine$Groupe,ref="temoin")
+str(methionine)
+```
+
+Chaque ligne du tableau de données **methionine** représente un élevage dont le groupe expérimental est donné par la variable **Groupe**. La colonne **Rendement** donne la valeur binaire (0/1) dont la définition est donnée en introduction de l'exercice. Les autres variables décrivent le troupeau et les pratiques de l'élevage à partir de variables agronomiques classiques. 
+
+La commande suivante donne la table de contingence des variables *Rendement* et *Groupe* :
+```{r}
+tab = table(methionine$Groupe,methionine$Rendement)
+tab
+```
+
+**Question 1**
+
+*A partir de la table de contingence ci-dessus, peut-on dire que la variation du taux protéique est liée de manière significative (au seuil de 5\%) au traitement à la méthionine ?*
+
+**Réponse**
+
+Vous pouvez utiliser cet espace pour votre réponse. 
+Si vous souhaitez écrire des formules mathématiques, voici quelques exemples qui devraient suffire:
+
+* formule mathématique dans une phrase : $\sqrt{n}$, $n^{2}$, $Y_{ij}=\mu+\alpha_{i}+\varepsilon_{ij}$, $Y_{i\bullet}$, $\varepsilon \sim {\cal N} ( 0 ; 1)$ 
+
+* formule mise en avant en dehors d'une phrase :
+\begin{eqnarray*}
+\text{log} \frac{\pi(x)}{1-\pi(x)} & = & \beta_{0} + \beta_{1} x , \\
+\text{log} \frac{\pi_{i}(x)}{1-\pi_{i}(x)} & = & \mu + \alpha_{i} + \beta_{1} x .
+\end{eqnarray*}
+
+**Question 2**
+
+*Que vaut l'odds-ratio du traitement à la méthionine ?*
+
+**Réponse**
+
+Malgré la répartition au hasard des élevages participant à l'expérience dans les groupes témoin et avec apport de méthionine, les troupeaux et les pratiques d'élevage ne sont pas nécessairement en tous points comparables entre les deux groupes expérimentaux.
+
+Par exemple, sachant que l'ensilage maïs (colonne **EnsilageMais**) apporte de la méthionine dans l'alimentation, on s'interroge sur le biais dans l'évaluation de l'effet du traitement que peut entrainer la non-prise en compte d'une éventuelle différence entre les groupes expérimentaux concernant cet apport en ensilage maïs.   
+
+**Question 3**
+
+*Proposez un modèle permettant de prendre en compte l'ensilage Maïs dans l'analyse de l'effet du traitement sur l'augmentation intéressante ou non (variable **Rendement**) du taux protéique dans le lait ?*
+
+**Réponse**
+
+**Question 4**
+
+*L'odds-ratio du traitement dépend-il significativement (au seuil de 5%) de l'ensilage maïs ?*
+
+**Réponse**
+
+**Question 5**
+
+*Déduire de l'ajustement du modèle de la question 3, la valeur de l'odds-ratio du traitement ajusté de l'effet de l'ensilage maïs.*
+
+**Réponse**
+
+Pour une évaluation la plus juste possible de l'effet du traitement à la méthionine, on souhaite aller plus loin et prendre en compte toutes les variables (pas seulement l'ensilage maïs) décrivant le troupeau et les pratiques d'élevage dans le modèle de l'effet du traitement.
+
+**Question 6**
+
+*Construire la table d'Analyse de la Déviance du modèle intégrant toutes les variables décrivant le troupeau et les pratiques d'élevage, en plus de celle donnant le groupe expérimental. Que peut-on en déduire ?*
+
+**Réponse**
+
+**Question 7**
+
+*Proposez une méthode permettant de sélectionner un sous-ensemble de variables descriptives des pratiques d'élevage suffisant pour une évaluation la plus juste possible de l'effet du traitement.*
+
+**Réponse**
+
+**Question 8**
+
+*Après implémentation de la méthode de la question 6 dans R, donnez les variables descriptives des pratiques d'élevage que vous suggérez de retenir dans le modèle de l'effet du traitement ?*
+
+**Réponse**
+
+**Question 9**
+
+*Quel est finalement l'odds-ratio du traitement ajusté des effets des pratiques d'élevage ?*
+
+**Réponse**
+

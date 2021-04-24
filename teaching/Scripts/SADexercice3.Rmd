@@ -1,0 +1,213 @@
+---
+title: Statistique et Aide à la Décision 2020 - Exercice - Session 3
+author: David Causeur
+date: ''
+output:
+  html_document:
+    df_print: paged
+  word_document: default
+  pdf_document:
+    fig_caption: yes
+    fig_height: 6.181
+    fig_width: 10
+    highlight: haddock
+    number_sections: yes
+header-includes:
+- \onehalfspacing
+- \usepackage{floatpag}
+- \floatpagestyle{empty}
+- \usepackage{wrapfig}
+- \usepackage{subcaption}
+- \usepackage{caption}
+- \usepackage[font=small,labelfont=bf]{caption}
+linestretch: 0.8
+geometry: margin = 0.8in
+fontsize: 12pt
+vignette: null
+---
+
+```{r, setup, include = FALSE}
+options(digits = 6, show.signif.stars = TRUE)
+knitr::opts_chunk$set(
+  tidy = FALSE,     # display code as typed
+  tidy.opts = list(blank = FALSE, width.cutoff = 60),
+  size = "small",   # slightly smaller font for code
+  comment = "",
+  fig.align = "center",
+  cache = TRUE,
+  message = FALSE,
+  warning = FALSE)
+```
+
+```{r functions, include=FALSE}
+# A function for captioning and referencing images
+fig <- local({
+    i <- 0
+    ref <- list()
+    list(
+        cap=function(refName, text) {
+            i <<- i + 1
+            ref[[refName]] <<- i
+            paste("Figure ", i, ": ", text, sep="")
+        },
+        ref=function(refName) {
+            ref[[refName]]
+        })
+})
+``` 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+Install_and_Load <- function(packages) {
+  k <- packages[!(packages %in% installed.packages()[, "Package"])];
+  if(length(k)) {
+    install.packages(k, repos = "https://cran.rstudio.com/");
+  }
+  for(package_name in packages) {
+    library(package_name, character.only = TRUE, quietly = TRUE);
+  }
+}
+Install_and_Load(c("aod","questionr"))
+```
+
+  **Nom Prénom :**
+
+L'objectif de l'expérience mise en place par l'équipe pathologie du tournesol, laboratoire INRA de pathologie et de mycologie de la station d'amélioration des
+plantes de Clermont-Ferrand (voir Albourie *et al.*, 1998) est d'étudier
+l'effet d'un traitement fongicide sur deux races de mildiou, dont l'une, notée R, présente une résistance au fongicide par mutation.
+   
+L'expérience consiste à inoculer le champignon parasite à des groupes de sept plantules et à mesurer le nombre de plantules présentant des signes d'infection, à savoir une sporulation.
+
+Dans cet exemple, la variable à expliquer est mesurée par la proportion de plantes infectées par groupe de sept plantules et les variables explicatives sont d'une part la race du mildiou inoculé et d'autre part la dose de fongicide ou, plus judicieusement, le logarithme de la dose.   
+
+Les commandes suivantes importent les données dans la session de travail et en donnent un aperçu, variable par variable.
+
+```{r}
+tournesol = read.table("tournesol.txt",header=TRUE)
+str(tournesol)
+```
+
+Chaque ligne du tableau de données **tournesol** représente un bac de sept plantules. La colonne **Sporulations** donne le nombre de plantules infectées et la colonne **PropSpo** la proportion correspondante. 
+
+**Question 1**
+
+*Quelles sont les variables réponse et explicative dans cette problématique ? Quelle est la nature, quantitative ou catégorielle, de ces variables ?*
+
+**Réponse**
+
+Vous pouvez utiliser cet espace pour votre réponse. 
+Si vous souhaitez écrire des formules mathématiques, voici quelques exemples qui devraient suffire:
+
+* formule mathématique dans une phrase : $\sqrt{n}$, $n^{2}$, $Y_{ij}=\mu+\alpha_{i}+\varepsilon_{ij}$, $Y_{i\bullet}$, $\varepsilon \sim {\cal N} ( 0 ; 1)$ 
+
+* formule mise en avant en dehors d'une phrase :
+\begin{eqnarray*}
+\text{log} \frac{\pi(x)}{1-\pi(x)} & = & \beta_{0} + \beta_{1} x , \\
+\text{log} \frac{\pi_{i}(x)}{1-\pi_{i}(x)} & = & \mu + \alpha_{i} + \beta_{1} x .
+\end{eqnarray*}
+
+**Question 2**
+
+*Représentez graphiquement les résultats expérimentaux de manière à décrire l'évolution de la proportion de plantes infectées en fonction de la log-dose de fongicide.*
+
+**Réponse**
+
+Vous pouvez taper vos commandes R dans l'espace réservé ci-après, que l'on appelle un chunk (un exemple est donné à titre illustratif):
+```{r,eval=TRUE}
+x = tournesol$logdose
+y = tournesol$Dose
+plot(x,y,xlab="Log-dose",ylab="Dose",pch=16,col="orange",bty="l")
+```
+
+**Question 3**
+
+*Proposez un modèle décrivant le lien entre la probabilité qu'une plante soit infectée et la log-dose de fongicide.*
+
+**Réponse**
+
+Ce modèle est ajusté par les commandes suivantes de *R* :
+```{r}
+# From aggregate to binary data 
+# 'cbind' binds the 2 columns 'Sporulations' and '7-Sporulations' 
+model.form = cbind(Sporulations,7-Sporulations)~Race+logdose+PropSpo
+# Transforming into binary data
+tournesol.bin = splitbin(model.form,data=tournesol)$tab[,-1]
+tournesol.logit = glm(Sporulations~logdose,data=tournesol.bin,family=binomial)
+```
+
+**Question 4**
+
+*Donnez, en utilisant la commande R appropriée, la déviance résiduelle du modèle ajusté ci-dessus.*
+
+**Réponse**
+
+**Question 5**
+
+*Quel est l'odds-ratio de la log-dose de fongicide ? Vous donnerez également un intervalle de confiance de cet odds-ratio de niveau de confiance 95\%.*
+
+**Réponse**
+
+Le graphique suivant permet de comparer les probabilités d'infections estimées par le modèle et les proportions réellement observées, lorsque le fongicide est appliqué à la race R du mildiou. 
+
+```{r}
+plot(tournesol.bin$logdose[tournesol.bin$Race=="R"],
+     tournesol.bin$PropSpo[tournesol.bin$Race=="R"],
+     type="p",pch=16,col="orange",ylim=c(0,1),xlab="log-dose de fongicide",
+     ylab="Proportion de plantules contaminées",bty="l",
+     main="Modèle d'efficacité du fongicide",sub="Mildiou de race R")
+vec_logdose = seq(from=-8,to=8,length=1000)
+probas = predict(tournesol.logit,newdata=data.frame(logdose=vec_logdose),
+                 type="response")
+lines(vec_logdose,probas,lwd=2,col="coral2")
+```
+
+**Question 6**
+
+*Commentez les écarts entre les probabilités d'infections estimées par le modèle et les proportions réellement observées, lorsque le fongicide est appliqué à la race R du mildiou.*
+
+**Réponse**
+
+**Question 7**
+
+*Reproduisez le script ci-dessus en le modifiant pour obtenir un graphique équivalent lorsque le fongicide est appliqué à la race S du mildiou. Commentez de la même manière qu'à la question 6 les écarts entre les probabilités d'infections estimées par le modèle et les proportions réellement observées.*
+
+**Réponse**
+
+**Question 8**
+
+*Proposez un nouveau modèle pour la probabilité d'infection d'une plantule en fonction de la log-dose de fongicide, intégrant aussi la race du mildiou.*
+
+**Réponse**
+
+Ce nouveau modèle est ajusté par les commandes R ci-après, qui donnent aussi les coeffcients estimés du modèle:
+```{r}
+tournesol.logit2 = glm(Sporulations~Race*logdose,data=tournesol.bin,family=binomial)
+summary(tournesol.logit2)$coefficients
+```
+
+**Question 9**
+
+*D'après les coefficients estimés ci-dessus, quels sont les scores linéaires modélisant la probabilité d'infection si le mildiou est de race R et si le mildiou est de race S ? Quelles sont les principales différences par rapport au score linéaire estimé avec le modèle de la question 3 ?*
+
+**Réponse**
+   
+**Question 10**
+
+*D'après les tests de Wald donnés ci-dessus dans le tableau des coefficients estimés, doit on considérer que les odds-ratios de la log-dose sont significativement différents lorsque le fongicide est appliqué à la race R et à la race S du mildiou ?*
+
+**Réponse**
+   
+**Question 11**
+
+*En déduire un nouveau modèle pour la probabilité d'infection d'une plantule en fonction de la log-dose de fongicide, intégrant la race du mildiou.*
+
+**Réponse**
+
+**Question 12**
+
+*En déduire une nouvelle estimation de l'odds-ratio de la log-dose avec un intervalle de confiance de niveau de confiance 95\%.*
+
+**Réponse**
+
+**Références**
+
+Albourie, J., Tourvieille, J. \& Tourvieille de Labrouhe, D. (1998) Resistance to metalaxyl in isolates of the sunflower pathogen Plasmopara halstedii. *European Journal of Plant Pathology* **104**, 235–242.

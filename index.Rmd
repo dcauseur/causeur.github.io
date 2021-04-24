@@ -1,5 +1,66 @@
 ---
-title: "Welcome to my website!"
+title: "Contact information"
+header-includes:
+  - \usepackage{fontawesome}
 ---
 
-You're up and running!
+<style>
+.column-left{
+  float: left;
+  width: 50%;
+  text-align: left;
+}
+.column-right{
+  float: right;
+  width: 50%;
+  text-align: right;
+}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+```{r load_packages, message=FALSE, warning=FALSE, include=FALSE} 
+library(fontawesome)
+library(png)
+```
+
+<div class="column-left">
+<p>
+<i class="fas fa-map-marker-alt fa-1x" style="color:dodgerblue"></i> Institut Agro - Agrocampus Ouest
+ 
+Département Statistique et Informatique
+ 
+65 rue de Saint-Brieuc CS 84215
+
+35042 Rennes cedex, FRANCE
+
+&nbsp;
+
+<i class="fas fa-envelope fa-1x" style="color:dodgerblue"></i> david [dot] causeur [at] agrocampus-ouest [dot] fr 
+ 
+&nbsp;
+
+<i class="fas fa-phone fa-1x" style="color:dodgerblue"></i> +33 (0) 223 485 884
+
+&nbsp; 
+
+ `r fa("researchgate", fill = "dodgerblue", height = "1em")` [Researchgate](https://www.researchgate.net/profile/David-Causeur)
+ 
+&nbsp;
+
+ `r fa("google", fill = "dodgerblue", height = "1em")` [Google scholar](https://scholar.google.com/citations?user=kCws61IAAAAJ&hl=fr)
+
+&nbsp;
+
+ `r fa("github", fill = "dodgerblue", height = "1em")` [Github](https://github.com/dcauseur)
+</p>
+</div>
+
+<div class="column-right">
+```{r echo = FALSE, fig.width=5, fig.height=3.1}
+img <- readPNG("./img/profile.png")
+grid::grid.raster(img)
+```
+</div>

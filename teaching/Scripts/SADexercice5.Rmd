@@ -1,0 +1,156 @@
+---
+title: Statistique et Aide à la Décision 2020 - Exercice - Session 5
+author: David Causeur
+date: ''
+output:
+  html_document:
+    df_print: paged
+  word_document: default
+  pdf_document:
+    fig_caption: yes
+    fig_height: 6.181
+    fig_width: 10
+    highlight: haddock
+    number_sections: yes
+header-includes:
+- \onehalfspacing
+- \usepackage{floatpag}
+- \floatpagestyle{empty}
+- \usepackage{wrapfig}
+- \usepackage{subcaption}
+- \usepackage{caption}
+- \usepackage[font=small,labelfont=bf]{caption}
+linestretch: 0.8
+geometry: margin = 0.8in
+fontsize: 12pt
+vignette: null
+---
+
+```{r, setup, include = FALSE}
+options(digits = 6, show.signif.stars = TRUE)
+knitr::opts_chunk$set(
+  tidy = FALSE,     # display code as typed
+  tidy.opts = list(blank = FALSE, width.cutoff = 60),
+  size = "small",   # slightly smaller font for code
+  comment = "",
+  fig.align = "center",
+  cache = TRUE,
+  message = FALSE,
+  warning = FALSE)
+```
+
+```{r functions, include=FALSE}
+# A function for captioning and referencing images
+fig <- local({
+    i <- 0
+    ref <- list()
+    list(
+        cap=function(refName, text) {
+            i <<- i + 1
+            ref[[refName]] <<- i
+            paste("Figure ", i, ": ", text, sep="")
+        },
+        ref=function(refName) {
+            ref[[refName]]
+        })
+})
+``` 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+Install_and_Load <- function(packages) {
+  k <- packages[!(packages %in% installed.packages()[, "Package"])];
+  if(length(k)) {
+    install.packages(k, repos = "https://cran.rstudio.com/");
+  }
+  for(package_name in packages) {
+    library(package_name, character.only = TRUE, quietly = TRUE);
+  }
+}
+Install_and_Load(c("aod","questionr","car","RcmdrMisc","nnet","groupdata2"))
+```
+  
+**Nom Prénom :**
+
+**Détermination du lieu de production d'un café**
+
+Un groupe industriel commercialisant du café souhaite élaborer une règle automatique de détermination du lieu de production d'un café à partir d'un profil de composition de ce café constitué des concentrations en **CGA** (acide chlorogénique), **Cafeine** (caféine), **Fat** (matières grasses), **Trigonelline** et **DM** (matières sèches) et de cinq variables **PC**$_{j}$, $j=1,\ldots,5$, issues d'une analyse par spectrométrie proche infra-rouge. Pour cela, il souhaite s'appuyer sur un tableau donnant la composition chimique et le lieu de production, codé par une entier entre 1 et 7, de 240 échantillons de café.
+
+
+
+On importe les données dans la session de travail à l'aide des commandes suivantes :
+```{r}
+cafe = read.table("coffee.txt")
+# Convert Localisation into a categorical variable
+cafe$Localisation = factor(cafe$Localisation)
+# Preview of the dataset 
+str(cafe)
+```
+
+**Question 1**
+
+*Dans la problématique présentée ci-dessus, quelle est la variable réponse et quelles sont les variables explicatives ? Donnez la nature, quantitative ou catégorielle, de ces variables.*
+
+**Réponse**
+
+Vous pouvez utiliser cet espace pour votre réponse. 
+Si vous souhaitez écrire des formules mathématiques, voici quelques exemples qui devraient suffire:
+
+* formule mathématique dans une phrase : $\sqrt{n}$, $n^{2}$, $Y_{ij}=\mu+\alpha_{i}+\varepsilon_{ij}$, $Y_{i\bullet}$, $\varepsilon \sim {\cal N} ( 0 ; 1)$ 
+
+* formule mise en avant en dehors d'une phrase :
+\begin{eqnarray*}
+\text{log} \frac{\pi(x)}{1-\pi(x)} & = & \beta_{0} + \beta_{1} x , \\
+\text{log} \frac{\pi_{i}(x)}{1-\pi_{i}(x)} & = & \mu + \alpha_{i} + \beta_{1} x .
+\end{eqnarray*}
+
+Dans un premier temps, on cherche à prédire le lieu de production d'un café uniquement à partir des cinq variables de composition chimique.
+
+**Question 2**
+
+*Proposez un modèle adapté à cette problématique. Quel est le nombre de paramètres de ce modèle ?*
+
+**Réponse**
+
+**Question 3**
+
+*Estimer les paramètres du modèle de la question 2.*
+
+**Réponse**
+
+**Question 4**
+
+*Pour chaque échantillon de café, donnez le lieu de production prédit par la règle de classification de Bayes appliquée aux probabilités de provenance des différents lieux de production estimées à partir du modèle ajusté à la question 3. Que vaut l'accuracy de cette  règle de classification, c'est-à-dire le pourcentage d'échantillons de café bien classés par cette règle ?*
+
+**Réponse**
+
+**Question 5**
+
+*De quel lieu de production viennent les cafés pour lesquels la procédure de classification de la question 4 commet le plus d'erreurs ?*
+
+**Réponse**
+
+**Question 6**
+
+*Donnez une estimation par validation croisée de l'accuracy de la règle de classification de la question 4.*
+
+**Réponse**
+
+On espère maintenant améliorer la procédure en y ajoutant les cinq variables issues de la spectrométrie proche infra-rouge.
+
+**Question 7**
+
+*Ces variables apportent-elles une information complémentaire significativement utile pour expliquer le lieu de production d'un échantillon de café ?*
+
+**Réponse**
+
+**Question 8**
+
+*Parmi tous les modèles que l'on peut construire en choisissant des variables explicatives parmis les cinq variables de composition chimique et les cinq variables issues de la spectrométrie, quel est le meilleur au sens du critère BIC ?*
+
+**Réponse**
+
+**Question 9**
+
+*Donnez une estimation par validation croisée de l'accuracy de la règle de classification de Bayes appliquée aux probabilités de provenance des différents lieux de production estimées à partir du meilleur modèle au sens du critère BIC.*
+
+**Réponse**

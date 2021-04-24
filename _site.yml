@@ -1,7 +1,7 @@
-name: "YOURNAME"                                # CHANGE HERE 
+name: "David Causeur"                                # CHANGE HERE 
 output_dir: "."
 navbar:
-  title: "YOURNAME"                             # CHANGE HERE 
+  title: "David Causeur"                             # CHANGE HERE 
   type: inverse
   left:
     - text: "Home"
@@ -10,19 +10,35 @@ navbar:
     - text: "About"
       icon: fa-user 
       href: about.html
-    - text: "CV"
-      icon: fa-file-pdf-o
-      href: cv.html
-    - text: "Blog"
-      icon: fa-rss
-      href: https://YOURGITHUB.github.io/blog/  # CHANGE HERE OR DELETE ALL 3 LINES 
+    - text: "Teaching"
+      icon: fa-pencil-alt 
+      menu:
+        - text: "Overview"
+          href: teaching.html
+        - text: "First steps in data analysis"
+          href: firststeps.html
+        - text: "Statistics for decision making"
+          href: statdecision.html
+        - text: "First steps in genomic data analysis"
+          href: genomicdata.html
+        - text: "Statistical learning of biological data"
+          href: statlearnbiodata.html
+    - text: "Research"
+      icon: fa-calculator 
+      href: research.html
+      menu:
+        - text: "Research topics"
+          href: research.html
+        - text: "Publications"
+          href: publications.html
+        - text: "Talks"
+          href: talks.html
+        - text: "Packages"
+          href: packages.html
   right:
     - text: "Contact me"
-      icon: fa-envelope-o
-      href: mailto:YOUREMAIL                    # CHANGE HERE 
-    - text: "GitHub"
-      icon: fa-github
-      href: https://github.com/YOURGITHUB       # CHANGE HERE 
+      icon: fa-at
+      href: mailto:david.causeur@agrocampus-ouest.fr                    # CHANGE HERE 
 output:
   html_document:
     theme: cosmo

@@ -1,0 +1,189 @@
+---
+title: Statistique et Aide à la Décision 2020 - Exercice - Session 2
+author: David Causeur
+date: ''
+output:
+  html_document:
+    df_print: paged
+  word_document: default
+  pdf_document:
+    fig_caption: yes
+    fig_height: 6.181
+    fig_width: 10
+    highlight: haddock
+    number_sections: yes
+header-includes:
+- \onehalfspacing
+- \usepackage{floatpag}
+- \floatpagestyle{empty}
+- \usepackage{wrapfig}
+- \usepackage{subcaption}
+- \usepackage{caption}
+- \usepackage[font=small,labelfont=bf]{caption}
+linestretch: 0.8
+geometry: margin = 0.8in
+fontsize: 12pt
+vignette: null
+---
+
+```{r, setup, include = FALSE}
+options(digits = 6, show.signif.stars = TRUE)
+knitr::opts_chunk$set(
+  tidy = FALSE,     # display code as typed
+  tidy.opts = list(blank = FALSE, width.cutoff = 60),
+  size = "small",   # slightly smaller font for code
+  comment = "",
+  fig.align = "center",
+  cache = TRUE,
+  message = FALSE,
+  warning = FALSE)
+```
+
+```{r functions, include=FALSE}
+# A function for captioning and referencing images
+fig <- local({
+    i <- 0
+    ref <- list()
+    list(
+        cap=function(refName, text) {
+            i <<- i + 1
+            ref[[refName]] <<- i
+            paste("Figure ", i, ": ", text, sep="")
+        },
+        ref=function(refName) {
+            ref[[refName]]
+        })
+})
+``` 
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+Install_and_Load <- function(packages) {
+  k <- packages[!(packages %in% installed.packages()[, "Package"])];
+  if(length(k)) {
+    install.packages(k, repos = "https://cran.rstudio.com/");
+  }
+  for(package_name in packages) {
+    library(package_name, character.only = TRUE, quietly = TRUE);
+  }
+}
+Install_and_Load("nnet")
+```
+
+  **Nom Prénom :**
+
+  A partir d'un test d'analyse sensorielle, on cherche à mettre en évidence un éventuel effet de l'âge sur le choix par un consommateur d'un parfum plutôt que d'un autre. Une première étude a permis de distinguer trois groupes de parfums ayant des caractéristiques sensorielles proches : un premier groupe constitué de *Angel* et *Lolita Lempicka*, un deuxième de *Cinéma*, *Coco madmoiselle* et *L'instant* et un troisième de *J'adore*, *Pure Poison* et *Pleasures*.    
+  
+La variable sensorielle dont on dispose pour l'étude de l'effet de l'âge sur la préférence est le groupe de parfums préféré (*G*$_{1}$, *G*$_{2}$ ou *G*$_{3}$), pour 143 consommateurs, dont 100 utilisent régulièrement des parfums et les 43 autres plus occasionnellement.  
+
+Les commandes suivantes donnent un aperçu des données.   
+   
+```{r}
+parfums = read.table("prefparfum.txt")
+str(parfums)
+```
+
+  Dans un premier temps, on ne s'intéresse qu'à l'effet de l'âge sur la préférence des consommateurs pour un groupe de parfums ou un autre.
+  
+**Question 1**
+
+*Quelles sont les variables réponse et explicative dans cette problématique ? Quelle est la nature, quantitative ou catégorielle, de ces variables ?*
+
+**Réponse**
+
+Vous pouvez utiliser cet espace pour votre réponse. 
+Si vous souhaitez écrire des formules mathématiques, voici quelques exemples qui devraient suffire:
+
+* formule mathématique dans une phrase : $\sqrt{n}$, $n^{2}$, $Y_{ij}=\mu+\alpha_{i}+\varepsilon_{ij}$, $Y_{i\bullet}$, $\varepsilon \sim {\cal N} ( 0 ; 1)$ 
+
+* formule mise en avant séparément :
+\begin{eqnarray*}
+\text{log} \frac{\pi(x)}{1-\pi(x)} & = & \beta_{0} + \beta_{1} x , \\
+\text{log} \frac{\pi_{i}(x)}{1-\pi_{i}(x)} & = & \mu + \alpha_{i} + \beta_{1} x .
+\end{eqnarray*}
+
+**Question 2**
+
+*Donnez l'expression mathématique du modèle permettant d'étudier l'effet de l'âge sur la préférence pour un parfum.*
+
+**Réponse**
+
+**Question 2**
+
+*Donnez l'expression mathématique du modèle permettant d'étudier l'effet de l'âge sur la préférence pour un parfum.*
+
+Ce modèle est ajusté par les commandes suivantes de R :
+```{r}
+parfums.mlog = multinom(Parfum~Age,data=parfums,trace=FALSE)
+coef(parfums.mlog)
+```
+
+ **Question 3**
+
+*D'après les valeurs estimées des coefficients du modèle, que peut-on dire de l'effet de l'âge sur la préférence pour les parfums du groupe 1 ?*
+
+**Réponse**
+
+Les commandes suivantes utilisent le modèle ajusté ci-dessus pour estimer des probabilités de préférence des trois groupes de parfums pour trois consommateurs dont on ne connait que l'âge (18, 25 et 45 ans) :
+```{r}
+probas = predict(parfums.mlog,newdata=data.frame(Age=c(18,25,45)),type="probs")
+probas
+```
+
+**Question 4**
+
+*Expliquez les valeurs que l'on trouve sur chacune des lignes du tableau ci-dessus. Ce tableau de résultats est-il conforme à l'interprétation faite à la question précédente concernant l'effet de l'âge sur la préférence pour les parfums du 1er groupe ?*
+
+**Réponse**
+
+On se demande maintenant si l'effet de l'âge sur la préférence est le même lorsque le consommateur est un utilisateur régulier de parfums que lorsque c'est un utilisateur occasionnel. 
+
+**Question 5**
+
+*Proposez une extension du modèle étudié précédemment intégrant l'effet de la fréquence d'utilisation d'un parfum.*
+
+**Réponse**
+
+**Question 6**
+
+*Combien de paramètres a ce nouveau modèle ?*
+
+**Réponse**
+
+La commande R ci-dessous implémente l'ajustement de ce nouveau modèle.
+   
+```{r,echo=TRUE}
+parfums.mlog2 = multinom(Parfum~Frequence*Age,data=parfums,trace=FALSE)
+coef(parfums.mlog2)
+```
+   
+**Question 7**
+
+*Indépendamment de l'âge, le fait d'être un utilisateur régulier favorise la préférence pour quel groupe de parfums ? (justifiez votre réponse)*
+
+**Réponse**
+
+**Question 8**
+
+*L'effet de l'âge sur la préférence pour le 1er groupe de parfums est-il le même pour les utilisateurs réguliers et occasionnels, accentué par le fait d'être un utilisateur régulier ou atténué par le fait d'être un utilisateur régulier ?*
+
+**Réponse**
+
+Les commandes suivantes utilisent le modèle ajusté ci-dessus pour estimer des probabilités de préférence des trois groupes de parfums pour six consommateurs dont on connait l'âge (18, 25 et 45 ans) et la fréquence d'utilsation d'un parfum :
+```{r}
+probas_reg = predict(parfums.mlog2,
+                 newdata=data.frame(Age=c(18,25,45),Frequence="régulièrement"),
+                 type="probs")
+probas_occ = predict(parfums.mlog2,
+                 newdata=data.frame(Age=c(18,25,45),Frequence="rarement"),
+                 type="probs")
+cbind.data.frame(rbind(probas_reg,probas_occ),
+                 Age=rep(c(18,25,45),2),
+                 Frequence=rep(c("régulièrement","rarement"),c(3,3)))
+```
+
+**Question 9**
+
+*Ce tableau de résultats est-il conforme à l'interprétation faite à la question précédente ?*
+
+**Réponse**

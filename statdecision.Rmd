@@ -1,0 +1,56 @@
+---
+title: "Statistics for decision making"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+*Course objective*: Introducing the logistic linear regression model for two or more class probabilities. The scope of methods covers the maximum-likelihood estimation of the model, the tests for significance of effects, the search for the best subset of explanatory variables and the prediction of a class label using the model.   
+
+*Organization*: The course is divided into five sessions. Each session is made of a lecture and practical classes. In those in-class practical classes, students are given the opportunity to tackle problem-solving exercises using R.  
+
+The following documents are provided for each session:
+
+* a video lecture: R tutorial whose slides, data and R script are provided;   
+* an Rmd file containing in-class exercises.   
+
+To start with Rmarkdown: [brief introduction](https://youtu.be/rmBk6ECKdqQ). 
+
+## Session 1
+
+*Objective*: A post on the blog of a French radio channel reports that the risk of being infected by COVID19 is 33% lower in people with blood type O. What does this assertion means?
+
+The session introduces a statistical method to compare groups of items regarding their exposition to a given risk. 
+
+* [Video lecture](https://youtu.be/ybyboAX5TT8) with [slides](./teaching/PDFs/SADslides1.pdf) and [R script](./teaching/scripts/SADsession1.R);   
+* In-class activities:  [exercise](./teaching/scripts/SADexercice1.Rmd).
+
+## Session 2
+
+*Objective*: How to use colorimetry to evaluate the maturity of a fruit? The session introduces a mathematical framework and related statistical methods to address this issue. 
+
+* [Video lecture](https://youtu.be/QmINzUDho8Q) with [slides](./teaching/PDFs/SADslides2.pdf), [data](./teaching/data/maturity.txt) and [R script](./teaching/scripts/SADsession2.R);   
+* In-class activities:  [exercise](./teaching/Scripts/SADexercice2.Rmd) and [data](./teaching/data/prefparfum.txt).
+
+## Session 3
+
+*Objective*: Are the components of a colorimetry profile all equally important to predict the maturity of a fruit? The session introduces the test for the significance of effects in the general setup for modeling class probabilities introduced in Session 2.
+
+* [Video lecture](https://youtu.be/NiXNpXNtJPQ) with [slides](./teaching/PDFs/SADslides3.pdf), [data](./teaching/data/maturity.txt) and [R script](./teaching/scripts/SADsession3.R);   
+* In-class activities:  [exercise](./teaching/Scripts/SADexercice3.Rmd) and [data](./teaching/data/tournesol.txt).
+
+## Session 4
+
+*Objective*: How to choose the best subset of explanatory variables to explain class probabilities in a large profile of possibly correlated features?
+
+* [Video lecture](https://youtu.be/XyxlSRnl4kI) with [slides](./teaching/PDFs/SADslides4.pdf), [data](./teaching/data/maturity.txt) and [R script](./teaching/scripts/SADsession4.R);   
+* In-class activities:  [exercise](./teaching/Scripts/SADexercice4.Rmd) and [data](./teaching/data/methionine.txt).
+
+## Session 5
+
+*Objective*: Prediction of the class label of test items exposes to errors. Those error rates need to be accurately evaluated, in order to help designing optimal classification strategies.   
+
+* [Video lecture](https://youtu.be/agt2WHQ4Hn8) with [slides](./teaching/PDFs/SADslides5.pdf), [data](./teaching/data/maturity.txt) and [R script](./teaching/scripts/SADsession5.R);   
+* In-class activities: [exercise](./teaching/Scripts/SADexercice5.Rmd) and [data](./teaching/data/SADcoffee.txt).
+

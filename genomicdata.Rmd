@@ -1,0 +1,46 @@
+---
+title: "First steps in genomic data analysis"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+*Course objective*: Introducing statistical methods for high-throughput gene expression data analysis focusing on the search for genes whose expression is related to variations in experimental covariates. 
+
+*Organization*: The course is divided into four sessions. Each session is made of a lecture and practical classes. In those in-class practical classes, students are given the opportunity to tackle problem-solving exercises, with or without the use of R.  
+
+The following documents are provided for each session:
+
+* A video lecture: R tutorial whose slides, data and R script are provided;   
+* A PDF and/or Rmd file containing a self-directed learning exercise.
+
+To start with Rmarkdown: [brief introduction](https://youtu.be/eAfbICgsc_E). 
+
+## Session 1
+
+*Objective*: Introducing general principles of gene expression data normalization. Normalization is a preliminary step in genomic data analysis consisting in identifying and removing variations only due to technological biases.   
+
+* Video lecture (divided in five short clips: [1](https://youtu.be/9m6tjSswofU),  [2](https://youtu.be/3xtUQo2kI88), [3](https://youtu.be/FczdN6HD-oA), [4](https://youtu.be/94El7wKCip0), [5](https://youtu.be/oQAssYDu1nk))  with [slides](./teaching/PDFs/ADGSession1.pdf), [data](./teaching/data/chicken.txt) and [R script](./teaching/scripts/ADGnormalisation.R);   
+* In-class activities:  [exercise](./teaching/PDFs/ADGexercice1.pdf).
+
+## Session 2
+
+*Objective*: Being able to use the R package [limma](https://bioconductor.org/packages/release/bioc/html/limma.html) to import gene expression data into a R session and control the quality of the gene expression measurements.   
+
+* [Video lecture](https://youtu.be/DnpPWLUsNe0) and [R script](./teaching/scripts/ADGlimma.R);   
+* In-class activities: exercise ([PDF](./teaching/PDFs/ADGexercice2.pdf) and [Rmd](./teaching/scripts/ADGexercice2.Rmd)).
+
+## Session 3
+
+*Objective*: Controlling false positives when selecting genes whose mean expression is significantly related to experimental covariates.
+
+* Video lecture (divided in five short clips: [1](https://youtu.be/ASFvJIW1064), [2](https://youtu.be/Njkv_fIISB4),  [3](https://youtu.be/U2C5g8XyocI),  [4](https://youtu.be/TCqUeA5BiB8), [5](https://youtu.be/-g5PT7OLaFc))  with [slides](./teaching/PDFs/ADGSession3.pdf), data([expression data](./teaching/data/ADGfoie.txt), [external data](./teaching/data/ADGexternal.txt), [experimental covariates](./teaching/data/ADGcovariates.txt)) and R script ([R](./teaching/scripts/ADGSession3.R), [Rmd](./teaching/scripts/ADGSession3.Rmd), [PDF](./teaching/pdfs/ADGSession3Rmd.pdf));
+* In-class activities: [exercise](./teaching/PDFs/ADGexercice3.pdf).
+
+## Session 4
+
+*Objective*: Using clustering procedures to give more insight to the list of selected genes. This short session is dedicated to clustering methods in order to extract groups of microarrays whose expression profiles are similar and groups of co-expressed genes.
+
+* [Video lecture](https://youtu.be/Jas1UDy3do4) with data ([expression data for selected genes](./teaching/data/ADGfoiepositive.txt), [factor-adjusted expression data for selected genes](./teaching/data/ADGfoiepositiveadjusted.txt)) and [R script](./teaching/scripts/ADGclustering.R).
+

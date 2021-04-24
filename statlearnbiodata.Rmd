@@ -1,0 +1,52 @@
+---
+title: "Statistical learning of high-dimensional biological data"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+*Course objective*: Introducing high-dimensional regression and classification methods for biological data analysis.   
+
+*Organization*: The course is divided into five sessions. Each session is made of a lecture and practical classes. In those in-class practical classes, students are given the opportunity to tackle problem-solving exercises using R.  
+
+The following documents are provided for each session:
+
+* a video lecture: R tutorial whose slides, data and R script are provided;   
+* an Rmd file containing in-class exercises.   
+
+## Session 1
+
+*Objective*: Setting a statistical framework for linear prediction of a real-valued or a k-class response variable. 
+
+* [Video lecture](https://youtu.be/5KLMYWWWcsE) with [slides](./teaching/PDFs/SLBDsession1.pdf), [R script](./teaching/scripts/SLBDsession1.R) and data ([1](./teaching/data/SLBDinvasive.txt) and [2](./teaching/data/SLBDcoffee.txt));   
+* In-class activities:  [exercise](./teaching/pdfs/SLBDexercicesession1.pdf) and [data](./teaching/data/SLBDscanner.txt).
+
+## Session 2
+
+*Objective*: Selecting the best subset of predicting variables in linear regression and classification models. 
+
+* [Video lecture](https://youtu.be/AwrppordO78) with [slides](./teaching/PDFs/SLBDsession2.pdf), [R script](./teaching/scripts/SLBDsession2.R) and data ([1](./teaching/data/SLBDinvasive.txt) and [2](./teaching/data/SLBDcoffee.txt));   
+* In-class activities:  [exercise](./teaching/pdfs/SLBDexercicesession2.pdf) and [data](./teaching/data/SLBDscanner.txt).
+
+## Session 3
+
+*Objective*: Using penalized estimation procedures to estimate high-dimensional regression and classification models.
+
+* [Video lecture](https://youtu.be/hW616AL1qNM) with [slides](./teaching/PDFs/SLBDsession3.pdf), [R script](./teaching/scripts/SLBDsession3.R) and data ([1](./teaching/data/SLBDscanner.txt) and [2](./teaching/data/SLBDcoffee.txt));   
+* In-class activities: exercise and data (1 and 2).
+
+## Session 4
+
+*Objective*: Using latent variable models for estimating prediction models with high-dimensional data.
+
+* [Video lecture](https://youtu.be/MC1MoYx576c) with [slides](./teaching/PDFs/SLBDsession4.pdf), [R script](./teaching/scripts/SLBDsession4.R) and data ([1](./teaching/data/SLBDscanner.txt) and [2](./teaching/data/SLBDoysters.txt));   
+* In-class activities:  [exercise](./teaching/pdfs/SLBDexercicesession4.pdf) and ([1](./teaching/data/SLBDnirstozeur.txt) and data [2](./teaching/data/SLBDcarbontozeur.txt)).
+
+## Session 5
+
+*Objective*: Introducing nonlinearity in regression and classification models using generalized additive modeling.   
+
+* Video lectures ([1](https://youtu.be/-npku94-JBk) and [2](https://youtu.be/LWRVnMiZisw)) with [slides](./teaching/PDFs/SLBDsession5.pdf), [R script](./teaching/scripts/SLBDsession5.R) and [data](./teaching/data/SLBDozone.txt);   
+* In-class activities:  [exercise](./teaching/pdfs/SLBDexercicesession5.pdf) and [data](./teaching/data/SLBDcoffee_nirs.txt).
+

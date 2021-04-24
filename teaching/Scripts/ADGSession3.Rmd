@@ -1,0 +1,289 @@
+---
+title: |
+  | Analyse des données génomiques 2020
+  | Sélection de gènes associés à un signal biologique d'intérêt
+author: |
+  | Sandrine Lagarrigue et David Causeur
+output:
+  pdf_document:
+    fig_caption: yes
+    fig_height: 6.181
+    fig_width: 10
+    highlight: haddock
+    number_sections: yes
+  word_document: default
+  html_document:
+    df_print: paged
+linestretch: 0.8
+geometry: margin = 0.8in
+fontsize: 12pt
+vignette: null
+---
+
+```{r, setup, include = FALSE}
+options(digits = 3, show.signif.stars = FALSE)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  tidy = TRUE,     # display code as typed
+  size = "small",   # slightly smaller font for code
+  comment = "",
+  fig.align = "center",
+  cache = TRUE,
+  message = FALSE,
+  warning = FALSE)
+```
+
+  *Nom Prénom* :
+
+   Dans la suite, on reprend les étapes de sélection de gènes décrite dans le podcast video. **Modifiez les commandes ci-après afin de les adapter au sujet de votre étude de cas.** En particulier, 
+   
+* les données d'expression pouront concerner un autre tissu que celui du foie (muscle ou tissu adipeux) ;
+
+* de même, les facteurs de variation des profils d'expression pourront ne pas être limités au régime et au génotype. En effet, ils pourront aussi être choisis dans le  tableau de données supplémentaires sur les poulets également disponible (profils d'acide gras, ...).
+
+# Préparation de la session de travail
+
+La commande d'installation ci-après du package *limma* à partir de la plateforme *bioconductor* ne doit être exécutée que si le package n'est pas déjà installé.
+
+```{r,eval=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install("limma",update=FALSE)
+``` 
+
+Une fois installé, le package doit être chargé dans la session de travail :
+
+```{r}
+require(limma)
+```
+
+De même, la commande d'installation ci-après du package *FAMT* ne doit être exécutée que si le package n'est pas déjà installé.
+
+```{r,eval=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install("impute",update=FALSE)
+
+install.packages("FAMT")
+``` 
+
+Une fois installé, le package doit être chargé dans la session de travail :
+
+```{r}
+require(FAMT)
+```
+
+Enfin, la commande d'installation ci-après du package *fdrtool* ne doit être exécutée que si le package n'est pas déjà installé.
+
+```{r,eval=FALSE}
+install.packages("fdrtool")
+``` 
+
+Une fois installé, le package doit être chargé dans la session de travail :
+
+```{r}
+require(fdrtool)
+```
+
+# Importation des données
+
+## Données d'expression
+
+On peut importer les données d'expression au format gènes x microarray grâce à la fonction *read.table* :
+
+```{r}
+## Import gene expression data
+expressions = read.table("foie.txt",header=TRUE)
+dim(expressions)           # Numbers of rows and columns
+head(expressions[,1:10])   # Displays first 6 rows of first 10 columns 
+``` 
+
+## Dispositif expérimental
+
+Toute l'information sur le dispositif expérimental est contenue dans le fichier 'covariates.txt'. On peut importer ce fichier grâce à la fonction *read.table* :
+
+```{r}
+covariates = read.table("covariates.txt",header=TRUE)
+dim(covariates)            # Numbers of rows and columns
+str(covariates)            # Overview of the data
+``` 
+
+Si votre étude de cas consiste à étudier les relations entre l'expression des gènes et une des variables supplémentaires décrivant notamment les profils d'acide gras des poulets, vous devez importer ici les données du fichier *external.txt*, en procédant de la même manière que ci-dessus pour *covariates.txt*.
+
+# Tests d'association entre expression et variables expérimentales
+
+Pour automatiser les tests d'association à l'échelle du génome, on utilise le package *FAMT*. Pour commencer, on crée un objet *FAMTdata* qui contient à la fois les données d'expression et les données avec lesquelles on souhaite tester l'association :
+
+```{r}
+# First, create an FAMTdata object gathering expressions and covariates
+# Column names of expressions should correspond to an ID variable in covariates
+# An ID variable is added in 1st column of covariates
+covariates = data.frame(ID=rownames(covariates),covariates)
+
+# as.FAMT data creates the FAMTdata object - idcovar gives the column number of the
+# ID variable in covariates
+foie.famt = as.FAMTdata(expressions,covariates,idcovar=1)
+
+# Overview of data in the FAMTdata object
+summaryFAMT(foie.famt)
+``` 
+
+Dans le cas présent, on s'intéresse à l'effet sur l'expression des gènes du régime ajusté de l'effet génotype :
+```{r}
+# Fits the linear model: here, Diet+Genotype (x = 2nd and 3rd columns of covariates)
+# Test for the Diet effect (test = 2nd column of covariates)
+# nbf = 0 for a standard fit
+foie.lmfit = modelFAMT(foie.famt,x=c(2,3),test=2,nbf=0)
+``` 
+
+On récupère maintenant les p-values du test de la manière suivante :
+```{r}
+# p-values for the diet effect can be found in $pval
+pvalD = foie.lmfit$pval
+hist(pvalD,
+     main="Diet effect on gene expression",
+     proba=TRUE,col="orange",xlab="p-values",
+     cex.lab=1.25,cex.axis=1.25,cex.main=1.25)
+``` 
+
+On détermine les gènes positifs en s'assurant que la proportion de faux positifs est de l'ordre de 5\% (vous pouvez préférer contrôler le risque de faux positifs en modifiant l'argument *method* de la fonction *p.adjust*) :
+```{r}
+BHpvalD = p.adjust(pvalD,method="BH") # adjusted p-values (BH)
+BHPositives = BHpvalD<=0.05       # TRUE if positive, FALSE if not
+sum(BHPositives)                  # Number of positive genes 
+``` 
+
+On affiche ci-après les p-values des 10 gènes pour lesquels l'effet est le plus significatif :
+```{r}
+sort(pvalD)[1:10]
+``` 
+
+# Amélioration de la puissance des tests
+
+On propose ici trois méthodes permettant d'améliorer la puissance des tests.
+
+## Méthode de la q-value
+
+On peut estimer la proportion $\pi_{0}$ des gènes dont l'expression moyenne ne varie pas en fonction du régime grâce à la fonction *pval.estimate.eta0* du package *fdrtool* :
+```{r}
+pi0 = pval.estimate.eta0(pvalD)   # Estimation of the proportion of true nulls
+``` 
+
+On en déduit une estimation moins biaisée des FDR, ce qui permet d'augmenter la puissance de la procédure de sélection :
+```{r}
+BHpvalD = p.adjust(pvalD,method="BH") # adjusted p-values (BH)
+qvaluesD = pi0*BHpvalD                # q-values
+positives = qvaluesD<=0.05
+# Number of positive genes with a control of the FDR at level 0.05
+sum(positives)                         
+``` 
+
+La $i$ème q-value estime le FDR si on choisit comme seuil de décision la $i$ème plus petite p-value. Par conséquent, si on souhaite limiter la liste des gènes positifs aux 100 premiers gènes, le FDR de cette liste est estimé de la manière suivante :
+```{r}
+# Suppose we choose to keep 100 genes: what is the estimated FDR?
+sort(qvaluesD)[100]
+``` 
+
+## Tests modérés
+
+Le package *limma* permet de mettre en oeuvre les tests (de Fisher ou de Student) modérés. Ce sont prrobablement les tests les plus utilisés pour la sélection de gènes.
+
+Dans un premier temps, on défnit le modèle d'association avec lequel on travaille :
+```{r}
+# First, set the design matrix
+design = model.matrix(~Genotype+Diet,data=covariates)   
+head(design)
+``` 
+
+Ensuite, on ajuste ce modèle d'association pour chacun des gènes :
+```{r}
+# Then, fit the 2-way analysis of variance model
+fit = lmFit(expressions,design)
+head(fit$coefficients)          # Display the first 6 rows
+``` 
+
+On peut maintenant calculer les statistiques de Fisher modérées et les p-values associées :
+```{r}
+# Now, calculate the moderated tests statistics and corresponding p-values
+fit = eBayes(fit)      
+# Display the top 10 most significant genes
+topTable(fit, coef=3)  # Coef=column number in fit$coefficients for the test   
+``` 
+
+Enfin, on peut définir une procédure de sélection basée à la fois sur la p-value avec un contrôle du FDR au niveau 5\% (Benjamini-Hochberg) et sur le log-ratio d'expression entre les deux régimes que l'on peut imposer supérieur à 1 (en valeur absolue) :
+```{r}
+# Volcano plot
+BHmoderatedpval = p.adjust(fit$p.value[,"DietHL"],method="BH")
+logFC = fit$coefficients[,3]
+
+plot(logFC,-log10(BHmoderatedpval),xlab = "log-Fold Change",
+     ylab = "-log10(pvalue)",main = "Volcano plot",cex = 0.6, pch = 19)
+points(logFC[BHmoderatedpval <= 0.05],
+       -log10(BHmoderatedpval)[BHmoderatedpval <= 0.05],
+       cex = 0.6, pch = 19, col = "red")
+abline(h = -log10(0.05),col = "blue",lty =2,lwd = 1.5)
+
+# Condition to be selected: BH adjusted p-value<=0.05 + |logFC|>=1
+select = (BHmoderatedpval<=0.05) & (abs(logFC)>=1)
+
+# Number of selected genes
+sum(select)
+``` 
+
+## Modèle pour l'hétérogénéité d'expression
+
+La fonction *modelFAMT* détermine le nombre de facteurs d'hétérogénéité dans les données d'expression, estime ces facteurs d'hétérogénéité pour les soustraire aux données d'expresssion et calcule les p-values des tests sur les données ajustées de leur hétérogénéité :
+```{r}
+# nbf = NULL let the function determine the proper number of factors
+foie.lmfit = modelFAMT(foie.famt,x=c(2,3),test=2,nbf=NULL)
+``` 
+
+La fonction *summaryFAMT* permet de mesurer l'impact de cette prise en compte de l'hétérogénéité des données sur la sélection des gènes par la méthode de la q-value (*pi0=NULL*) : 
+```{r}
+# alpha = 0.05 is the FDR control level
+# pi0 = NULL to let the functione estimate pi0 
+results = summaryFAMT(foie.lmfit,alpha=0.05,pi0=NULL)
+results$pi0
+results$nbreject
+``` 
+
+Enfin, les p-values pour l'effet régime calculées sur les données ajustées de leur hétérogénéité peuvent être récupérées :
+```{r}
+# Heterogeneity-adjusted p-values for the diet effect can be found in $adjpval
+pvalD = foie.lmfit$adjpval
+hist(pvalD,
+     main="Diet effect on gene expression",
+     proba=TRUE,col="orange",xlab="p-values",
+     cex.lab=1.25,cex.axis=1.25,cex.main=1.25)
+mtext("After heterogeneity adjustment")
+``` 
+
+Comme précédement avec *limma*, la sélection des gènes peut combiner un contrôle du FDR (méthode de la q-value) et l'exigence de log-ratios d'expression supérieurs à 1 :
+```{r}
+# Heterogeneity-adjusted p-values for the diet effect can be found in $adjpval
+qvaluesD = results$pi0*p.adjust(pvalD,method="BH")
+select = (qvaluesD<=0.05) & (abs(logFC)>=1)
+
+# Number of selected genes
+sum(select)
+``` 
+
+# Création des fichiers de gènes sélectionnés
+
+Il reste à créer et exporter le tableau des données d'expression restreint aux gènes sélectionnés par la méthode choisie :
+```{r}
+foiePositive = expressions[select,]
+write.table(foiePositive,"foiePositive.txt")
+``` 
+
+On peut aussi exporter le fichier des données d'expressions ajustées de leurs facteurs d'hétérogénéité accessibles dans *foie.lmfit\$adjdata\$expression*:
+```{r}
+expressions_adjusted = foie.lmfit$adjdata$expression
+foiePositive_adjusted = expressions_adjusted[select,]
+write.table(foiePositive_adjusted,"foiePositiveAdjusted.txt")
+``` 
+
+
+

@@ -1,0 +1,25 @@
+---
+title: "Recent talks"
+---
+
+1. Sparse inverse time correlation model for signal identification in functional Near Infrared Spectroscopy data. April 2021. Channel Network Conference, 2021, Online conference. [Slides](./research/PDFs/ridgeifa_talk.pdf) 
+
+2. Adaptive handling of dependence in high-dimensional regression modeling. November 2020. Invited talk at the Dutch Biometric Conference.
+
+3. A functional generalized F-test for signal detection with applications to event-related potentials significance
+analysis. May 2020, Invited talk at Journées de Statistique, Nice.
+
+4. Functional Analysis of Variance in the Comparison of Curves. November 2019. Invited talk at School of Occupational Therapy, National Taiwan University, Taipei
+
+5. Ignoring dependence in large-dimensional testing issues: what consequences? July 2018. Channel Network Conference, Rothamsted Research Center, UK.
+
+6. Handling dependence or not in statistical learning for high-dimensional data. December 2018, Invited Seminar,
+Department of Statistics, La Sapienza University, Roma, Italy.
+
+7. Signal identification in ERP data by decorrelated Higher Criticism Thresholding, September 2015, CIBB 2015, Naples, Italy.
+
+8. Large Scale Mutiple Comparisons in Ranking Studies. Invited Seminar, November 2013. NCKU, Tainan, Taiwan.
+
+9. Modèles à facteurs parcimonieux pour données à haut débit. Séminaire invité, Mars 2013, Université de Montpellier.
+
+10. Sparse factor models for high-dimensional interaction networks. Invited talk, May 2013, 7th International Workshop on Simulation, Rimini, Italy.

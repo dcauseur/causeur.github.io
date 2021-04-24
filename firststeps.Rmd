@@ -1,0 +1,57 @@
+---
+title: "First steps in data analysis with R"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+*Course objective*: Introducing basic statistical methods for testing the existence of an effect at a population level using data collected on a representative sample. 
+
+*Organization*: The course is divided into five sessions. Each session is made of a lecture and (at least) two practical classes. In those in-class practical classes, students are given the opportunity to tackle problem-solving exercises, with or without the use of R.  
+
+The following documents are provided for each session:
+
+* a 1h-video lecture: a R tutorial whose slides, data and R script are provided;   
+* a PDF file containing a self-directed learning exercise; 
+* two PDF files with in-class exercises.   
+
+## Session 1
+
+*Objective*: Introducing the principles of statistical inference and especially hypothesis testing. What does the question "Is there an effect of this on that?" mean in practice? 
+
+* Video lecture with [slides](./teaching/PDFs/DS20Session1.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session1.R);   
+* Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation1.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/Scripts/ExerciceAutoEvaluation1.R); 
+
+## Session 2
+
+*Objective*: Introducing the F-test for the group mean comparison.
+
+* Video lecture with [slides](./teaching/PDFs/DS20Session2.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session2.R);   
+* Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation2.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation2.R);
+* In-class activities: session [1](./teaching/pdfs/ds20TD1.pdf) and [2](./teaching/pdfs/ds20TD2.pdf).
+
+## Session 3
+
+*Objective*: Introducing the t-test for the two-group mean comparison, the power of a t-test, the Bonferroni correction for the multiplicity of simultaneous tests.
+
+* Video lecture with [slides](./teaching/PDFs/DS20Session3.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session3.R);   
+* Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation3.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation3.R);
+* In-class activities: session [1](./teaching/pdfs/ds20TD3.pdf) and [2](./teaching/pdfs/ds20TD4.pdf).
+
+## Session 4
+
+*Objective*: Introducing the paired t-test for the two-group mean comparison and the simple linear regression model.
+
+* Video lecture with [slides](./teaching/PDFs/DS20Session4.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session4.R);   
+* Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation4.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation4.R);
+* In-class activities: session [1](./teaching/pdfs/ds20TD5.pdf) and [2](./teaching/pdfs/ds20TD6.pdf).
+
+## Session 5
+
+*Objective*: Introducing the F-test in the simple linear regression model and the prediction issue. The lecture ends with the implementation of an F-test to conclude about group differences between linear effects (an example of interaction effect).
+
+* Video lecture with [slides](./teaching/PDFs/DS20Session5.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session5.R);   
+* Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation5.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation5.R);
+* In-class activities: session [1](./teaching/pdfs/ds20TD7.pdf) and [2](./teaching/pdfs/ds20TD8.pdf).
+

@@ -1,0 +1,363 @@
+---
+title: |
+  | Analyse des données génomiques 2020
+  | Importation de données d'expression et contrôle qualité
+author: |
+  | Sandrine Lagarrigue et David Causeur
+output:
+  pdf_document:
+    fig_caption: yes
+    fig_height: 6.181
+    fig_width: 10
+    highlight: haddock
+    number_sections: yes
+  word_document: default
+  html_document:
+    df_print: paged
+linestretch: 0.8
+geometry: margin = 0.8in
+fontsize: 12pt
+vignette: null
+---
+
+```{r, setup, include = FALSE}
+options(digits = 3, show.signif.stars = FALSE)
+knitr::opts_chunk$set(
+  tidy = TRUE,     # display code as typed
+  size = "small",   # slightly smaller font for code
+  comment = "",
+  fig.align = "center",
+  cache = TRUE,
+  message = FALSE,
+  warning = FALSE)
+```
+
+  
+  *Nom Prénom* :
+
+   Dans la suite, on reprend les étapes, mises en oeuvre grâce au package *limma* de *R*, de l'importation et du contrôle qualité des données d'expression des gènes de poulets dans le foie. **A partir des données disponibles sur la plateforme moodle, modifiez les commandes ci-après afin de les adapter au sujet de votre étude de cas.** En particulier, 
+   
+* les données d'expression pouront concerner un autre tissu que celui du foie (muscle ou tissu adipeux) ;
+
+* de même, les facteurs de variation des profils d'expression pourront ne pas être limités au régime et au génotype. En effet, ils pourront aussi être choisis dans le  tableau de données supplémentaires sur les poulets également disponible (profils d'acide gras, ...).
+
+# Préparation de la session de travail
+
+La commande d'installation ci-après du package *limma* à partir de la plateforme *bioconductor* ne doit être exécutée que si le package n'est pas déjà installé.
+
+```{r,eval=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install("limma",update=FALSE)
+``` 
+
+Une fois installé, le package doit être chargé dans la session de travail :
+
+```{r}
+require(limma)
+```
+
+# Importation des données
+
+## Dispositif expérimental
+
+Toute l'information sur le dispositif expérimental est contenue dans le fichier 'targetsF.txt'. On peut importer ce fichier grâce à la fonction *readTargets* du package *limma* :
+
+```{r}
+targets = readTargets("targetsF.txt")
+head(targets)    # Display the first 6 rows
+``` 
+
+En particulier, la colonne *Factor* contient toute l'information sur les deux facteurs expérimentaux du dispositif, à savoir le régime et le génotype.
+
+```{r}
+dietgenotype = factor(targets$Factor)
+table(dietgenotype)
+```
+
+La fonction *substring* (extrait une sous-chaîne de caractères) permet d'extraire les informations relatives au régime et au génotype à partir des chaînes de caractères stockées dans *dietgenotype* :
+
+```{r}
+genotype = factor(substring(dietgenotype,first=1,last=1))
+diet = factor(substring(dietgenotype,first=3,last=4))
+```
+
+La commande suivante produit la table de contingence des deux facteurs expérimentaux, ce qui permet de s'assurer de l'équilibre du dispositif expérimental :
+
+```{r}
+table(diet,genotype)
+```
+
+## Données supplémentaires sur les poulets
+
+On importe les données contenues dans le fichier au format *.csv* disponible sur la plateforme (il a été généré en enregistrant le fichier Excel au format CSV, séparateur : point-virgule), grâce à la fonction *read.csv2* :
+
+```{r}
+external_data = read.csv2("44variables_poulet9S_V1.csv")
+str(external_data)
+```
+
+La commande ci-dessus donne un aperçu des 44 variables contenues dans ces données supplémentaires. En particulier, la 1ère colonne est un identifiant des lignes, dont l'ordre doit être cohérent avec le numéro figurant dans l'identifiant des lignes du tableau *targets*. Pour s'en assurer, on commence par extraire ce numéro des chaînes de caractères *ArrayName* : 
+
+```{r}
+# Extracts the microarray number from ArrayName in targets
+ArrayNumber = substring(targets$ArrayName,first=3,last=4)
+ArrayNumber = as.numeric(ArrayNumber)
+```
+
+On peut maintenant vérifier l'exacte correspondance entre les identifiants des deux tableaux :
+
+```{r}
+# Checks the consistency with the numbers in the 1st column of external_data
+all(ArrayNumber==external_data[,1])
+```
+
+La valeur *TRUE* retournée par la commande ci-dessus nous assure d'une égalité terme à terme parfaite entre les vecteurs d'identifiants des tableaux *targets* et *external_data*.
+
+## Données d'expression de gènes
+
+La colonne *ArrayFile* du tableau *targets* contient les noms des fichiers dans la forme sous laquelle ils seront importés. 
+
+```{r}
+head(targets)    # Display the first 6 rows
+``` 
+
+La commande ci-dessus montre que cette colonne doit être modifiée de telle sorte que n'y figurent que les noms des fichiers, en supprimant la mention au chemin vers ces fichiers. Pour cela, on extrait des noms actuels des fichiers la sous-chaîne de caractères commençant au 13ème caractère :
+
+```{r}
+arrayfile = targets$ArrayFile
+targets$ArrayFile = substring(arrayfile,first=13,last=nchar(arrayfile))   
+```
+
+La fonction *read.maimages* du package *limma* permet à la fois d'importer les données d'expression et de contrôler leur qualité, selon des règles que l'utilisateur se donne via une fonction qui associe à chaque spot sur chaque microarray la valeur 0 ou 1, 0 si la mesure sur ce spot est de mauvaise qualité, 1 sinon. La fonction que l'on propose ci-après impose trois conditions pour qu'un 'spot' soit considéré comme donnant une mesure utile et de bonne qualité :
+
+* le 'spot' doit correspondre à un gène ;
+
+* l'expression du gène doit être bien supérieure au bruit de fond ;
+
+* l'image du spot doit être de bonne qualité (pas de signalement par Agilent, répartition spatiale uniforme des pixels)
+
+```{r}
+MyFiltering <- function(x)   {
+  okType = x$ControlType==0          # Probe=gene
+  okExpress = x$gIsWellAboveBG==1    # Gene expression >> background
+  okSpotQuality = (x$IsManualFlag ==0)&(x$gIsFeatNonUnifOL == 0) 
+  # No flag + no spatial aggregates
+  as.numeric(okType & okExpress & okSpotQuality)
+}
+```
+
+L'importation peut commencer avec la fonction *read.maimages*, en spécifiant bien qu'il s'agit de données d'hybridation mono-couleur (*green.only=TRUE*) et que les mesures d'expression et de bruit de fond sont des niveaux de couleurs médians (*columns=list(E = "gMedianSignal", Eb = "gBGMedianSignal")*) :
+
+```{r,results=FALSE}
+G = read.maimages(files = targets$ArrayFile, names=targets$ArrayName, 
+                  source="agilent",green.only=TRUE,wt.fun=MyFiltering, 
+                  columns=list(E = "gMedianSignal", Eb = "gBGMedianSignal"))
+```
+
+L'objet *G* créé par la commande ci-dessus est une liste à 6 composantes :
+
+```{r}
+typeof(G)   # G is a list 		
+names(G)		# G has 6 components 
+```
+
+Une de ces composantes, *G\$genes* est elle-même une liste donnant des informations spécifiquement sur les sondes (position sur la puce, type, etc.) :
+
+```{r}
+str(G$genes) # G$genes gives information on probes
+```
+
+Le tableau *G\$E* est une matrice dont les colonnes sont les profils complets d'expression sur chaque microarray :
+
+```{r}
+dim(G$E)     # G$E is the probe x microarray matrix of gene expressions 
+head(G$E[,1:10]) # Display the first 6 row and 10 columns
+```
+
+Dans un premier temps, on va restreindre les données aux spots porteurs d'une mesure d'expression d'un gène. Ils sont identifiables par le fait que *G\$genes\$ControlType* prend la valeur 0 :
+
+```{r}
+G = G[G$genes$ControlType==0,]
+dim(G) 
+```
+
+# Contrôle de la qualité des données d'expression
+
+La définition d'une mesure de bonne qualité sur un spot est donnée par la fonction de filtrage utilisée lors de la procédure d'importation des données. Le résultat prend la forme d'une matrice *G\$weights* dont les dimensions sont les mêmes que *G\$E* et dont l'élement (i,j) vaut 1 si le $i$ème spot sur la $j$ème microarray est de bonne qualité :
+```{r}
+dim(G$weights)    
+head(G$weights[,1:10])  # G$weights is a probe x microarray matrix of boolean values
+                        # 0 = bad spot, 1 = good spot    
+```
+
+## Qualité des microarrays
+
+La proportion des mesures de bonne qualité par microarray s'obtient facilement en calculant les moyennes par colonne des valeurs de la matrice *G\$weights* :
+
+```{r}
+arrayquality = colMeans(G$weights) # Proportions of good spots on each microarray 
+summary(arrayquality)
+```
+
+Les commandes ci-dessus révèlent que la proportion moyenne de mesures de bonne qualité par microarray est satisfaisante. Le graphique suivant permet de visualiser la répartition de ces proportions de mesures de bonne qualité :
+
+```{r}
+barplot(arrayquality,ylim=c(0,1), las=3,main="% de mesures de bonne qualité") 
+abline(h=0.7, col="red", lwd=2)
+```
+
+Le graphique ci-dessus met en évidence deux microarrays dont les proportions de mesures de bonne qualité sont très différentes de celles des autres microarrays. Cette différence en fait des microarrays suspectes, que l'on suggère de retirer de l'étude :
+
+```{r}
+out = which(arrayquality>0.9)           # Suspicious microarrays
+G = G[,-out]                            # Two microarays are removed
+dietgenotype = dietgenotype[-out]       # Removed from the design
+diet = diet[-out]                       # Removed from the diet variable 
+genotype = genotype[-out]               # Removed from the genotype variable
+targets = targets[-out,]                # Removed from targets
+external_data = external_data[-out,]    # Removed from external_data
+```
+
+## Qualité des sondes (gènes)
+
+De la même manière que précédemment, on peut calculer des proportions de mesures de bonne qualité par sonde, au sein de chaque lot expérimental (une lignée x un régime):
+
+```{r}
+genesqualityGBL = rowMeans(G$weights[,dietgenotype=="G_BL"])
+genesqualityMBL = rowMeans(G$weights[,dietgenotype=="M_BL"])
+genesqualityGHL = rowMeans(G$weights[,dietgenotype=="G_HL"])
+genesqualityMHL = rowMeans(G$weights[,dietgenotype=="M_HL"])
+```
+
+On propose de considérer qu'une sonde doit être conservée si, au moins dans un lot expérimental, la proportion de mesures de bonne qualité pour cette sonde dépasse 75%:  
+
+```{r} 
+okgenes = (genesqualityGBL>=0.75)|
+          (genesqualityMBL>=0.75)|
+          (genesqualityGHL>=0.75)|
+          (genesqualityMHL>=0.75)
+```
+
+Le vecteur *okgenes* créé ci dessus contient autant de valeurs booléennes que de sondes : *TRUE* si la sonde peut être conservée, *FALSE* sinon. Au total, le nombre de sondes à conserver est donné par la commande suivante :
+
+```{r}
+sum(okgenes)
+```
+
+Finalement, on réduit encore le tableau des données d'expression en ne conservant que les sondes ayant passé avec succès le contrôle qualité :
+
+```{r}
+G = G[okgenes,]
+dim(G)           # 46741 probes x 46 microarrays
+```
+
+# Normalisation des données
+
+On applique dans la suite plusieurs étapes de normalisation des données d'expression :
+
+* transformation logarithmique, 
+
+* gestion du bruit de fond, 
+
+* identification d'écarts de répartition entre microararys et correction,
+
+* gestion des réplicats. 
+
+## Transformation logarithmique
+
+Les données d'expression et de bruit de fond sont transformées par la fonction $log_2$ :
+```{r}
+G$E = log2(G$E)     # log-transformation of expression data
+G$Eb = log2(G$Eb)   # log-transformation of background values
+```
+
+## Gestion du bruit de fond
+
+Le graphique suivant permet de comparer les niveaux de bruit de fond par microarray :
+
+```{r}
+boxplot(G$Eb,main="Bruit de fond",names=targets$ArrayName,las=3)
+```
+
+Il montre des variations évidentes des niveaux du bruit de fond. De plus, ces variations ne semblent pas aléatoire, mais décrivant une tendance progressive à la baisse dans le temps, ce qui laisse supposer qu'elles résultent d'actions correctives des opérations ayant généré les données. Ces différences de bruit de fond peuvent remettre en cause l'équité d'une étude comparative des signaux mesurés par microarray (en effet, un signal est en réalité la somme d'une expression et d'un bruit de fond). 
+
+Toutefois les différences entre microarrays étant jugées faibles, on décide de faire l'hypothèse qu'elles n'ont pas d'impact sur la comparaison des signaux d'expression :
+
+```{r}
+G = backgroundCorrect(G, method="none") 
+# Another possibility is method="subtract"
+names(G) 
+# The background component has been removed. The matrix E is unchanged.
+```
+
+## Différences de répartition entre microarrays
+
+De la même manière que pour le bruit de fond, le graphique suivant décrit les variations de répartition des signaux d'expression par microarray :
+
+```{r}
+boxplot(G$E,main="Signal",names=targets$ArrayName,las=3)
+```
+
+Le graphique montre des différences assez faibles entre les signaux médians par microarray. On décide néanmoins de gommer ces différences en soustrayant à chaque mesure d'expression la valeur médiane de la microarray : 
+
+```{r}
+medians = apply(G$E,2,median)  # Medians for each microarray 
+G$E = sweep(G$E,MARGIN=2,FUN="-",STATS=medians)     
+   # Subtract medians for each microarray (column)
+apply(G$E,2,median)
+```
+
+L'impact de cette étape de la normalisation est visible sur le graphique comparant les répartitions des signaux d'expression par microarray :
+
+```{r}
+boxplot(G$E,main="Signal après normalisation",names=targets$ArrayName,las=3)
+```
+
+##  Gestion des réplicats
+
+Les sondes peuvent parfois être présentes en plusieurs exemplaires sur chaque microarray. Pour s'en rendre compte, on peut par exemple compter le nombre d'exemplaires de chaque sonde :
+
+```{r}
+head(G$genes$ProbeName)                  # First 6 probe names
+names_counts = table(G$genes$ProbeName)  # Numbers of probes for each probe name
+table(names_counts)                      # 681 probe names are replicated 
+```
+
+On constate donc que 681 sondes sont présentes en deux exemplaires. Pour ces sondes, on propose de remplacer les deux mesures par leur moyenne, en utilisant la fonction *avereps* : 
+
+```{r}
+G$E = avereps(G$E, ID=G$genes$ProbeName) # Replace replicated probes by average 
+dim(G$E)                          # Dimensions of the normalized expression data      
+```
+
+# Création des fichiers de données
+
+## Données d'expression
+
+On commence par exporter les données d'expression dans le format sondes x microarrays :
+
+```{r}
+write.table(G$E,"foie.txt")
+```
+
+## Données du dispositif expérimental
+
+De la même manière, on crée et on exporte des données sur les facteurs régime et génotype :
+
+```{r}
+covariates = data.frame(Diet=diet,Genotype=genotype)
+rownames(covariates) = targets$ArrayName
+str(covariates)
+
+write.table(covariates,"covariates.txt")
+```
+
+## Données supplémentaires
+
+Enfin, on exporte les données apportant des informations supplémentaires sur les poulets :
+
+```{r}
+write.table(external_data,"external.txt")
+```

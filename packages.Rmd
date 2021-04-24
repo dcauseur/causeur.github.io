@@ -1,0 +1,26 @@
+---
+title: "Packages"
+---
+
+```{r load_packages, message=FALSE, warning=FALSE, include=FALSE} 
+library(fontawesome)
+```
+
+All the R packages below are freely available on the [CRAN](https://cran.r-project.org/).
+
+ `r fa("laptop", fill = "forestgreen")` **FAMT** 
+
+Large-scale multiple testing based on a factor-adjusted estimation of the false discovery proportion (see Friguet et al., 2009 [JASA], [Causeur *et al*, 2011](./research/PDFs/FAMT_JSS.pdf) [JSS]) 
+
+ `r fa("laptop", fill = "forestgreen")` **FADA** 
+
+Factor-adjusted feature selection in high-dimensional linear discriminant analysis (see Perthame *et al*, 2015 [StatCo], [Emeline's webpage](https://emelineperthame.wordpress.com/fada/))
+
+ `r fa("laptop", fill = "forestgreen")` **ERP** 
+
+Functional ANOVA and signal identification for Event-Related Potentials study designs (see Causeur *et al*, 2012 [BRM], Sheu *et al*, 2016 [AoAS], Causeur *et al*, 2020 [Biometrics])
+
+ `r fa("laptop", fill = "forestgreen")` **bapred** 
+
+Batch Effect Removal (in Phenotype Prediction using Gene
+Data) (see Hornung *et al*, 2016 [BMC Bioinf.], Hornung *et al*, 2017 [Bioinf.]).

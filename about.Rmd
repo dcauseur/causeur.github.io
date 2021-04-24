@@ -1,7 +1,21 @@
 ---
-title: "About me"
+title: ""
 ---
 
-## Header
+&nbsp; &nbsp;
 
-Say more about you here.
+I'm **David Causeur**, full professor of statistics
+
+in the Department of Statistics and Computer Science,
+
+at [Institut Agro](https://www.agrocampus-ouest.fr/), Rennes, France.
+
+I'm a research fellow at [IRMAR, UMR 6625 CNRS](https://irmar.univ-rennes1.fr/)
+
+I'm the current President of the [French region](https://sfb.pages.math.cnrs.fr/asso/) of the [International Biometric Society](https://www.biometricsociety.org/home).
+
+For more check out my [resume](DC-CV.pdf).
+
+Contact me by [email].
+
+[email]: mailto:david.causeur@agrocampus-ouest.fr

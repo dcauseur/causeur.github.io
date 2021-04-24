@@ -1,0 +1,135 @@
+---
+title: Statistique et Aide à la Décision 2020 - Exercice - Session 1
+author: David Causeur
+date: ''
+output:
+  html_document:
+    df_print: paged
+  word_document: default
+  pdf_document:
+    fig_caption: yes
+    fig_height: 6.181
+    fig_width: 10
+    highlight: haddock
+    number_sections: yes
+header-includes:
+- \onehalfspacing
+- \usepackage{floatpag}
+- \floatpagestyle{empty}
+- \usepackage{wrapfig}
+- \usepackage{subcaption}
+- \usepackage{caption}
+- \usepackage[font=small,labelfont=bf]{caption}
+linestretch: 0.8
+geometry: margin = 0.8in
+fontsize: 12pt
+vignette: null
+---
+
+```{r, setup, include = FALSE}
+options(digits = 6, show.signif.stars = TRUE)
+knitr::opts_chunk$set(
+  tidy = FALSE,     # display code as typed
+  tidy.opts = list(blank = FALSE, width.cutoff = 60),
+  size = "small",   # slightly smaller font for code
+  comment = "",
+  fig.align = "center",
+  cache = TRUE,
+  message = FALSE,
+  warning = FALSE)
+```
+
+```{r functions, include=FALSE}
+# A function for captioning and referencing images
+fig <- local({
+    i <- 0
+    ref <- list()
+    list(
+        cap=function(refName, text) {
+            i <<- i + 1
+            ref[[refName]] <<- i
+            paste("Figure ", i, ": ", text, sep="")
+        },
+        ref=function(refName) {
+            ref[[refName]]
+        })
+})
+``` 
+  
+  **Nom Prénom :** David Causeur
+
+  \bigskip
+
+  Cet exercice porte sur l'étude de l'effet du mode d'alimentation (deux modes d'alimentation sont envisagés) sur la coloration du gras d'agneaux (voir Grenet, 1999). Dans cette étude, la coloration du gras d'un agneau est une évaluation binaire (le gras est coloré ou non). 
+   Le protocole expérimental prévoit la répartition de 80 agneaux en parts égales dans quatre lots expérimentaux, chacun correspondant à une combinaison d'un mode d'alimentation et d'un mode de logement (deux modes de logement possibles). 
+   Les nombres d'agneaux à gras colorés par lot expérimental sont présentés dans le tableau ci-dessous.   
+   
+```{r}
+lamb = data.frame(Alimentation=c("F1","F1","F2","F2"),
+                  Logement=c("H1","H2","H1","H2"),
+                  Coloration=c(10,12,15,16),Total=rep(20,times=4))
+lamb
+```
+
+__**Question 1**__
+
+*Quelles sont les variables réponse et explicative dans cette problématique ? Quelle est la nature, quantitative ou catégorielle, de ces variables ?*
+
+**Réponse** Voici ma réponse 
+
+Vous pouvez utiliser cet espace pour votre réponse. 
+Si vous souhaitez écrire des formules mathématiques, voici quelques exemples qui devraient suffire:
+
+* formule mathématique dans une phrase : $\sqrt{n}$, $n^{2}$, $Y_{ij}=\mu+\alpha_{i}+\varepsilon_{ij}$, $Y_{i\bullet}$, $\varepsilon \sim {\cal N} ( 0 ; 1)$ 
+
+* formule mise en avant séparément :
+\begin{eqnarray*}
+\text{log} \frac{\pi}{1-\pi} & = & \beta_{0} + \beta_{1} x
+\end{eqnarray*}
+
+__**Question 2**__
+
+*Donnez la table de contingence des deux variables mentionnées dans la question 1*
+
+**Réponse**
+
+__**Question 3**__
+
+*Donnez la table de contingence attendue sous l'hypothèse d'indépendance des deux variables mentionnées dans la question 1*
+
+**Réponse**
+
+__**Question 4**__
+
+*Calculez la statistique de test du $\chi^{2}$ de Pearson pour l'hypothèse nulle d'indépendance entre la coloration du gras et le mode d'alimentation.*
+
+**Réponse**
+
+__**Question 5**__
+
+*Quelle est la loi de la statistique de test de la question 4 sous l'hypothèse d'indépendance entre la coloration du gras et le mode d'alimentation ?*
+
+**Réponse**
+
+__**Question 6**__
+
+*Conclure au seuil de 5\% sur l'effet du mode d'alimentation sur la coloration du gras.*
+
+**Réponse**
+
+__**Question 7**__
+
+*Quel mode d'alimentation favorise la coloration du gras d'agneau ?*
+
+**Réponse**
+
+__**Question 8**
+
+*Quel est l'odds-ratio mesurant l'évolution du risque de coloration du gras entre le mode F$_{1}$ et le mode F$_{2}$*
+
+**Réponse**
+
+**Références**
+   
+   Grenet N. (1999) Etude de l'origine alimentaire et caractérisation des défauts de tenue et de couleur des gras d'agneaux. Rapport final du projet de recherche "Agriculture Demain" n° 95 G0109. Compte rendu n° 9993215
+  
