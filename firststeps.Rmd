@@ -14,20 +14,22 @@ The following documents are provided for each session:
 
 * a 1h-video lecture: a R tutorial whose slides, data and R script are provided;   
 * a PDF file containing a self-directed learning exercise; 
-* two PDF files with in-class exercises.   
+* two PDF files with in-class exercises.  
+
+2021-2022: all in-class activities (practical sessions) [here](https://agrocampusds.github.io/demarche_statistique/).
 
 ## Session 1
 
 *Objective*: Introducing the principles of statistical inference and especially hypothesis testing. What does the question "Is there an effect of this on that?" mean in practice? 
 
-* Video lecture with [slides](./teaching/PDFs/DS20Session1.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session1.R);   
+* [Video lecture](https://youtu.be/vHiRSJGq53M) with [slides](./teaching/PDFs/DS20Session1.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session1.R);   
 * Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation1.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/Scripts/ExerciceAutoEvaluation1.R); 
 
 ## Session 2
 
 *Objective*: Introducing the F-test for the group mean comparison.
 
-* Video lecture with [slides](./teaching/PDFs/DS20Session2.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session2.R);   
+* [Video lecture](https://youtu.be/cGkuIZM_-AE) with [slides](./teaching/PDFs/DS20Session2.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session2.R);   
 * Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation2.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation2.R);
 * In-class activities: session [1](./teaching/pdfs/ds20TD1.pdf) and [2](./teaching/pdfs/ds20TD2.pdf).
 
@@ -35,7 +37,7 @@ The following documents are provided for each session:
 
 *Objective*: Introducing the t-test for the two-group mean comparison, the power of a t-test, the Bonferroni correction for the multiplicity of simultaneous tests.
 
-* Video lecture with [slides](./teaching/PDFs/DS20Session3.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session3.R);   
+* [Video lecture](https://youtu.be/5GrlbSspeic) with [slides](./teaching/PDFs/DS20Session3.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session3.R);   
 * Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation3.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation3.R);
 * In-class activities: session [1](./teaching/pdfs/ds20TD3.pdf) and [2](./teaching/pdfs/ds20TD4.pdf).
 
@@ -43,7 +45,7 @@ The following documents are provided for each session:
 
 *Objective*: Introducing the paired t-test for the two-group mean comparison and the simple linear regression model.
 
-* Video lecture with [slides](./teaching/PDFs/DS20Session4.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session4.R);   
+* [Video lecture](https://youtu.be/frs5pacwPYQ) with [slides](./teaching/PDFs/DS20Session4.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session4.R);   
 * Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation4.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation4.R);
 * In-class activities: session [1](./teaching/pdfs/ds20TD5.pdf) and [2](./teaching/pdfs/ds20TD6.pdf).
 
@@ -51,7 +53,7 @@ The following documents are provided for each session:
 
 *Objective*: Introducing the F-test in the simple linear regression model and the prediction issue. The lecture ends with the implementation of an F-test to conclude about group differences between linear effects (an example of interaction effect).
 
-* Video lecture with [slides](./teaching/PDFs/DS20Session5.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session5.R);   
+* [Video lecture](https://youtu.be/XJbWDBvC4cg) with [slides](./teaching/PDFs/DS20Session5.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session5.R);   
 * Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation5.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation5.R);
 * In-class activities: session [1](./teaching/pdfs/ds20TD7.pdf) and [2](./teaching/pdfs/ds20TD8.pdf).
 
