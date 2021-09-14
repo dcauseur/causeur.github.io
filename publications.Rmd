@@ -4,13 +4,14 @@ title: "Publications"
 
 ## 2021
 
-1. Suwareh, O., Causeur, D., Jardin, J., Briard-Bion, V., Le Feunteun, S., Pézennec, S., Nau, F. (2021) Statistical modeling of in vitro pepsin specificity. Under revision in **Food Chemistry**.
+1. Comfort, W.E.,  Nunes  de  Andrade, B., Wingenbach, T.S.H, Causeur, D., Boggio, P.S. (2021). Implicit Responses in the Judgement of Attractiveness in Faces with Differing Levels of Makeup. **Psychology of Aesthetics, Creativity, and the Arts**.
+Advance online publication. https://doi.org/10.1037/aca0000408
 
-2. Hébert, F., Causeur, D. and Emily, M. (2021) Global Testing Approach for Gene-Based Gene-Gene Interaction. Under revision.
+2. Suwareh, O., Causeur, D., Jardin, J., Briard-Bion, V., Le Feunteun, S., Pézennec, S., Nau, F. (2021) Statistical modeling of in vitro pepsin specificity. **Food Chemistry**. 130098, Volume 362. https://doi.org/10.1016/j.foodchem.2021.130098.
 
-3. Hébert, F., Causeur, D. and Emily, M.. (2021) Adaptive Handling of Dependence in Regression Modeling. Under revision.
+3. Hébert, F., Causeur, D. and Emily, M. (2021) Global Testing Approach for Gene-Based Gene-Gene Interaction. Under revision.
 
-4. Comfort, W.E.,  Nunes  de  Andrade, B., Wingenbach, T.S.H, Causeur, D., Boggio, P.S. (2021). Implicit Responses in the Judgement of Attractiveness in Faces with Differing Levels of Makeup. To appear in **Psychology of Aesthetics, Creativity, and the Arts**.
+4. Hébert, F., Causeur, D. and Emily, M.. (2021) Adaptive Handling of Dependence in Regression Modeling. Under revision.
 
 5. Hébert, F., Causeur, D. and Emily, M. (2021), An adaptive decorrelation procedure for signal detection, **Computational Statistics & Data Analysis**, Vol. 153.
 
