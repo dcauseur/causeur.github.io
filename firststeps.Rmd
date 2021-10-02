@@ -45,7 +45,7 @@ The following documents are provided for each session:
 
 *Objective*: Introducing the paired t-test for the two-group mean comparison and the simple linear regression model.
 
-* [Video lecture](https://youtu.be/frs5pacwPYQ) with [slides](./teaching/PDFs/DS20Session4.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session4.R);   
+* [Video lecture](https://youtu.be/r6evkckZ1y8) with [slides](./teaching/PDFs/DS20Session4.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session4.R);   
 * Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation4.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation4.R);
 * In-class activities: session [1](./teaching/pdfs/ds20TD5.pdf) and [2](./teaching/pdfs/ds20TD6.pdf).
 
@@ -53,7 +53,7 @@ The following documents are provided for each session:
 
 *Objective*: Introducing the F-test in the simple linear regression model and the prediction issue. The lecture ends with the implementation of an F-test to conclude about group differences between linear effects (an example of interaction effect).
 
-* [Video lecture](https://youtu.be/XJbWDBvC4cg) with [slides](./teaching/PDFs/DS20Session5.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session5.R);   
+* [Video lecture](https://youtu.be/tV7H3tpJvsQ) with [slides](./teaching/PDFs/DS20Session5.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session5.R);   
 * Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation5.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation5.R);
 * In-class activities: session [1](./teaching/pdfs/ds20TD7.pdf) and [2](./teaching/pdfs/ds20TD8.pdf).
 
