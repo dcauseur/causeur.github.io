@@ -18,6 +18,8 @@ The following documents are provided for each session:
 
 2021-2022: all in-class activities (practical sessions) [here](https://agrocampusds.github.io/demarche_statistique/).
 
+2020 examination: [exam](./teaching/PDFs/DS20examSession1.pdf) 
+
 ## Session 1
 
 *Objective*: Introducing the principles of statistical inference and especially hypothesis testing. What does the question "Is there an effect of this on that?" mean in practice? 

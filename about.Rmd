@@ -19,3 +19,8 @@ For more check out my [resume](DC-CV.pdf).
 Contact me by [email].
 
 [email]: mailto:david.causeur@agrocampus-ouest.fr
+
+## Upcoming conferences
+
+* October 21-22, 2021 [Journées de Biostatistique 2021](http://gdr-stat-sante.math.cnrs.fr/spip/spip.php?rubrique61)
+* July 10-15, 2022, [31st International Biometric Conference](https://www.ibc2022.org/home)
