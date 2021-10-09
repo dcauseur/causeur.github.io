@@ -4,97 +4,99 @@ title: "Publications"
 
 ## 2021
 
-1. Comfort, W.E.,  Nunes  de  Andrade, B., Wingenbach, T.S.H, Causeur, D., Boggio, P.S. (2021). Implicit Responses in the Judgement of Attractiveness in Faces with Differing Levels of Makeup. **Psychology of Aesthetics, Creativity, and the Arts**.
+1. Hébert, F., Causeur, D. and Emily, M. (2021) Global Testing Approach for Gene-Based Gene-Gene Interaction. Under revision.
+
+2. Hébert, F., Causeur, D. and Emily, M.. (2021) Adaptive Handling of Dependence in Regression Modeling. Under revision.
+
+3. Blay, C., Haffray P., D’Ambrosio, J., Prado, E., Dechamp, N., Nazabal, V., Bugeon, J., Enez, F., Causeur, D., Eklouh-Molinier, C., Petit, V., Phocas, F., Corraze, G. and Dupont-Nivet, M. (2021) Genetic Architecture and Genomic Selection of Fatty Acid Composition Predicted by Raman Spectrocopy in Rainbow Trout. **BMC Genomics**. To appear.
+
+4. Comfort, W.E.,  Nunes  de  Andrade, B., Wingenbach, T.S.H, Causeur, D., Boggio, P.S. (2021). Implicit Responses in the Judgement of Attractiveness in Faces with Differing Levels of Makeup. **Psychology of Aesthetics, Creativity, and the Arts**.
 Advance online publication. https://doi.org/10.1037/aca0000408
 
-2. Suwareh, O., Causeur, D., Jardin, J., Briard-Bion, V., Le Feunteun, S., Pézennec, S., Nau, F. (2021) Statistical modeling of in vitro pepsin specificity. **Food Chemistry**. 130098, Volume 362. https://doi.org/10.1016/j.foodchem.2021.130098.
+5. Suwareh, O., Causeur, D., Jardin, J., Briard-Bion, V., Le Feunteun, S., Pézennec, S., Nau, F. (2021) Statistical modeling of in vitro pepsin specificity. **Food Chemistry**. 130098, Volume 362. https://doi.org/10.1016/j.foodchem.2021.130098.
 
-3. Hébert, F., Causeur, D. and Emily, M. (2021) Global Testing Approach for Gene-Based Gene-Gene Interaction. Under revision.
-
-4. Hébert, F., Causeur, D. and Emily, M.. (2021) Adaptive Handling of Dependence in Regression Modeling. Under revision.
-
-5. Hébert, F., Causeur, D. and Emily, M. (2021), An adaptive decorrelation procedure for signal detection, **Computational Statistics & Data Analysis**, Vol. 153.
+6. Hébert, F., Causeur, D. and Emily, M. (2021), An adaptive decorrelation procedure for signal detection, **Computational Statistics & Data Analysis**, Vol. 153.
 
 ## 2020
 
-6. Causeur, D., Sheu, C.-F., Perthame, E. and Rufini, F. (2020). A functional generalized F-test for signal detection with applications to event-related potentials significance analysis. **Biometrics**. 246-256.
+7. Causeur, D., Sheu, C.-F., Perthame, E. and Rufini, F. (2020). A functional generalized F-test for signal detection with applications to event-related potentials significance analysis. **Biometrics**. 246-256.
 
-7. Aïchi, H., Fouad, Y., Causeur, D., and Walter, C. (2020) Organic Carbon and Total Iron Effect on Soil Vis-SWNIR Spectra and Quantification of Their Contents Using PLS R Models. **Communications in Soil Science and Plant Analysis**, 51:9, 1253-1267.
+8. Aïchi, H., Fouad, Y., Causeur, D., and Walter, C. (2020) Organic Carbon and Total Iron Effect on Soil Vis-SWNIR Spectra and Quantification of Their Contents Using PLS R Models. **Communications in Soil Science and Plant Analysis**, 51:9, 1253-1267.
 
 ## 2018
 
-8. Désert, C., Baeza, E., Aite, M., Boutin, M., Le Cam, A., Montfort, J., Houée-Bigot, M., Blum, Y., Roux, P.-F., Hennequet-Antier, C., Berri, C., Metayer-Coustard, S., Collin, A., Allais, S., Lebihan, E., Causeur, D., Gondret, F., Duclos, M., Lagarrigue, S. (2018). Multi-tissue transcriptomic study reveals the main role of liver in the chicken adaptive response to a switch in dietary energy source through the transcriptional regulation of lipogenesis. **BMC Genomics**. 19(1):187.
+9. Désert, C., Baeza, E., Aite, M., Boutin, M., Le Cam, A., Montfort, J., Houée-Bigot, M., Blum, Y., Roux, P.-F., Hennequet-Antier, C., Berri, C., Metayer-Coustard, S., Collin, A., Allais, S., Lebihan, E., Causeur, D., Gondret, F., Duclos, M., Lagarrigue, S. (2018). Multi-tissue transcriptomic study reveals the main role of liver in the chicken adaptive response to a switch in dietary energy source through the transcriptional regulation of lipogenesis. **BMC Genomics**. 19(1):187.
 
 ## 2017
     
-9. Gondret, F., Vincent, A., Houée-Bigot, M., Siegel, A., Lagarrigue, S., Causeur, D., Gilbert, H. and Louveau, I. (2017). A transcriptome multi-tissue analysis identifies biological pathways and genes associated with variations in feed efficiency of growing pigs. **BMC Genomics**. 18:244.
+10. Gondret, F., Vincent, A., Houée-Bigot, M., Siegel, A., Lagarrigue, S., Causeur, D., Gilbert, H. and Louveau, I. (2017). A transcriptome multi-tissue analysis identifies biological pathways and genes associated with variations in feed efficiency of growing pigs. **BMC Genomics**. 18:244.
     
-10. Hornung, R., Causeur, D., Bernau, C. and Boulesteix, A.-L. (2017). Improving cross-study prediction through addon batch effect adjustment and addon normalization. **Bioinformatics**. 33(3). 397-404.
+11. Hornung, R., Causeur, D., Bernau, C. and Boulesteix, A.-L. (2017). Improving cross-study prediction through addon batch effect adjustment and addon normalization. **Bioinformatics**. 33(3). 397-404.
 
 ## 2016
 
-11. Blum, Y., Houée-Bigot, M., Causeur, D. (2016). Sparse factor model for co-expression networks with an application using prior biological knowledge. **Statistical Applications in Genetics and Molecular Biology**. 15(3), 253-272.
+12. Blum, Y., Houée-Bigot, M., Causeur, D. (2016). Sparse factor model for co-expression networks with an application using prior biological knowledge. **Statistical Applications in Genetics and Molecular Biology**. 15(3), 253-272.
 
-12. Hornung, R. Boulesteix, A.-L. and Causeur, D. (2016). Combining location-and scale batch effect adjustment with data cleaning by latent factor adjustment. **BMC Bioinformatics**. 12, 17:27.
+13. Hornung, R. Boulesteix, A.-L. and Causeur, D. (2016). Combining location-and scale batch effect adjustment with data cleaning by latent factor adjustment. **BMC Bioinformatics**. 12, 17:27.
     
-13. Gondret, F., Vincent, A., Houée-Bigot, M., Siegel, A., Lagarrigue, S., Louveau, I. and Causeur, D. (2016). Molecular alterations induced by a high-fat high-fiber diet in porcine adipose tissues: variations according to the anatomical fat location. **BMC Genomics.** 18, 17:120.
+14. Gondret, F., Vincent, A., Houée-Bigot, M., Siegel, A., Lagarrigue, S., Louveau, I. and Causeur, D. (2016). Molecular alterations induced by a high-fat high-fiber diet in porcine adipose tissues: variations according to the anatomical fat location. **BMC Genomics.** 18, 17:120.
 
-14. Nyemb-Diop, K., Causeur, D., Jardin, J., Briard-Bion V., Guérin-Dubiard, C., Rutherfurd, S.-M., Dupont and nau, F. (2016). Investigating the impact of egg white gel structure on peptide kinetics profile during in vitro digestion. **Food Research International**. 88(B). 302-309.
+15. Nyemb-Diop, K., Causeur, D., Jardin, J., Briard-Bion V., Guérin-Dubiard, C., Rutherfurd, S.-M., Dupont and nau, F. (2016). Investigating the impact of egg white gel structure on peptide kinetics profile during in vitro digestion. **Food Research International**. 88(B). 302-309.
   
-15. Sheu, C-.F., Perthame, E., Lee, Y-.S., Causeur, D. (2016). Accounting for time dependence in large-scale multiple testing of event-related potential data. **Annals of Applied Statistics**. 10(1), 219-245.
+16. Sheu, C-.F., Perthame, E., Lee, Y-.S., Causeur, D. (2016). Accounting for time dependence in large-scale multiple testing of event-related potential data. **Annals of Applied Statistics**. 10(1), 219-245.
 
 ## Before 2016
 
-16. Perthame, E., Friguet, C. and Causeur, D. (2015) Stability of feature selection in classification issues for high-dimensional correlated data. **Statistics and Computing**. DOI 10.1007/s11222-015-9569-2. pp 1-14.
+17. Perthame, E., Friguet, C. and Causeur, D. (2015) Stability of feature selection in classification issues for high-dimensional correlated data. **Statistics and Computing**. DOI 10.1007/s11222-015-9569-2. pp 1-14.
 
-17. Gelein, B., Haziza, D. and Causeur, D. (2014) Preserving relationships between variables with MIVQUE based imputation for missing survey data. **Journal of Multivariate Analysis**. 131, 197–208
+18. Gelein, B., Haziza, D. and Causeur, D. (2014) Preserving relationships between variables with MIVQUE based imputation for missing survey data. **Journal of Multivariate Analysis**. 131, 197–208
 
-18. Nyemb, K., Jardin, J., Causeur, D., Guérin-Dubiard, C., Dupont, D., Rutherfurd, S.M. and Nau, F. (2014) Investigating the impact of ovalbumin aggregate morphology on in vitro ovalbumin digestion using label-free quantitative peptidomics and multivariate data analysis. **Food Research International**, 63, 192-202.
+19. Nyemb, K., Jardin, J., Causeur, D., Guérin-Dubiard, C., Dupont, D., Rutherfurd, S.M. and Nau, F. (2014) Investigating the impact of ovalbumin aggregate morphology on in vitro ovalbumin digestion using label-free quantitative peptidomics and multivariate data analysis. **Food Research International**, 63, 192-202.
 
-19. Causeur, D., Chu, M.-C., Hsieh, S. and Sheu, C.-F. (2012) A factor-adjusted multiple testing procedure for ERP data analysis. **Behavior Research Methods**. 44, 635-643.
+20. Causeur, D., Chu, M.-C., Hsieh, S. and Sheu, C.-F. (2012) A factor-adjusted multiple testing procedure for ERP data analysis. **Behavior Research Methods**. 44, 635-643.
     
-20. Mach, N., Blum, Y., Bannink, A., Causeur, D., Houée-Bigot, M., Lagarrigue, S. and Smits, M.-A. (2012) Pleiotropic effects of polymorphism of the gene diacylglycerol-O-transferase 1 (DGAT1) in the mammary gland tissue of dairy cows. **Journal of Dairy Science**. 95 (9), 4989-5000.
+21. Mach, N., Blum, Y., Bannink, A., Causeur, D., Houée-Bigot, M., Lagarrigue, S. and Smits, M.-A. (2012) Pleiotropic effects of polymorphism of the gene diacylglycerol-O-transferase 1 (DGAT1) in the mammary gland tissue of dairy cows. **Journal of Dairy Science**. 95 (9), 4989-5000.
     
-21. Blum, Y., Le Mignon, G., Causeur, D., Filangi, O. Désert, C. Demeure, O. Le Roy, P. and Lagarrigue, S. (2011) Complex trait subtypes identification using transcriptome profiling reveals an interaction between two QTL affecting adiposity in chicken. **BMC Genomics**. 12:567.  
+22. Blum, Y., Le Mignon, G., Causeur, D., Filangi, O. Désert, C. Demeure, O. Le Roy, P. and Lagarrigue, S. (2011) Complex trait subtypes identification using transcriptome profiling reveals an interaction between two QTL affecting adiposity in chicken. **BMC Genomics**. 12:567.  
     
-22. Causeur, D., Friguet, C., Houée-Bigot, M. and Kloareg, M. (2011). Factor Analysis for Multiple Testing (FAMT): An R package for Large-Scale Significance Testing Under Dependence. **Journal of Statistical Software**. 40 (14), 1-19.
+23. Causeur, D., Friguet, C., Houée-Bigot, M. and Kloareg, M. (2011). Factor Analysis for Multiple Testing (FAMT): An R package for Large-Scale Significance Testing Under Dependence. **Journal of Statistical Software**. 40 (14), 1-19.
 
-23. Friguet, C. and Causeur, D. (2010). Estimation of the proportion of true null hyptheses in high-dimensional data under dependence. **Computational Statistics and Data Analysis**, 55 (9), 2665-2676
+24. Friguet, C. and Causeur, D. (2010). Estimation of the proportion of true null hyptheses in high-dimensional data under dependence. **Computational Statistics and Data Analysis**, 55 (9), 2665-2676
 
-24. Blum, Y., Le Mignon, G., Lagarrigue, S. and Causeur, D. (2010). A factor model to analyse heterogeneity in gene expressions. BMC Bioinformatics. **BMC Bioinformatics**. 11:368.
+25. Blum, Y., Le Mignon, G., Lagarrigue, S. and Causeur, D. (2010). A factor model to analyse heterogeneity in gene expressions. BMC Bioinformatics. **BMC Bioinformatics**. 11:368.
     
-25. Caffier, V., Didelot, F., Pumo, B., Causeur, D., Durel, C.E. and Parisi, L. (2010). Aggressiveness of eight Venturia inaequalis isolates virulent or avirulent to the major resistance gene Rvi6 on a non-Rvi6 apple cultivar. **Plant pathology**. 59(6) 1072-1080.
+26. Caffier, V., Didelot, F., Pumo, B., Causeur, D., Durel, C.E. and Parisi, L. (2010). Aggressiveness of eight Venturia inaequalis isolates virulent or avirulent to the major resistance gene Rvi6 on a non-Rvi6 apple cultivar. **Plant pathology**. 59(6) 1072-1080.
     
-26. Friguet, C., Kloareg, M. and Causeur, D. (2009). A factor model approach to multiple testing under dependence. **Journal of the American Statistical Association**. 104 (488), 1406-1415.
+27. Friguet, C., Kloareg, M. and Causeur, D. (2009). A factor model approach to multiple testing under dependence. **Journal of the American Statistical Association**. 104 (488), 1406-1415.
     
-27. Causeur, D., Kloareg, M. and Friguet, C. (2009). Control of the FWER in multiple testing under dependence. **Communications in Statistics - Theory and Methods**.  Special issue dedicated to Pr. Shelley Zacks. 38 (16, 17) 2733-2747.
+28. Causeur, D., Kloareg, M. and Friguet, C. (2009). Control of the FWER in multiple testing under dependence. **Communications in Statistics - Theory and Methods**.  Special issue dedicated to Pr. Shelley Zacks. 38 (16, 17) 2733-2747.
 
-28. Ablain, W., Hallier Soulier, S., Causeur, D., Gautier, M. and Baron, F. (2009) A simple and rapid method for the disruption of Staphylococcus aureus, optimized for quantitative reverse transcriptase applications: Application for the examination of Camembert cheese. **Dairy Science and Technology**. DOI: 10.1051/dst/2008034
+29. Ablain, W., Hallier Soulier, S., Causeur, D., Gautier, M. and Baron, F. (2009) A simple and rapid method for the disruption of Staphylococcus aureus, optimized for quantitative reverse transcriptase applications: Application for the examination of Camembert cheese. **Dairy Science and Technology**. DOI: 10.1051/dst/2008034
 
-29. Cutullic, E., Delaby, L., Causeur, D., Michel, G. and Disenhaus, C. (2009) Hierarchy of factors affecting behavioural signs used for oestrus detection of Holstein and Normande dairy cows in a seasonal calving system. **Animal Reproduction Science**. 113 (1-4), 22-37
+30. Cutullic, E., Delaby, L., Causeur, D., Michel, G. and Disenhaus, C. (2009) Hierarchy of factors affecting behavioural signs used for oestrus detection of Holstein and Normande dairy cows in a seasonal calving system. **Animal Reproduction Science**. 113 (1-4), 22-37
 
-30. Kloareg, M. and Causeur, D. (2009). Double-sampling designs to reduce the non-discovery rate. Application to microarray data. **Journal of Data Science**. 7(2). 219-234.
+31. Kloareg, M. and Causeur, D. (2009). Double-sampling designs to reduce the non-discovery rate. Application to microarray data. **Journal of Data Science**. 7(2). 219-234.
     
-31. Causeur, D. and Husson, F. (2008). Asymptotic power of double-sampling tests for general linear hypothesis. **Statistics**. 42, 2. 115-125.
+32. Causeur, D. and Husson, F. (2008). Asymptotic power of double-sampling tests for general linear hypothesis. **Statistics**. 42, 2. 115-125.
     
-32. Kloareg, M. and Causeur, D. (2007). Improving Type-II error rates of multiple testing procedures by use of auxiliary variables. application to microrray data. in **Recent advances in Stochastic Modelling and data Analysis**, Ed. Christos Skiadas, World Scientific Publishing, Co Pte Ldt.
+33. Kloareg, M. and Causeur, D. (2007). Improving Type-II error rates of multiple testing procedures by use of auxiliary variables. application to microrray data. in **Recent advances in Stochastic Modelling and data Analysis**, Ed. Christos Skiadas, World Scientific Publishing, Co Pte Ldt.
 
-33. Causeur, D. (2006). MIVQUE and maximum likelihood estimation for multivariate linear models with incomplete observations. **Sankhya**. 68 (3), 408-434.
+34. Causeur, D. (2006). MIVQUE and maximum likelihood estimation for multivariate linear models with incomplete observations. **Sankhya**. 68 (3), 408-434.
 
-34. Causeur, D. (2005). Optimal sampling from concomitant variables for regression problems. **Journal of Statistical planning and Inference**. 128, 289-301.
+35. Causeur, D. (2005). Optimal sampling from concomitant variables for regression problems. **Journal of Statistical planning and Inference**. 128, 289-301.
 
-35. Causeur, D. , Dhorne, T. and Antoni, A. (2005). A two-way analysis of variance model with positive definite interaction for homologous factors. **Journal of Multivariate Analysis**. 95 (2), 431-448.
+36. Causeur, D. , Dhorne, T. and Antoni, A. (2005). A two-way analysis of variance model with positive definite interaction for homologous factors. **Journal of Multivariate Analysis**. 95 (2), 431-448.
 
-36. Causeur, D. and Husson, F. (2005). A 2-dimensional extension of the Bradley-Terry model for paired comparisons. **Journal of  Statistical planning and Inference**. 135 , 245-259.
+37. Causeur, D. and Husson, F. (2005). A 2-dimensional extension of the Bradley-Terry model for paired comparisons. **Journal of  Statistical planning and Inference**. 135 , 245-259.
     
-37. Ledauphin, S., Vigneau, E. and Causeur, D. (2005). Functional approach for the analysis of Time Intensity curves using B-splines. **Journal of Sensory Studies**.  20 (4), 285-300.
+38. Ledauphin, S., Vigneau, E. and Causeur, D. (2005). Functional approach for the analysis of Time Intensity curves using B-splines. **Journal of Sensory Studies**.  20 (4), 285-300.
     
-38. Causeur, D. and Dhorne, T. (2003). Linear Regression Models under Conditional Independence Restrictions. **Scandinavian Journal of Statistics**. 30 (3), 637-650.
+39. Causeur, D. and Dhorne, T. (2003). Linear Regression Models under Conditional Independence Restrictions. **Scandinavian Journal of Statistics**. 30 (3), 637-650.
     
-39. Kamp, J.F., Marin-Mamellet, C., Forzy, J.F. and Causeur, D. (2001). HMI Aspects of the Usability of Internet Services with  an In-car Terminal on a Driving Simulator. **IATSS Research**.  25 (2), 29-40.
+40. Kamp, J.F., Marin-Mamellet, C., Forzy, J.F. and Causeur, D. (2001). HMI Aspects of the Usability of Internet Services with  an In-car Terminal on a Driving Simulator. **IATSS Research**.  25 (2), 29-40.
     
-40. Causeur, D. (1999). Exact distribution of the regression estimator in double-sampling. **Statistics**,  32 , 297-315.
+41. Causeur, D. (1999). Exact distribution of the regression estimator in double-sampling. **Statistics**,  32 , 297-315.
     
-41. Causeur, D. (1998). Plan d'échantillonnage en plusieurs phases pour la réduction des coûts expérimentaux en régression linéaire.  **Revue de Statistique Appliquée**. XLVI (4), 59-73.
+42. Causeur, D. (1998). Plan d'échantillonnage en plusieurs phases pour la réduction des coûts expérimentaux en régression linéaire.  **Revue de Statistique Appliquée**. XLVI (4), 59-73.
     
-42. Causeur, D. and Dhorne, T. (1998). Finite-sample properties of a multivariate extension of double-regression. **Biometrics**. 54 (4), 1591-1601.
+43. Causeur, D. and Dhorne, T. (1998). Finite-sample properties of a multivariate extension of double-regression. **Biometrics**. 54 (4), 1591-1601.
