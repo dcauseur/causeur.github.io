@@ -20,6 +20,8 @@ The following documents are provided for each session:
 
 2020 examination: [exam](./teaching/PDFs/DS20examSession1.pdf) 
 
+Assignments: see instructions [here](./teaching/PDFs/evaluation.pdf).
+
 ## Session 1
 
 *Objective*: Introducing the principles of statistical inference and especially hypothesis testing. What does the question "Is there an effect of this on that?" mean in practice? 
