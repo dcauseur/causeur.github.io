@@ -1,0 +1,260 @@
+---
+title: "Analyse des données avec R"
+author: ''
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document: default
+  pdf_document: default
+subtitle: "Partie II : tester une hypothèse"
+fontsize: 10pt
+---
+
+
+```{r knitr_init, echo = FALSE, cache = FALSE}
+## Global options
+options(digits = 3, show.signif.stars = FALSE, width = 50)
+options(knitr.kable.NA = "")
+knitr::opts_chunk$set(echo = TRUE,
+                      cache = TRUE,
+                      prompt = FALSE,
+                      tidy = FALSE,
+                      comment = NA,
+                      message = FALSE,
+                      warning = FALSE,
+                      fig.align = 'center',
+                      fig.width = 7,
+                      fig.height = 4.33,
+                      size = "tiny")
+```
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+Install_and_Load <- function(packages) {
+  k <- packages[!(packages %in% installed.packages()[, "Package"])];
+  if(length(k)) {
+    install.packages(k, repos = "https://cran.rstudio.com/");
+  }
+  for(package_name in packages) {
+    library(package_name, character.only = TRUE, quietly = TRUE);
+  }
+}
+Install_and_Load(c("MASS","tidyverse","kableExtra","rstatix",
+                   "emmeans","ggpubr","car","nnet","groupdata2",
+                   "pls","glmnet","leaps","boot","RcmdrMisc",
+                   "wesanderson"))
+```
+```{r,echo=FALSE}
+fruit <- read.table(file="maturity.txt",stringsAsFactors=TRUE)
+fruit <- fruit %>% rename(Poids = Weight, 
+                          Variete = Variety,
+                          Maturite = Maturity)
+fruit <- fruit %>% 
+  mutate(Poids=1000*Poids,Diam=1000*Diam)
+fruit <- fruit %>% 
+  mutate(Maturite=factor(Maturite))
+fruit <- fruit %>% 
+  mutate(Maturite=recode_factor(Maturite,
+                              `1`="Faible",
+                              `2`="Moyenne",
+                              `3`="Forte",.ordered=TRUE))
+```
+
+# Effet groupe
+
+## Exemple
+
+**Les poids moyens des fruits par variété sont-il différents ?**
+
+```{r, echo = TRUE}
+tab <- fruit %>% group_by(Variete) %>% summarise(Mean=mean(Poids))
+tab %>% mutate(Mean=round(Mean,digits=2)) %>% t() %>% 
+  kbl(caption="Résumé statistique de Poids") %>%
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+## Modèle d'analyse de la variance à un facteur
+
+**Ajustement du modèle :**
+```{r, echo = TRUE}
+mod1 <- lm(Poids~Variete,data=fruit)
+coef(mod1)
+```
+
+## Modèle nul
+
+```{r, echo = TRUE}
+mod0 <- lm(Poids~1,data=fruit)
+coef(mod0)
+```
+
+## Evaluation de l'effet groupe ; rapport signal/bruit
+
+```{r, echo = TRUE, fig.height = 3.5}
+fruit %>% ggplot() + geom_boxplot(aes(x=Variete,y=Poids),fill="orange") +
+  ggtitle("Répartition des poids par variété") + xlab("Variété") + ylab("Poids")
+```
+
+## Test de Fisher
+
+**Comparaison des modeles nul et alternatif**
+
+```{r, echo = TRUE}
+anova(mod0,mod1) %>% kbl(caption="Effet Variété sur le poids") %>%
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+## Test de Student 
+
+```{r, echo = TRUE}
+fruit2 <- fruit %>% filter(Variete%in%c("A","B")) %>% droplevels()
+t.test(Poids~Variete,data=fruit2,var.equal=TRUE)
+```
+
+## Puissance du dispositif experimental
+
+```{r, echo = TRUE}
+mod = lm(Poids~Variete,data=fruit2)
+sigma = summary(mod)$sigma
+power.t.test(delta=2,n=100,sd=sigma,sig.level=0.05)$power
+```
+
+## Comparaisons par paires
+
+```{r}
+comp <- emmeans(mod1, ~ Variete)
+pairs(comp,adjust="bonf") %>% kbl(caption="Comparaisons par paires") %>%
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+# Effet linéaire
+
+## Exemple
+
+```{r, echo = TRUE, fig.height = 3.5}
+fruit %>% ggplot() + aes(x=L,y=Diam) + 
+  geom_point() + geom_smooth(method='lm') +
+  ggtitle("Relation entre diamètre et clarté") + xlab("L") + ylab("Diamètre")
+```
+
+## Corrélation
+
+```{r, echo = TRUE}
+cor(fruit$L,fruit$Diam)
+```
+
+## Modèle de régression linéaire
+
+**Estimation de la droite de régression**
+```{r, echo = TRUE}
+mod1 <- lm(Diam~L,data=fruit)
+coef(mod1)
+```
+
+**Valeurs ajustées de la variable à expliquer**
+```{r, echo = TRUE}
+fruit$Diam_fit <- fitted(mod1)
+fruit %>% slice(n=1) %>% kbl() %>% kable_paper(bootstrap_options = "striped")
+```
+
+## Evaluation (graphique) de l'ajustement 
+
+```{r, echo = TRUE, fig.height = 3.5}
+fruit %>% ggplot(aes(x=Diam,y=Diam_fit)) + geom_point() + geom_smooth(method='lm') +
+  ggtitle("Diamètres ajustés et observés") + geom_abline(intercept=0,slope=1) +
+  xlab("Diamètres observés") + ylab("Diamètres ajustés") + ylim(34,54)
+```
+
+## Evaluation (numérique) de l'ajustement 
+
+```{r, echo = TRUE}
+summary(mod1)$r.squared
+cor(fruit$Diam,fruit$Diam_fit)^2
+var(fruit$Diam_fit)/var(fruit$Diam)
+```
+
+## Test de Fisher
+
+**Comparaison des modèles nul et alternatif**
+
+```{r, echo = TRUE}
+mod0 <- lm(Diam~1,data=fruit)
+anova(mod0,mod1) %>% kbl(caption="Lien entre Clarté et Diamètre") %>%
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+## Prédiction
+
+**Intervalle de confiance (95%) d'ajustement**
+```{r, echo = TRUE}
+new_fruit <- data.frame(L=c(40,60))
+predict(mod1,newdata=new_fruit,interval="confidence")
+```
+
+**Intervalle de confiance (95%) de prédiction**
+```{r, echo = TRUE}
+predict(mod1,newdata=new_fruit,interval="prediction")
+```
+
+## Effet linéaire par groupes
+
+```{r, echo = TRUE}
+mod2 <- lm(Diam~L*Variete,data=fruit)
+coef(mod2)
+```
+
+## Equation unique ou équations par groupe ?
+
+**Test de Fisher**
+```{r, echo = TRUE}
+anova(mod1,mod2) %>% kbl() %>%
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+# Caractérisation de groupes
+
+## Modèle pour variable catégorielle
+
+**La maturité dépend-elle de la clarté ?**
+
+```{r,echo=TRUE,warning=TRUE}
+mod = lm(Maturite~L,data=fruit)
+coef(mod)
+```
+
+## Modèle de régression logistique multinomiale
+
+**Modèle de régression pour variable catégorielle**
+```{r,echo=TRUE}
+mod = multinom(Maturite~L,data=fruit,trace=FALSE)
+coef(mod)
+```
+
+## Probabilités d'appartenance à un groupe (1/2)
+
+```{r,echo=TRUE,fig.height=3}
+seq_L <- seq(from=38,to=82,length=1000)
+probas <- predict(mod,newdata=data.frame(L=seq_L),type="probs")
+probas <- bind_cols(probas,L=seq_L)
+probas %>% ggplot(aes(x=L,y=Forte)) + ylim(0,0.5) + geom_line() + xlab("L") + 
+  ggtitle("Probabilité d'être de maturité forte") + ylab("Probabilité")
+```
+
+## Probabilités d'appartenance à un groupe (2/2)
+
+```{r,echo=TRUE,fig.height=3}
+probas <- probas %>% gather(Maturite,Proba,1:3) %>%
+  mutate(Maturite=factor(Maturite,c("Faible","Moyenne","Forte")))
+probas %>% ggplot(aes(x=L,y=Proba)) + geom_line() + ylab("Probabilité") +
+  facet_grid(.~Maturite) + ggtitle("Relation entre maturité et L") + theme_bw()
+```
+
+## Effet sur la probabilité d'appartenir à un groupe
+
+**Test d'analyse de la déviance**
+```{r,echo=TRUE}
+mod0 = multinom(Maturite~1,data=fruit,trace=FALSE)
+mod1 = multinom(Maturite~L,data=fruit,trace=FALSE)
+anova(mod0,mod1,test="Chisq") %>% kbl() %>%
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+

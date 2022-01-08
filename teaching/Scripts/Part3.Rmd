@@ -1,0 +1,431 @@
+---
+title: "Analyse des données avec R"
+author: ''
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document: default
+  pdf_document: default
+subtitle: "Partie III : prédire"
+fontsize: 10pt
+---
+
+
+```{r knitr_init, echo = FALSE, cache = FALSE}
+## Global options
+options(digits = 3, show.signif.stars = FALSE, width = 80)
+options(knitr.kable.NA = "")
+knitr::opts_chunk$set(echo = TRUE,
+                      cache = TRUE,
+                      prompt = FALSE,
+                      tidy = FALSE,
+                      comment = NA,
+                      message = FALSE,
+                      warning = FALSE,
+                      fig.align = 'center',
+                      fig.width = 7,
+                      fig.height = 4.33,
+                      size = "tiny")
+```
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+Install_and_Load <- function(packages) {
+  k <- packages[!(packages %in% installed.packages()[, "Package"])];
+  if(length(k)) {
+    install.packages(k, repos = "https://cran.rstudio.com/");
+  }
+  for(package_name in packages) {
+    library(package_name, character.only = TRUE, quietly = TRUE);
+  }
+}
+Install_and_Load(c("MASS","tidyverse","kableExtra","rstatix",
+                   "emmeans","ggpubr","car","nnet","groupdata2",
+                   "pls","glmnet","leaps","boot","RcmdrMisc",
+                   "wesanderson"))
+```
+
+## Importation de données
+
+```{r,echo=TRUE}
+fruit <- read.table(file="maturity_nirs.txt",header=TRUE,stringsAsFactors=TRUE)
+fruit <- fruit %>% select(1:10,303:304) %>%mutate(Poids=1000*Poids,Diam=1000*Diam)
+fruit <- fruit %>% mutate(Maturite=factor(Maturite))
+fruit <- fruit %>% mutate(Maturite=recode_factor(Maturite,
+  `1`="Faible",`2`="Moyenne",`3`="Forte",.ordered=TRUE))
+colnames(fruit)
+```
+
+# Comparaison de modèles
+
+## Exemple : prédiction du taux de sucre d'un fruit
+
+**Modèle de régression linéaire multiple**
+```{r,echo=TRUE}
+mod <- lm(Saccharose~Poids+Diam+L+a+b,data=fruit)
+coef(mod)
+```
+
+**Qualité d'ajustement**
+```{r,echo=TRUE}
+summary(mod)$r.squared
+```
+
+## Un des effets est-il significatif ?
+
+**Test de Fisher**
+```{r,echo=TRUE}
+mod0 = lm(Saccharose~1,data=fruit)
+anova(mod0,mod) %>% kbl(caption="Analyse de la variance") %>%
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+## Confusion d'effets
+
+**Quels sont les effets à retenir ?**
+```{r,echo=TRUE}
+car::Anova(mod) %>% kbl() %>%
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+# Sélection des effets
+
+## Choix du meilleur modele
+
+**Quel choix de variables explicatives ?**
+```{r,echo=TRUE}
+bestmod <- regsubsets(Saccharose~Poids+Diam+L+a+b,data=fruit)
+tidy(bestmod) %>% dplyr::select(1:7) %>% 
+  kbl(caption="Recherche exhaustive du meilleur modèle") %>%
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+## Est-ce vraiment le meilleur choix ?
+
+**Performance de prédiction : validation croisée**
+```{r,echo=TRUE}
+mod <- glm(Saccharose~Poids+Diam+L+a+b,data=fruit)
+msep <- cv.glm(data=fruit,glmfit=mod,K=10)$delta
+sqrt(msep)
+```
+
+## Qualité d'ajustement  
+
+```{r,echo=TRUE}
+tidy(bestmod) %>% dplyr::select(c(1:6,9)) %>% 
+  kbl(caption="Recherche exhaustive du meilleur modèle") %>%
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+## Sélection pas à pas 
+
+**Comment prédire au mieux la maturité ?**
+```{r,echo=TRUE}
+mod <- multinom(Maturite~Poids+Diam+L+a+b,data=fruit,trace=FALSE)
+select <- stepwise(mod,direction="forward/backward",criterion="BIC",trace=0)
+coef(select)
+```
+
+## Performance de prédiction du modele choisi
+
+**Prédiction par la classe de probabilité maximale**
+```{r,echo=TRUE}
+predictions <- predict(select,newdata=fruit)
+predictions <- ordered(predictions,levels=levels(fruit$Maturite))
+table(fruit$Maturite,predictions) %>% kbl(caption="Matrice de confusion")
+```
+
+```{r,echo=TRUE}
+mean(fruit$Maturite==predictions)
+```
+
+## Performance de prédiction : validation croisée
+
+**Segmentation aléatoire des données**
+```{r}
+segs <- fold(fruit,cat_col="Maturite",k=10)$.folds
+cv_predictions <- fruit$Maturite
+for (k in 1:10) {
+  mod_train <- multinom(formula(select),data=fruit[segs!=k,],trace=FALSE)
+  cv_predictions[segs==k] <- predict(mod_train,newdata=fruit[segs==k,],type="class")
+}
+```
+
+**Taux d'affectations correctes : accuracy (10-fold CV)**
+```{r,echo=TRUE}
+mean(fruit$Maturite==cv_predictions)
+```
+# Caractérisation de groupes
+
+## Quelle est la variable explicative la plus discriminante ?
+
+**Evaluation du pouvoir discriminant : statistique F**
+```{r,echo=TRUE}
+vecF <- rep(0,times=5)
+names(vecF) <- colnames(fruit)[1:5]
+for (k in 1:5) {
+  mod <- lm(x~Maturite,data=data.frame(x=fruit[,k],Maturite=fruit[,7]))
+  vecF[k] <- summary(mod)$fstatistic[1]
+}
+t(vecF) %>% kbl() %>% kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+## Scores linéaires les plus discriminants
+
+**Quels scores linéaires discriminent le mieux les stades de maturité ?**
+```{r,echo=TRUE}
+Maturite.lda <- lda(Maturite~Poids+Diam+L+a+b,data=fruit)
+coef(Maturite.lda) %>% t() %>% kbl() %>% 
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+## Pouvoir discriminant du meilleur score
+
+**Statistique de Fisher pour l'effet de la maturité**
+```{r,echo=TRUE}
+ld <- predict(Maturite.lda)$x
+ld <- cbind.data.frame(ld,Maturite=fruit$Maturite)
+mod <- lm(LD1~Maturite,data=ld)
+summary(mod)$fstatistic
+```
+
+## Caractérisation graphique des groupes
+
+**Nuage des individus**
+```{r,echo=TRUE,fig.height=3}
+ld %>% ggplot() + aes(x=LD1,y=LD2,col=Maturite) +
+  scale_color_manual(values=wes_palette(n=3,name="GrandBudapest1")) +
+  geom_point() + geom_hline(yintercept=0) + geom_vline(xintercept=0)
+```
+
+## Interprétation des scores discriminants
+
+**Interprétation à partir des corrélations entre scores et variables explicatives**
+```{r,echo=TRUE}
+cor(ld[,1:2],fruit[,1:5]) %>%   
+  kbl(caption="Corrélations entre scores et variables explicatives") %>% 
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+## Prédiction à partir des scores discriminants
+
+**Prédiction leave-one-out par la classe de probabilité maximale**
+```{r,echo=TRUE}
+Maturite.cvlda <- lda(Maturite~Poids+Diam+L+a+b,data=fruit,CV=TRUE)
+predictions <- ordered(Maturite.cvlda$class)
+table(fruit$Maturite,predictions) %>% kbl() %>% 
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+```{r,echo=TRUE}
+mean(fruit$Maturite==predictions)
+```
+
+# Données à haut débit
+
+## Importation des données
+
+```{r}
+fruit2 <- read.table("maturity_nirs.txt",header=TRUE,stringsAsFactors = TRUE) 
+fruit2 <- fruit2 %>% select(-c(1:7,9:10))
+fruit2 <- fruit2 %>% mutate(Maturite=factor(Maturite))
+fruit2 <- fruit2 %>% mutate(Maturite=recode_factor(Maturite,
+                              `1`="Faible",
+                              `2`="Moyenne",
+                              `3`="Forte",.ordered=TRUE))
+fruit2[,2:293] <- t(scale(t(fruit2[,2:293])))
+dim(fruit2)
+```
+
+## Données de spectrométrie proche infrarouge
+
+**Longueurs d'onde dans le proche infrarouge**
+```{r,echo=TRUE,fig.height=3}
+noms_cols <- colnames(fruit2)[2:293]
+wl <- noms_cols %>% substring(first=3,last=10) %>% as.numeric()
+range(wl)
+```
+
+**Données en format long**
+```{r,echo=TRUE,fig.height=3}
+nirs <- fruit2 %>% gather(Wl,Nirs,2:293)
+nirs$Wl <- rep(wl,times=rep(435,292))
+dim(nirs)
+```
+
+## Visualisation de spectres proche infrarouge
+
+**Spectres moyens par stade de maturité**
+```{r,echo=TRUE,fig.height=3}
+nirs %>% ggplot(aes(x=Wl,y=Nirs)) + stat_summary(fun="mean",geom = "line") +
+  facet_grid(. ~ Maturite) + theme_bw() + xlab("Longueur d'onde (nm)") + ylab("Nirs") + 
+  ggtitle("Spectres proche infra-rouge moyens")
+```
+
+## Modele de régression linéaire
+
+**Prédiction du taux de sucre par le spectre**
+```{r,echo=TRUE}
+mod = lm(Saccharose~.,data=fruit2[,1:293])
+summary(mod)$sigma^2
+```
+
+**Performance de prédiction - Validation croisée**
+```{r,echo=TRUE}
+mod = glm(Saccharose~.,data=fruit2[,1:293])
+cv.glm(glmfit=mod,data=fruit2[,1:293],K=10)$delta[1]
+```
+
+## Dimension + corrélation = estimation instable
+
+**Estimation du modèle par la methode des moindres carrés**
+```{r,echo=TRUE,fig.height=3}
+df <- data.frame(wl = wl , beta = coef(mod)[-1])
+df %>% ggplot(aes(x=wl,y=beta)) + geom_line(col="orange") + ylab(expression(beta)) + 
+  xlab("Longueur d'onde (nm)") + ggtitle("Coefficients de régression")
+```
+
+# Estimation régularisée
+
+## Echange variance contre biais
+
+```{r,echo=TRUE,fig.height=3}
+x <- fruit2 %>% dplyr::select(2:293) %>% as.matrix()
+y <- fruit2$Saccharose
+mod <- glmnet(x,y,lambda=c(0.01,0.001,0.0001),alpha=0,standardize = FALSE)
+beta <- as.matrix(mod$beta)
+beta %>% head(n=3) %>% kbl(caption="Estimation régularisée") %>% 
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+## Régularisation de l'estimation
+
+```{r,echo=TRUE,fig.height=3}
+df <- data.frame(wl = wl , beta = beta)
+df <- df %>% gather(lambda,beta,2:4)
+df %>% ggplot(aes(x=wl,y=beta)) + geom_line(col="orange") +
+  facet_grid(. ~ lambda) + theme_bw() + xlab("Longueur d'onde (nm)") +
+  ylab(expression(beta)) + ggtitle("Régularisation de l'estimation")
+```
+
+## Choix du paramètre de régularisation
+
+```{r,echo=TRUE,fig.height=3.5}
+log_lambda = seq(from=-20,to=0,length=100)
+cvmod <- cv.glmnet(x,y,alpha=0,lambda=exp(log_lambda),type.measure="mse")
+plot(cvmod)
+```
+
+## Compromis biais-variance
+
+**Régularisation optimale**
+```{r,echo=TRUE}
+cvmod$lambda.min
+min(cvmod$cvm)
+```
+
+## Une alternative à la regression ridge : lasso
+
+```{r,echo=TRUE,fig.height=3}
+mod <- glmnet(x,y,lambda=c(0.01,0.0001,0.000001),alpha=1,standardize = FALSE)
+beta <- as.matrix(mod$beta)
+beta %>% head(n=3) %>% kbl(caption="Estimation régularisée (lasso)") %>% 
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+## Régularisation et sélection
+
+**Estimation LASSO du modèle de régression**
+```{r,echo=TRUE,fig.height=3}
+df <- data.frame(wl = wl , beta = beta)
+df <- df %>% gather(lambda,beta,2:4)
+df %>% ggplot(aes(x=wl,y=beta)) + geom_line(col="orange") + theme_bw() +
+  facet_grid(. ~ lambda) + ylab(expression(beta)) + xlab("Longueur d'onde (nm)")
+```
+
+## Choix du paramètre de régularisation
+
+**Performance de prédiction - Validation croisée**
+```{r,echo=TRUE,fig.height=3.5}
+log_lambda = seq(from=-12,to=0,length=100)
+cvmod <- cv.glmnet(x,y,alpha=1,lambda=exp(log_lambda),type.measure="mse")
+plot(cvmod)
+```
+
+## Compromis précision-parcimonie
+
+**Régularisation optimale**
+```{r,echo=TRUE,fig.height=3}
+cvmod$lambda.1se
+```
+
+**Performance de prédiction**
+```{r,echo=TRUE,fig.height=3}
+cvmod$cvm[cvmod$lambda==cvmod$lambda.1se]
+```
+
+## Parcimonie du modele de régression
+
+```{r,echo=TRUE,fig.height=3}
+mod <- glmnet(x,y,lambda=cvmod$lambda.1se,alpha=1,standardize = FALSE)
+df <- data.frame(wl = wl , beta = mod$beta[,1])
+df %>% ggplot(aes(x=wl,y=beta)) + geom_line(col="orange") +
+  xlab("Longueur d'onde (nm)") + ylab(expression(beta)) +
+  ggtitle("Régularisation lasso de l'estimation")
+```
+
+# Estimation à rang réduit
+
+## Quelle est la meilleure variable explicative ?
+
+```{r,echo=TRUE}
+x <- fruit2[,2:293]
+y <- fruit2$Saccharose
+vec_msep <- rep(0,times=ncol(x))
+names(vec_msep) <- colnames(x)
+for (k in 1:ncol(x)) {
+  mod <- glm(y~x,data=data.frame(x=x[,k],y=y))
+  vec_msep[k] <- cv.glm(data=data.frame(x=x[,k],y=y),glmfit=mod,
+                        K=10)$delta[1]
+}
+min(vec_msep)
+```
+
+## Scores linéaires les plus prédictifs
+
+**Quels scores linéaires prédisent le mieux le taux de sucre ?**
+```{r,echo=TRUE}
+saccharose.pls <- plsr(Saccharose~.,data=fruit2[,1:293])
+scores.pls <- scores(saccharose.pls)[,]
+k = 1
+mod <- glm(y~x,data=data.frame(x=scores.pls[,k],y=y))
+cv.glm(data=data.frame(x=scores.pls[,k],y=y),glmfit=mod,
+                        K=10)$delta[1]
+```
+
+## Choix du nombre de scores à retenir
+
+```{r,echo=TRUE,fig.height=3}
+saccharose.pls <- plsr(Saccharose~.,data=fruit2[,1:293],validation="CV",k=10)
+msep <- MSEP(saccharose.pls)$val[1,1,]
+data.frame(Nbcomp=0:292,MSEP=msep) %>% ggplot(aes(x=Nbcomp,y=MSEP)) + ylim(0,3) + 
+  geom_line(col="orange") + xlab("Nombre de scores")
+```
+
+## Pouvoir de prédiction des meilleurs scores
+
+**Performance de prédiction par validation croisée**
+```{r,echo=TRUE}
+k_optimal <- (0:292)[which.min(msep)]
+k_optimal
+min(msep)
+```
+
+## Interprétation des scores prédictifs
+
+**Corrélation avec les variables explicatives**
+```{r,echo=TRUE,fig.height=3}
+cor1 <- cor(scores.pls[,1],x)[1,]
+data.frame(Wl=wl,Cor=cor1) %>% ggplot(aes(x=Wl,y=Cor)) + 
+  geom_line(col="orange") + ylim(-1,1) + xlab("Corrélation") +
+  ylab("Longueur d'ondes") + ggtitle("Correlation entre 1er score PLS et spectres")
+```
