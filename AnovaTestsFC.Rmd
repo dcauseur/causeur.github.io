@@ -1,0 +1,38 @@
+---
+title: "Analyse des données avec R"
+subtitle: "8 avril 2022"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+&nbsp;
+
+**Objectifs**: 
+
+* Acquérir une autonomie dans la mise en oeuvre de
+démarches d'analyse adaptées à différentes
+problématiques rencontrées en situation professionnelle
+* Mettre en oeuvre ces démarches d'analyse dans R et Rstudio
+* Editer des rapports d'analyse de données avec Rmarkdown
+
+**Organisation de la session**: La formation est divisée en deux parties se déclinant autour de la question *y-a t'il un effet de ceci sur cela ?* : 
+
+* *Explorer, manipuler, visualiser des données* : cette première étape vise a orienter la synthèse de données vers la vérification ou la recherche d'hypothèses de travail sur le lien supposé entre *ceci* et *cela*  ;
+* *Tester* : l'objectif est ici de confronter une hypothèse de travail aux données pour affirmer finalement que *cela* dépend effectivement de *ceci* (ou non) ; 
+
+L'ensemble de la formation insiste moins sur les aspects formels et mathématiques des méthodes présentées que sur la confrontation à des situations pratiques et sur les recommandations en matière de choix d'une méthode. 
+
+L'environnement R et l'interface de développement Rstudio sont choisis pour construire ces compétences. L'édition de rapports d'analyse de données par l'utilisation de Rmarkdown est également présentée.  
+
+## Matériel
+
+* [Présentation](./teaching/html/slides_FC_fruit.html) 
+* [Données](./teaching/data/FC/fruit.txt)
+* [Rmd script](./teaching/scripts/FC_fruit.Rmd)   
+
+## Données Wafa
+
+* [Données](./teaching/data/FC/aporg_Yffiniac.txt)
+* [Rmd script](./teaching/scripts/FC_wafa.Rmd)   

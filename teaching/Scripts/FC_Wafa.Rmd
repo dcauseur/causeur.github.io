@@ -1,0 +1,152 @@
+---
+title: "Analyse des données avec R"
+author: ''
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document: 
+      toc: yes
+      toc_depth: 3
+      number_sections: yes
+  pdf_document: 
+      toc: yes
+      toc_depth: 3
+      number_sections: yes
+subtitle: 'Tester une hypothèse'
+fontsize: 10pt
+---
+
+```{r knitr_init, echo = FALSE, cache = FALSE}
+## Global options
+options(digits = 3, show.signif.stars = FALSE, width = 80)
+knitr::opts_chunk$set(echo = TRUE,
+                      cache = TRUE,
+                      prompt = FALSE,
+                      tidy = FALSE,
+                      comment = NA,
+                      message = FALSE,
+                      warning = FALSE,
+                      fig.align = 'center',
+                      fig.width = 7,
+                      fig.height = 4.33,
+                      size = "tiny")
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+Install_and_Load <- function(packages) {
+  k <- packages[!(packages %in% installed.packages()[, "Package"])];
+  if(length(k)) {
+    install.packages(k, repos = "https://cran.rstudio.com/");
+  }
+  for(package_name in packages) {
+    library(package_name, character.only = TRUE, quietly = TRUE);
+  }
+}
+Install_and_Load(c("MASS","tidyverse","kableExtra","rstatix",
+                   "emmeans","ggpubr","car","nnet","groupdata2",
+                   "pls","glmnet","leaps","boot","RcmdrMisc",
+                   "wesanderson","lubridate"))
+```
+
+
+# Explorer, visualiser
+
+## Importer des données
+
+```{r}
+yffiniac <- read.table(file="aporg_Yffiniac.txt",
+                    stringsAsFactors=TRUE,
+                    header=TRUE)
+str(yffiniac)
+```
+## Nature des variables
+
+```{r}
+yffiniac$date <- as_date(as.character(yffiniac$date),
+                              format= '%d/%m/%Y')
+yffiniac$num_parcelle <- as.factor(yffiniac$num_parcelle)
+yffiniac$num_exploit <- as.factor(yffiniac$num_exploit)
+```
+
+## Nombre de mesures par date
+
+```{r, echo = TRUE}
+df_temp <- yffiniac %>%
+  group_by(date) %>%
+  summarize(n = n())
+
+df_temp %>% ggplot() + aes(x = date, y = n) + 
+  geom_line() + ggtitle("Nombre de mesures par date") +
+  xlab("Temps") + ylab("Nombre de mesures")
+```
+
+## Répartition d'une variable
+
+```{r,echo=TRUE}
+yffiniac %>% ggplot() + 
+  geom_histogram(aes(x = MS_apportee_P.t.ha.),
+                 fill="orange",bins=15,col="white") +
+                  ggtitle("Répartition de MS") +
+  xlab("MS") + ylab("Effectifs")
+```
+
+## Transformation d'une variable
+
+```{r, echo = TRUE}
+yffiniac$logMS <- log(yffiniac$MS_apportee.t.ha.)
+yffiniac %>% ggplot() + 
+  geom_histogram(aes(x = logMS),
+                 fill="orange",bins=15,col="white") +
+                  ggtitle("Répartition de MS (log)") +
+  xlab("log-MS") + ylab("Effectifs")
+```
+
+## Variation de MS au cours du temps
+
+```{r,echo=TRUE}
+df_temp <- yffiniac %>%
+  group_by(year = lubridate::floor_date(date, "year")) %>%
+  summarize(n = n(),Mean=mean(logMS),Sd=sd(logMS))
+df_temp$Upper <- df_temp$Mean+1.96*df_temp$Sd/sqrt(df_temp$n)
+df_temp$Lower <- df_temp$Mean-1.96*df_temp$Sd/sqrt(df_temp$n)
+
+ggplot(df_temp, aes(x=year, y=Mean)) + 
+    geom_errorbar(aes(ymin=Lower, ymax=Upper), width=1) +
+    geom_line() +
+    geom_point()
+```
+
+## Résumé statistique par plante
+
+```{r, echo = TRUE}
+yffiniac %>% group_by(plante) %>%
+  summarise(Mean=mean(logMS),Sd=sd(logMS),
+              Min=min(logMS),Max=max(logMS),
+              n=n())
+```
+
+## Boites de dispersion par plante
+
+```{r, echo = TRUE, fig.height = 3.5}
+yffiniac %>% ggplot() + 
+  geom_boxplot(aes(x=plante,y=logMS),fill="orange") +
+  ggtitle("Répartition des log-MS par plante") +
+  xlab("Plante") + ylab("log-MS")
+```
+
+## Modèle d'analyse de la variance à un facteur
+
+**Test de Fisher**
+
+```{r, echo = TRUE}
+mod1 <- lm(logMS~plante,data=yffiniac)
+mod0 <- lm(logMS~1,data=yffiniac)
+anova(mod0,mod1)
+```
+
+## Comparaisons par paires
+
+```{r}
+comp <- emmeans(mod1, ~ plante)
+pairs(comp,adjust="bonf")
+```
+

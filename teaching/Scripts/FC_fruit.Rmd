@@ -1,0 +1,224 @@
+---
+title: "Analyse des données avec R"
+author: ''
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  ioslides_presentation:
+    logo: logo_iara.jpg
+    transition: faster
+    widescreen: yes
+    number_sections: no
+    highlight: tango
+    df_print: kable
+    css: my.css
+  slidy_presentation:
+    highlight: tango
+  pdf_document:
+    toc: yes
+    toc_depth: 3
+    number_sections: yes
+    highlight: tango
+    df_print: kable
+  beamer_presentation: default
+  html_document:
+    toc: yes
+    toc_depth: '3'
+    df_print: paged
+header-includes:
+- \usepackage{booktabs}
+- \usepackage{wrapfig}
+- \usepackage{subcaption}
+- \usepackage[font=small,labelfont=bf,labelformat=empty]{caption}
+- \usepackage{amsmath}
+- \usepackage[T1]{fontenc}
+linestretch: 0.8
+fontsize: 10pt
+vignette: null
+subtitle: Tester une hypothèse
+---
+
+```{r knitr_init, echo = FALSE, cache = FALSE}
+## Global options
+options(digits = 3, show.signif.stars = FALSE, width = 50)
+knitr::opts_chunk$set(echo = TRUE,
+                      cache = TRUE,
+                      prompt = FALSE,
+                      tidy = FALSE,
+                      comment = NA,
+                      message = FALSE,
+                      warning = FALSE,
+                      fig.align = 'center',
+                      fig.width = 7,
+                      fig.height = 4.33,
+                      size = "tiny")
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+Install_and_Load <- function(packages) {
+  k <- packages[!(packages %in% installed.packages()[, "Package"])];
+  if(length(k)) {
+    install.packages(k, repos = "https://cran.rstudio.com/");
+  }
+  for(package_name in packages) {
+    library(package_name, character.only = TRUE, quietly = TRUE);
+  }
+}
+Install_and_Load(c("MASS","tidyverse","kableExtra","rstatix",
+                   "emmeans","ggpubr","car","nnet","groupdata2",
+                   "pls","glmnet","leaps","boot","RcmdrMisc",
+                   "wesanderson"))
+```
+
+## Importer des données
+
+```{r}
+fruit <- read.table(file="maturity.txt",stringsAsFactors=TRUE)
+str(fruit)
+```
+
+# Manipuler des données {data-background=bg_iara.jpg data-background-size=cover}
+
+## Renommer des variables {data-background=bg_iara.jpg data-background-size=cover}
+
+```{r}
+fruit <- fruit %>% rename(Poids = Weight, 
+                          Variete = Variety,
+                          Maturite = Maturity)
+str(fruit)
+```
+
+## Sélectionner des variables
+
+```{r}
+fruit2 <- fruit %>% select(L,a,b,Variete)
+str(fruit2)
+```
+
+## Supprimer des variables
+
+```{r}
+fruit2 <- fruit %>% select(-Maturite)
+str(fruit2)
+```
+
+## Sélectionner des individus
+
+```{r}
+fruit2 <- fruit %>% filter(Variete%in%c("A","D")) %>% droplevels()
+str(fruit2)
+```
+
+## Transformer des variables
+
+**Convertir Poids en g, Diam en mm**
+```{r}
+fruit <- fruit %>% 
+  mutate(Poids=1000*Poids,Diam=1000*Diam)
+str(fruit)
+```
+
+## Nature des variables
+
+```{r}
+fruit <- fruit %>% 
+  mutate(Maturite=factor(Maturite))
+str(fruit)
+```
+
+## Recoder les modalités
+
+```{r}
+fruit <- fruit %>% 
+  mutate(Maturite=recode_factor(Maturite,
+                              `1`="Faible",
+                              `2`="Moyenne",
+                              `3`="Forte",.ordered=TRUE))
+str(fruit)
+```
+
+# Explorer, visualiser
+
+## Effectifs par groupes
+
+```{r, echo = TRUE}
+tab <- fruit %>% 
+    group_by(Variete) %>%
+    tally()
+tab %>% t() %>% kbl(caption="Effectifs par variété") %>%
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+## Diagramme en barres
+
+```{r, echo = TRUE, fig.height = 3.8}
+fruit %>% ggplot() + 
+  geom_bar(aes(x = Variete),fill="orange",width=0.5) +
+  ggtitle("Effectifs par variété") + xlab("Variété") + ylab("Effectifs")
+```
+
+## Résumé statistique
+
+```{r, echo = TRUE}
+tab <- fruit %>% summarise(Mean=mean(Poids),
+              Sd=sd(Poids),
+              Min=min(Poids),
+              Max=max(Poids))
+tab %>% kbl(caption="Résumé statistique de Poids") %>%
+  kable_paper(bootstrap_options = "striped", full_width = F) 
+```
+
+## Histogramme
+
+```{r, echo = TRUE, fig.height = 3.5}
+fruit %>% ggplot() + geom_histogram(aes(x = Poids),
+                 fill="orange",bins=15,col="white") +
+  ggtitle("Répartition des poids") +
+  xlab("Poids") + ylab("Effectifs")
+```
+
+## Résumé statistique par groupe
+
+```{r, echo = TRUE}
+tab <- fruit %>% group_by(Variete) %>%
+  summarise(Mean=mean(Poids),Sd=sd(Poids),
+              Min=min(Poids),Max=max(Poids))
+tab %>% kbl(caption="Résumé statistique de Poids") %>%
+  kable_paper(bootstrap_options = "striped", full_width = F)
+```
+
+## Boites de dispersion
+
+```{r, echo = TRUE, fig.height = 3.5}
+fruit %>% ggplot() + 
+  geom_boxplot(aes(x=Variete,y=Poids),fill="orange") +
+  ggtitle("Répartition des poids par variété") +
+  xlab("Variété") + ylab("Poids")
+```
+
+## Nuage de points
+
+```{r, echo = TRUE, fig.height = 3.5}
+p <- fruit %>% ggplot() + geom_point(aes(x=Diam,y=Poids),col="orange") +
+  ggtitle("Relation entre poids et diamètre") + xlab("Diamètre") + ylab("Poids")
+p
+```
+
+## Tendance linéaire
+
+```{r, echo = TRUE, fig.height = 3.5}
+p + geom_smooth(method="lm",aes(x=Diam,y=Poids),col="orange")
+```
+
+## Nuage de points par groupe
+
+```{r, echo = TRUE, fig.height = 3.5}
+p <- fruit %>% ggplot() + geom_point(aes(x=Diam,y=Poids,col=Variete)) +
+  ggtitle("Relation entre poids et diamètre") + xlab("Diamètre") + ylab("Poids")
+p
+```
+
+## Tendance linéaire par groupe
+
+```{r, echo = TRUE, fig.height = 3.5}
+p + geom_smooth(method="lm",aes(x=Diam,y=Poids,col=Variete))
+```
