@@ -2,11 +2,13 @@
 title: "Publications"
 ---
 
+## 2022
+
+1. Hébert, F., Causeur, D. and Emily, M.. (2022) Adaptive Handling of Dependence in Regression Modeling. Under revision.
+
+2. Hébert, F., Causeur, D. and Emily, M. (2022) Omnibus Testing Approach for Gene-Based Gene-Gene Interaction. **Statistics in Medicine**. doi: 10.1002/sim.9389.
+
 ## 2021
-
-1. Hébert, F., Causeur, D. and Emily, M. (2021) Global Testing Approach for Gene-Based Gene-Gene Interaction. Under revision.
-
-2. Hébert, F., Causeur, D. and Emily, M.. (2021) Adaptive Handling of Dependence in Regression Modeling. Under revision.
 
 3. Prado, E., Eklouh-Molinier, C., Enez, F., Causeur, D., Blay, C., Dupont-Nivet, M., Labbé, L., Petit, V., Moreac, A., Taupier, G., Haffray, P., Bugeon, J., Corraze, G. and Nazabal, V. (2021) Prediction of fatty acids composition in the rainbow trout Oncorhynchus mykiss by using Raman micro-spectroscopy. To appear in **Analytica Chimica Acta**.
 

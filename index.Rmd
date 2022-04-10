@@ -28,7 +28,7 @@ library(png)
 
 <div class="column-left">
 <p>
-<i class="fas fa-map-marker-alt fa-1x" style="color:dodgerblue"></i> Institut Agro - Agrocampus Ouest
+<i class="fas fa-map-marker-alt fa-1x" style="color:dodgerblue"></i> L'Institut Agro Rennes Angers
  
 Département Statistique et Informatique
  

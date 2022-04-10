@@ -8,7 +8,7 @@ I'm **David Causeur**, full professor of statistics
 
 in the Department of Statistics and Computer Science,
 
-at [Institut Agro](https://www.agrocampus-ouest.fr/), Rennes, France.
+at [Institut Agro](https://www.institut-agro-rennes-angers.fr/), Rennes, France.
 
 I'm a research fellow at [IRMAR, UMR 6625 CNRS](https://irmar.univ-rennes1.fr/)
 
@@ -22,5 +22,5 @@ Contact me by [email].
 
 ## Upcoming conferences
 
-* October 21-22, 2021 [Journées de Biostatistique 2021](http://gdr-stat-sante.math.cnrs.fr/spip/spip.php?rubrique61)
+* June 29 - July 1, 2022 [Intelligence artificielle et santé : approches interdisciplinaires](https://www.lebesgue.fr/fr/conf_IA_sante2022)
 * July 10-15, 2022, [31st International Biometric Conference](https://www.ibc2022.org/home)
