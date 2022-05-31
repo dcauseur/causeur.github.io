@@ -4,7 +4,7 @@ title: "Publications"
 
 ## 2022
 
-1. Hébert, F., Causeur, D. and Emily, M.. (2022) Adaptive Handling of Dependence in Regression Modeling. Under revision.
+1. Hébert, F., Causeur, D. and Emily, M.. (2022) Adaptive Handling of Dependence in Regression Modeling. To appear in **Journal of Computational and Graphical Statistics**.
 
 2. Hébert, F., Causeur, D. and Emily, M. (2022) Omnibus Testing Approach for Gene-Based Gene-Gene Interaction. **Statistics in Medicine**. doi: 10.1002/sim.9389.
 

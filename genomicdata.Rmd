@@ -8,6 +8,14 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 *Course objective*: Introducing statistical methods for high-throughput gene expression data analysis focusing on the search for genes whose expression is related to variations in experimental covariates. 
 
+# 2022
+
+*Organization*: The course is a one-day tutorial dedicated to the selection of genes whose expression depends on experimental conditions using RNA-Seq data. It introduces to the R packages DESeq2 and limma.   
+
+* [slides](./teaching/html/slides_ADG_2022_RnaSeq.html), [data](./teaching/data/DataTest_foie_15ind_4cat4ind_10742genes_countData.txt) and [Rmd file](./teaching/scripts/ADG_2022_RnaSeq.Rmd);   
+
+# 2021
+
 *Organization*: The course is divided into four sessions. Each session is made of a lecture and practical classes. In those in-class practical classes, students are given the opportunity to tackle problem-solving exercises, with or without the use of R.  
 
 The following documents are provided for each session:

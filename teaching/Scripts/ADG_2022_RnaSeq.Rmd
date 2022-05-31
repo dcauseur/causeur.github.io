@@ -1,0 +1,529 @@
+---
+title: "Analyse des données génomiques"
+subtitle: ""
+author: ""
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: yes
+    toc_depth: 1
+    df_print: paged
+  slidy_presentation:
+    highlight: tango
+  pdf_document:
+    toc: yes
+    toc_depth: 1
+    number_sections: yes
+    highlight: tango
+    df_print: kable
+  beamer_presentation: default
+  ioslides_presentation:
+    toc: yes
+    toc_depth: 1
+    transition: faster
+    widescreen: yes
+    number_sections: no
+    highlight: tango
+    df_print: kable
+linestretch: 0.8
+fontsize: 10pt
+vignette: null
+---
+
+```{r knitr_init, echo = FALSE, cache = FALSE}
+## Global options
+options(digits = 3, show.signif.stars = FALSE, width = 100)
+knitr::opts_chunk$set(echo = TRUE,
+                      cache = TRUE,
+                      prompt = FALSE,
+                      tidy = FALSE,
+                      comment = NA,
+                      message = FALSE,
+                      warning = FALSE,
+                      fig.align = 'center',
+                      fig.width = 7,
+                      fig.height = 4.33,
+                      size = "tiny")
+```
+
+```{r functions, include=FALSE}
+# A function for captioning and referencing images
+fig <- local({
+    i <- 0
+    ref <- list()
+    list(
+        cap=function(refName, text) {
+            i <<- i + 1
+            ref[[refName]] <<- i
+            paste("Figure ", i, ": ", text, sep="")
+        },
+        ref=function(refName) {
+            ref[[refName]]
+        })
+})
+``` 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+Install_and_Load <- function(packages) {
+  k <- packages[!(packages %in% installed.packages()[, "Package"])];
+  if(length(k)) {
+    install.packages(k, repos = "https://cran.rstudio.com/");
+  }
+  for(package_name in packages) {
+    library(package_name, character.only = TRUE, quietly = TRUE);
+  }
+}
+
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install(c("DESeq2","edgeR","limma","vsn"),update=FALSE,ask=FALSE)
+
+Install_and_Load(c("DESeq2","edgeR","limma","vsn","MASS",
+                   "tidyverse","kableExtra","rstatix",
+                   "fdrtool","gplots"))
+```
+
+# Données RNA-seq
+
+## Importer des données
+
+Nombres de *reads* par gène et par échantillon:
+```{r}
+rawdta <- read.table("DataTest_foie_15ind_4cat4ind_10742genes_countData.txt",
+                      sep="\t",header=TRUE,stringsAsFactors=TRUE)
+head(rawdta[,1:6],n=3)
+```
+
+## Dimensions
+
+**Gènes** :
+```{r}
+nbgenes <- nrow(rawdta) ; nbgenes
+```
+
+**Echantillons** :
+```{r}
+nbsamples <- ncol(rawdta) ; nbsamples
+sample_labs <- colnames(rawdta) ; head(sample_labs)
+```
+
+
+## Plan d'expérience
+
+Deux lignées x deux régimes :
+```{r}
+genotype <- factor(substring(sample_labs,first=5,last=5))
+diet <- factor(substring(sample_labs,first=7,last=7))
+covariates <- data.frame(Genotype=genotype,Diet=diet)
+rownames(covariates) <- colnames(rawdta)
+summary(covariates)
+```
+
+# Tests à l'échelle du génome 
+
+## Exemple du gène LPCAT3
+
+```{r, echo = TRUE, fig.height = 3.5}
+df <- data.frame(LPCAT3=as.matrix(rawdta)["LPCAT3",],Diet=covariates$Diet)
+df %>% ggplot() + geom_boxplot(aes(x=Diet,y=LPCAT3),fill="orange") +
+  ggtitle("Gène LPCAT3 : Répartition des données de comptage par régime") +
+  xlab("Régime") + ylab("Nombre de reads")
+```
+
+## Test de Fisher
+
+**Test pour le gène LPCAT3**
+```{r, echo = TRUE}
+dta <- data.frame(y=as.matrix(rawdta)["LPCAT3",],Diet=covariates$Diet)
+mod0 <- lm(y~1,data=dta)
+mod1 <- lm(y~Diet,data=dta)
+anova(mod0,mod1)
+```
+
+## Effet à l'échelle du génome
+
+**Test pour tous les gènes**
+```{r}
+my_ftest <- function(y,groupe) {
+   mod0 <- lm(y~1,data=data.frame(y=y,Groupe=groupe))
+   mod1 <- lm(y~Groupe,data=data.frame(y=y,Groupe=groupe))
+   anova(mod0,mod1)[2,"Pr(>F)"]
+}
+pval_Fisher <- apply(X=rawdta,MARGIN=1,FUN=my_ftest,groupe=covariates$Diet)
+pval_Fisher["LPCAT3"]
+```
+
+## Répartition des p-values 
+
+```{r, echo = TRUE, fig.height = 3.5}
+data.frame(Pval=pval_Fisher) %>% ggplot() + aes(x = Pval) +
+  geom_histogram(fill="orange",bins=15,col="white",breaks=seq(from=0,to=1,by=0.025)) +
+  ggtitle("Répartition des p-values de l'effet régime - Test de Fisher") + 
+  xlab("p-value") + ylab("Effectifs")
+```
+
+## Identification des gènes positifs
+
+**Combien de gènes positifs ?**
+```{r}
+positives_Fisher <- pval_Fisher<=0.05
+select <- which(positives_Fisher)
+length(select)
+```
+
+# Normalisation des données
+
+## Méthode Median of ratios (1/5, package DESeq2)
+
+**Nombre de reads pour un pseudo-échantillon de référence**
+```{r}
+prs <- exp(rowMeans(log(rawdta)))
+head(cbind(rawdta[,1:6],PRS=prs),n=3)
+```
+
+## Méthode Median of ratios (2/5, package DESeq2)
+
+**Ratios au pseudo-échantillon de référence**
+```{r}
+ratios_to_prs <- rawdta/tcrossprod(prs,rep(1,nbsamples))
+head(ratios_to_prs[,1:6],n=3) 
+```
+
+## Méthode Median of ratios (3/5, package DESeq2)
+
+**Facteurs de normalisation par échantillon**
+```{r}
+norm_factors <- apply(X=ratios_to_prs,MARGIN=2,FUN=median,na.rm=TRUE)
+head(norm_factors)
+```
+
+## Méthode Median of ratios (4/5, package DESeq2)
+
+**Données de comptage normalisées**
+```{r}
+norm_dta <- rawdta/tcrossprod(rep(1,nbgenes),norm_factors)
+head(norm_dta[,1:6],n=3)
+```
+
+## Méthode Median of ratios (5/5, package DESeq2)
+
+**Normalisation par le package DESeq2**
+```{r}
+dds <- DESeqDataSetFromMatrix(countData = rawdta,colData = covariates,design = ~ Diet)
+dds <- estimateSizeFactors(dds)
+norm_dta_deseq2 <- counts(dds, normalized=TRUE)
+norm_dta_deseq2 <- round(norm_dta_deseq2)
+head(norm_dta_deseq2[,1:6],n=3)
+```
+## Effet à l'échelle du génome (données normalisées)
+
+**Test pour tous les gènes**
+```{r}
+pval_Fisher <- apply(X=norm_dta_deseq2,MARGIN=1,FUN=my_ftest,groupe=covariates$Diet)
+pval_Fisher["LPCAT3"]
+```
+
+## Répartition des p-values 
+
+```{r, echo = TRUE, fig.height = 3.5}
+data.frame(Pval=pval_Fisher) %>% ggplot() + aes(x = Pval) +
+  geom_histogram(fill="orange",bins=15,col="white",breaks=seq(from=0,to=1,by=0.025)) +
+  ggtitle("Répartition des p-values de l'effet régime - Test de Fisher") + 
+  xlab("p-value") + ylab("Effectifs")
+```
+
+## Identification des gènes positifs
+
+**Combien de gènes positifs ?**
+```{r}
+positives_Fisher <- pval_Fisher<=0.05
+select <- which(positives_Fisher)
+length(select)
+```
+
+# Modèles pour données de comptage
+
+## Rapport entre signal biologique et bruit
+
+**Rapport signal-bruit**
+```{r, echo = TRUE}
+my_wb_sd <- function(y,groupe) {
+   mod0 <- lm(y~1,data=data.frame(y=y,Groupe=groupe))
+   mod1 <- lm(y~Groupe,data=data.frame(y=y,Groupe=groupe))
+   anova_tab <- anova(mod0,mod1)
+   within_sd <- sqrt(anova_tab[2,"RSS"]/anova_tab[2,"Res.Df"])
+   between_sd <- sqrt(anova_tab[2,"Sum of Sq"]/anova_tab[2,"Df"])
+   return(list(Wsd=within_sd,Bsd=between_sd))
+}
+wb_sd <- apply(X=norm_dta_deseq2,MARGIN=1,FUN=my_wb_sd,groupe=diet)
+unlist(wb_sd["LPCAT3"])
+```
+
+## Hétérogénéité à l'échelle du génome
+
+**Rapport signal-bruit**
+```{r, echo = TRUE,fig.height=2.5}
+w_sd <- unlist(lapply(wb_sd,function(x) x$Wsd))
+b_sd <- unlist(lapply(wb_sd,function(x) x$Bsd))
+data.frame(w_sd,b_sd) %>% ggplot() + xlab("Différences d'expressions moyennes (log)") + 
+  ylab("Ecarts-types intra-régimes (log)") + 
+  geom_point(aes(x=log(b_sd),y=log(w_sd)),col="orange") +
+  ggtitle("Relation entre signal et bruit") + geom_abline(intercept=0,slope=1)
+```
+
+## Sur-dispersion
+
+**Relation variance-moyenne** 
+```{r, echo = TRUE,fig.height=2.5}
+mu_B <- rowMeans(norm_dta_deseq2[,covariates$Diet=="B"])
+v_B <- apply(X=norm_dta_deseq2[,covariates$Diet=="B"],MARGIN = 1,FUN=var)
+data.frame(Mean=mu_B,Var=v_B) %>% ggplot() + 
+  xlab("Expressions moyennes (log) - Régime B") + ylab("Variance intra-régimes (log)") + 
+  geom_point(aes(x=log(Mean),y=log(Var)),col="orange") +
+  ggtitle("Relation entre variance et moyenne") + geom_abline(intercept=0,slope=1)
+```
+
+## Test d'analyse de la déviance
+
+**Test de $\chi^{2}$ pour le gène LPCAT3**
+```{r, echo = TRUE}
+dta <- data.frame(y=norm_dta_deseq2["LPCAT3",],Diet=diet)
+mod0 <- glm(y~1,data=dta,family="poisson")
+mod1 <- glm(y~Diet,data=dta,family="poisson")
+anova(mod0,mod1,test="Chisq")
+```
+
+## Effet régime à l'échelle du génome
+
+**Test pour tous les gènes**
+```{r, echo = TRUE}
+my_chi2_test <- function(y,groupe) {
+   dta <- data.frame(y=y,Groupe=groupe)
+   mod0 <- glm(y~1,data=dta,family="poisson")
+   mod1 <- glm(y~Groupe,data=dta,family="poisson")
+   anova(mod0,mod1,test="Chisq")[2,"Pr(>Chi)"]
+}
+pval_Poisson <- apply(X=norm_dta_deseq2,MARGIN=1,FUN=my_chi2_test,groupe=diet)
+pval_Poisson["LPCAT3"]
+```
+
+## Répartition des p-values 
+
+```{r, echo = TRUE, fig.height = 3.5}
+data.frame(Pval=pval_Poisson) %>% ggplot() + aes(x = Pval) +
+  geom_histogram(fill="orange",bins=15,col="white",breaks=seq(from=0,to=1,by=0.025)) +
+  ggtitle("Répartition des p-values de l'effet régime - Modèle de Poisson") + 
+  xlab("p-value") + ylab("Effectifs")
+```
+
+## Identification des gènes positifs
+
+**Combien de gènes positifs ?**
+```{r}
+positives_Poisson <- pval_Poisson<=0.05
+select <- which(pval_Poisson<=0.05)
+length(select)
+```
+
+**Concordance Fisher-Poisson**
+```{r}
+table(positives_Fisher,positives_Poisson)
+```
+
+## Test du rapport de vraisemblance
+
+**Test de $\chi^{2}$ pour le gène LPCAT3**
+```{r, echo = TRUE}
+dta <- data.frame(y=norm_dta_deseq2["LPCAT3",],Diet=covariates$Diet)
+mod0 <- glm.nb(y~1,data=dta)
+mod1 <- glm.nb(y~Diet,data=dta)
+anova(mod0,mod1,test="Chisq")
+```
+
+## Effet régime à l'échelle du génome
+
+**Test pour tous les gènes**
+```{r, echo = TRUE}
+my_chi2_test <- function(y,groupe) {
+   dta <- data.frame(y=y,Groupe=groupe)
+   mod0 <- glm.nb(y~1,data=dta)
+   mod1 <- glm.nb(y~Groupe,data=dta)
+   anova(mod0,mod1,test="Chisq")[2,"Pr(Chi)"]
+}
+pval_nb <- apply(X=norm_dta_deseq2,MARGIN=1,FUN=my_chi2_test,groupe=covariates$Diet)
+pval_nb["LPCAT3"]
+```
+
+## Répartition des p-values 
+
+```{r, echo = TRUE, fig.height = 3.5}
+data.frame(Pval=pval_nb) %>% ggplot() + aes(x = Pval) +
+  geom_histogram(fill="orange",bins=15,col="white",breaks=seq(from=0,to=1,by=0.025)) +
+  ggtitle("Répartition des p-values de l'effet régime - Modèle Binomial Négatif") + 
+  xlab("p-value") + ylab("Effectifs")
+```
+
+## Identification des gènes positifs
+
+**Combien de gènes positifs ?**
+```{r}
+positives_nb <- pval_nb <= 0.05
+select <- which(positives_nb)
+length(select)
+```
+
+**Concordance Fisher - Binomial Négatif**
+```{r}
+table(positives_Fisher,positives_nb)
+```
+
+## Tests à l'échelle du génome avec DESeq2 (1/3)
+
+```{r}
+dds <- DESeq(dds)
+res <- results(dds)
+mcols(res)$description
+``` 
+
+## Répartition des p-values 
+
+```{r, echo = TRUE, fig.height = 3.5}
+data.frame(Pval=res$pvalue) %>% ggplot() + aes(x = Pval) +
+  geom_histogram(fill="orange",bins=15,col="white",breaks=seq(from=0,to=1,by=0.025)) +
+  ggtitle("Répartition des p-values de l'effet régime - DESeq2") + xlab("p-value") + 
+  ylab("Effectifs")
+```
+
+## Identification des gènes positifs
+
+**Combien de gènes positifs ?**
+```{r}
+pval_deseq2 <- res$pvalue
+positives_deseq2 <- pval_deseq2 <= 0.05
+select <- which(positives_deseq2)
+length(select)
+```
+
+# Transformation des données de comptage
+
+## Stabilisation de la variance
+
+```{r}
+vsd <- vst(dds, blind=TRUE)
+pseudo_counts <- assay(vsd)
+head(pseudo_counts[,1:6],n=3) 
+```
+
+## Tests sur données transformées (package limma)
+
+**Modèle d'analyse de la variance à l'échelle du génome**
+```{r}
+design = model.matrix(~Diet,data=covariates)   
+fit = lmFit(pseudo_counts,design)
+head(fit$coefficients,n=3)
+```
+
+## Tests à l'échelle du génome (package limma)
+
+```{r}
+fit <- eBayes(fit)
+pval_limma <- fit$p.value[,"DietH"]
+pval_limma["LPCAT3"]
+```
+
+**Gènes positifs**
+```{r}
+positives_limma <- pval_limma <= 0.05
+sum(positives_limma)
+```
+
+## Concordance limma - DESeq2
+
+```{r,fig.height=3.5}
+data.frame(Limma=-log10(pval_limma),Deseq2=-log10(pval_deseq2)) %>% ggplot() + 
+  xlab("P-values limma (-log)") + ylab("P-values DESeq2 (-log)") + 
+  geom_point(aes(x=Limma,y=Deseq2),col="orange") +
+  ggtitle("Relation entre p-values Limma et Deseq2") + geom_abline(intercept=0,slope=1)
+```
+
+# Sélection de gènes
+
+## Taille de l'effet à l'échelle du génome 
+
+```{r,fig.height=2.5}
+data.frame(Pval=pval_limma) %>% ggplot() + aes(x = Pval,y=..density..) +
+  geom_histogram(fill="orange",bins=15,col="white",breaks=seq(from=0,to=1,by=0.025)) +
+  ggtitle("Répartition des p-values de l'effet régime - Test de Fisher") + 
+  xlab("p-value") + ylab("Effectifs") + geom_hline(yintercept=0.7)
+```
+
+## Taille de l'effet à l'échelle du génome (package fdrtool)
+
+**Estimation du nombre de gènes non-impactés par l'effet testé**
+```{r,fig.height=3.5}
+m <- length(pval_limma)
+pi0 <- pval.estimate.eta0(pval_limma,diagnostic.plot=FALSE)
+m0 <- m*pi0 ; m0
+```
+
+## Tests simultanés à l'échelle du génome
+
+**Nombre de gènes positifs si $t=0.05$**
+```{r}
+positives_limma <- pval_limma <= 0.05
+sum(positives_limma)
+```
+
+## Estimation du FDR
+
+**Exemple avec $t=0.05$**
+```{r}
+P <- sum(pval_limma <= 0.05)
+FDR <- m0*0.05/P ; FDR
+```
+
+## Méthode de Benjamini-Hochberg
+
+**Sélection pour un contrôle du FDR au seuil de 0.05**
+```{r}
+fdr_limma <- pi0*p.adjust(pval_limma,method="BH")
+sum(fdr_limma <= 0.05)
+```
+
+**Seuil de décision**
+```{r}
+p_sort <- sort(pval_limma)
+fdr <- m0*p_sort/(1:m)
+seuil <- max(p_sort[fdr<=0.05]) ; seuil
+```
+
+## Sélection multi-critères (1/2, volcano plot)
+
+```{r,fig.height=4.5}
+volcanoplot(fit,coef=2)
+abline(h = -log10(seuil),col = "orange",lty =2,lwd = 2)
+```
+
+## Sélection multi-critères (2/2)
+
+**Gènes postifs et ayant un ratio d'expressions moyennes suffisamment grand**
+```{r}
+log_fc <- fit$coefficients[,"DietH"]
+select <- (fdr_limma <= 0.05) & (abs(log_fc) > 1)
+sum(select)
+```
+
+## Clustering des échantillons
+
+```{r}
+x = pseudo_counts[select,]
+heatmap(x, Rowv = FALSE, col = rev(heat.colors(16)))
+```
+
+## Clustering des gènes sélectionnés
+
+```{r}
+heatmap(cor(t(x)), symm = TRUE, distfun = function(c) as.dist(1 - abs(c)), 
+        col = rev(heat.colors(16)),trace="none",dendrogram="col")
+```

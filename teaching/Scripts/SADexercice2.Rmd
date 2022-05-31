@@ -1,5 +1,5 @@
 ---
-title: Statistique et Aide à la Décision 2020 - Exercice - Session 2
+title: Statistique et Aide à la Décision - Exercice - Session 2
 author: David Causeur
 date: ''
 output:
