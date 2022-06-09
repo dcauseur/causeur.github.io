@@ -1,0 +1,177 @@
+---
+title: Statistique et Aide à la Décision 2021 - Examen 1ère session
+author: David Causeur
+date: ''
+output:
+  html_document:
+    df_print: paged
+  word_document: default
+  pdf_document:
+    fig_caption: yes
+    fig_height: 6.181
+    fig_width: 10
+    highlight: haddock
+    number_sections: yes
+header-includes:
+- \onehalfspacing
+- \usepackage{floatpag}
+- \floatpagestyle{empty}
+- \usepackage{wrapfig}
+- \usepackage{subcaption}
+- \usepackage{caption}
+- \usepackage[font=small,labelfont=bf]{caption}
+linestretch: 0.8
+geometry: margin = 0.8in
+fontsize: 12pt
+vignette: null
+---
+
+```{r, setup, include = FALSE}
+options(digits = 6, show.signif.stars = TRUE)
+knitr::opts_chunk$set(
+  tidy = FALSE,     # display code as typed
+  tidy.opts = list(blank = FALSE, width.cutoff = 60),
+  size = "small",   # slightly smaller font for code
+  comment = "",
+  fig.align = "center",
+  cache = TRUE,
+  message = FALSE,
+  warning = FALSE)
+```
+
+```{r functions, include=FALSE}
+# A function for captioning and referencing images
+fig <- local({
+    i <- 0
+    ref <- list()
+    list(
+        cap=function(refName, text) {
+            i <<- i + 1
+            ref[[refName]] <<- i
+            paste("Figure ", i, ": ", text, sep="")
+        },
+        ref=function(refName) {
+            ref[[refName]]
+        })
+})
+``` 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+Install_and_Load <- function(packages) {
+  k <- packages[!(packages %in% installed.packages()[, "Package"])];
+  if(length(k)) {
+    install.packages(k, repos = "https://cran.rstudio.com/");
+  }
+  for(package_name in packages) {
+    library(package_name, character.only = TRUE, quietly = TRUE);
+  }
+}
+Install_and_Load(c("aod","car","RcmdrMisc","nnet","groupdata2"))
+```
+  
+**Nom Prénom :**
+
+**Détermination de l'âge d'un ormeau**
+
+\bigskip
+
+L'âge d'un ormeau (espèce *haliotis*, appelé aussi abalone ou oreille de mer) est déterminé par le nombre d'anneaux observable au microscope après découpe précise du cône de l'animal. Cette procédure est longue, coûteuse en temps de manipulation et sujette à erreurs. Une étude menée par Nash *et al.* (1994) vise à construire une règle de détermination de la classe d'âge (**classe 1** de 1 à 8 anneaux, **classe 2** pour 9 et 10 anneaux, **classe 3** au delà de 11 anneaux) d'un ormeau à partir de mesures biométriques. Les sept mesures biométriques potentiellement utilisables pour prédire la classe d'âge sont les suivantes :
+
+* Length : plus grande longueur du coquillage (mm)
+* Diameter : longueur dans l'axe perpendiculaire à l'axe de plus grande longueur	(mm)
+* Height :	épaisseur (mm) de l'ormeau plein (avec chair)	
+* Whole weight : poids total (g)
+* Meat weight : poids de la chair (g)
+* Viscera weight : poids de l'estomac (g)
+* Dry weight : poids de la coquille (g)
+
+On dispose de ces données pour un grand nombre d'ormeaux. On importe les données dans la session de travail à l'aide des commandes suivantes :
+```{r}
+abalone = read.table("abalone.txt",
+                     header=TRUE,
+                     stringsAsFactors = TRUE)
+abalone$Age = factor(abalone$Age)
+str(abalone)
+```
+
+Toutes les variables du tableau sont quantitatives, sauf la première (**Sex**), qui donne le sexe de l'ormeau (M pour Male, F pour Female ou I pour Infant), et la dernière (**Age**), qui donne sa classe d'âge. 
+
+Comme mentionné ci-dessus, on cherche à construire une règle de détermination de la classe d'âge d'un ormeau **à partir des sept variables de son profil biométrique**.
+
+**Question 1**
+
+*Dans la problématique présentée ci-dessus, quelle est la variable réponse et quelles sont les variables explicatives ? Donnez la nature, quantitative ou catégorielle, de ces variables (si catégorielle, quelles modalités ?).*
+
+**Réponse**
+
+Vous pouvez utiliser cet espace pour votre réponse. 
+Si vous souhaitez écrire des formules mathématiques, voici quelques exemples qui devraient suffire:
+
+* formule mathématique dans une phrase : $\sqrt{n}$, $n^{2}$, $Y_{ij}=\mu+\alpha_{i}+\varepsilon_{ij}$, $Y_{i\bullet}$, $\varepsilon \sim {\cal N} ( 0 ; 1)$ 
+
+* formule mise en avant en dehors d'une phrase :
+\begin{eqnarray*}
+\text{log} \frac{\pi(x)}{1-\pi(x)} & = & \beta_{0} + \beta_{1} x , \\
+\text{log} \frac{\pi_{i}(x)}{1-\pi_{i}(x)} & = & \mu + \alpha_{i} + \beta_{1} x .
+\end{eqnarray*}
+
+Dans un premier temps, on cherche à comparer les modèles construits avec **une seule variable explicative**, que l'on appelle $X$ ($X$ est l'une des sept variables biométriques).
+
+**Question 2**
+
+*Proposez un modèle adapté à cette problématique. Quel est le nombre de paramètres de ce modèle ?*
+
+**Réponse**
+
+**Question 3**
+
+*Parmi les sept variables explicatives possibles, quelle est celle qui permet de construire le modèle de la question 2 ayant la plus petite déviance résiduelle ?*
+
+On appelle dans la suite cette variable explicative $X^{*}$.
+
+On cherche maintenant à savoir si le modèle construit avec $X^{*}$ doit être considéré comme valide pour tous les ormeaux, quelque soit leur sexe, ou au contraire, comme pouvant être significativement amélioré par la prise en compte d'un effet du sexe.
+
+**Question 4**
+
+*Proposez un test de comparaison de deux modèles pour répondre à cette question (donnez les modèles sous les hypothèses nulle et alternative, donnez la valeur de la statistique du test, rappelez sa loi sous l'hypothèse nulle et conclure).*
+
+**Réponse**
+
+**Question 5**
+
+*En examinant les scores linéaires du modèle de la question 4 prenant en compte l'effet du sexe, quel est le sexe (F, M ou I) pour lequel le coefficient associé à $X^{*}$ est le plus grand (justifiez en donnant les coefficients pour les trois sexes) ?*
+
+**Réponse**
+
+On déduit des question 4 et 5 qu'il est important de prendre en compte l'effet du sexe pour déterminer la classe d'âge d'un ormeau.
+
+**Question 6**
+
+*Donnez les variables explicatives à retenir dans le meilleur sous-modèle construit à partir des sept variables biométriques et du sexe de l'ormeau. En quoi ce sous-modèle est-il meilleur qu'un autre ?*
+
+**Question 7**
+
+*Donnez une valeur estimée des proportions de bons classements par classe d'âge lorsque l'on applique la règle de Bayes sur les probabilités qu'un ormeau soit dans les trois classes d'âge estimées par le modèle de la question 6.*
+
+**Réponse**
+
+**Question 8**
+
+*Donnez une valeur approchée des proportions de bons classements par classe d'âge lorsque l'on affecte au hasard une classe d'âge à un ormeau ?*
+
+Les commandes suivantes permettent de séparer les données de manière aléatoire en deux échantillons : un échantillon de données d'apprentissage (**learn**) et un échantillon de données test (**test**) :
+```{r}
+select_app_1 = sample(which(abalone$Age=="1"),2*round(sum(abalone$Age=="1")/3))
+select_app_2 = sample(which(abalone$Age=="2"),2*round(sum(abalone$Age=="2")/3))
+select_app_3 = sample(which(abalone$Age=="3"),2*round(sum(abalone$Age=="3")/3))
+select_app = c(select_app_1,select_app_2,select_app_3)
+learn = abalone[select_app,]
+test = abalone[-select_app,]
+```
+
+**Question 9**
+
+*En utlisant ce dispositif de validation croisée, donnez une valeur estimée des proportions de bons classements par classe d'âge par la procédure mise en oeuvre dans les questions précédentes (sélection d'un sous-modèle, estimation des probabilités par le meilleur-sous-modèle et affectation à une classe d'âge selon la règle de Bayes).*
+
+**Réponse**
+

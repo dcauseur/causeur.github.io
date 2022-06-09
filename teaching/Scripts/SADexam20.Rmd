@@ -1,0 +1,172 @@
+---
+title: Statistique et Aide à la Décision 2020 - Examen 1ère session
+author: David Causeur
+date: ''
+output:
+  html_document:
+    df_print: paged
+  word_document: default
+  pdf_document:
+    fig_caption: yes
+    fig_height: 6.181
+    fig_width: 10
+    highlight: haddock
+    number_sections: yes
+header-includes:
+- \onehalfspacing
+- \usepackage{floatpag}
+- \floatpagestyle{empty}
+- \usepackage{wrapfig}
+- \usepackage{subcaption}
+- \usepackage{caption}
+- \usepackage[font=small,labelfont=bf]{caption}
+linestretch: 0.8
+geometry: margin = 0.8in
+fontsize: 12pt
+vignette: null
+---
+
+```{r, setup, include = FALSE}
+options(digits = 6, show.signif.stars = TRUE)
+knitr::opts_chunk$set(
+  tidy = FALSE,     # display code as typed
+  tidy.opts = list(blank = FALSE, width.cutoff = 60),
+  size = "small",   # slightly smaller font for code
+  comment = "",
+  fig.align = "center",
+  cache = TRUE,
+  message = FALSE,
+  warning = FALSE)
+```
+
+```{r functions, include=FALSE}
+# A function for captioning and referencing images
+fig <- local({
+    i <- 0
+    ref <- list()
+    list(
+        cap=function(refName, text) {
+            i <<- i + 1
+            ref[[refName]] <<- i
+            paste("Figure ", i, ": ", text, sep="")
+        },
+        ref=function(refName) {
+            ref[[refName]]
+        })
+})
+``` 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+Install_and_Load <- function(packages) {
+  k <- packages[!(packages %in% installed.packages()[, "Package"])];
+  if(length(k)) {
+    install.packages(k, repos = "https://cran.rstudio.com/");
+  }
+  for(package_name in packages) {
+    library(package_name, character.only = TRUE, quietly = TRUE);
+  }
+}
+Install_and_Load(c("aod","questionr","car","RcmdrMisc","nnet","groupdata2"))
+```
+  
+**Nom Prénom :**
+
+**Outil de détection de bactéries par imagerie**
+
+Une start-up technologique Rennaise travaillant pour l'industrie agro-alimentaire et cosmétique développe un outil d'imagerie pour détecter de manière quasi-instantanée des bactéries dans des échantillons de produits.
+
+Sur chaque image, des amas de pixels lumineux apparaissent (que l'on appelle des événements), certains étant identifiés par des experts comme des bactéries, d'autres pas (on appelle ces derniers des blancs). L'expert s'appuie sur des règles de décision qui lui sont propres et qui intègrent la forme de l'amas de pixels lumineux, l'homogénéité des pixels, etc.
+
+Cette start-up souhaite mettre au point un outil d'aide à la décision reproduisant le plus fidèlement possible et de manière automatique l'évaluation de l'expert. Pour cela, elle a constitué un tableau de données rassemblant des caractéristiques géométriques d'événements (diamètre, élongation, luminosité moyenne, médiane, écart-type, etc.) et le classement par l'expert de cet événement en bactérie ou événement indésirable. L'expert a travaillé sur deux images.
+
+On importe les données dans la session de travail à l'aide des commandes suivantes :
+```{r}
+# Dans la commande ci-dessous, bact.txt est à remplacer par Data_Jean_Dupont.txt
+# (seulement si vous vous appelez Jean Dupont)
+bact = read.table("bact.txt")
+bact$E = relevel(bact$E,ref="Blanc")
+str(bact)
+```
+
+Toutes les variables du tableau sont quantitatives, sauf les deux dernières : E (comme événement), catégorielle à deux modalités (donnant le type Bacterie ou Blanc de l'événement) et Image, catégorielle à deux modalités (identifiant l'image sur laquelle l'événement est observé). 
+
+**Question 1**
+
+*Les proportions de bactéries par image sont-elles significativement différentes, au seuil de 5% (justifiez votre réponse).*
+
+**Réponse**
+
+Vous pouvez utiliser cet espace pour votre réponse. 
+Si vous souhaitez écrire des formules mathématiques, voici quelques exemples qui devraient suffire:
+
+* formule mathématique dans une phrase : $\sqrt{n}$, $n^{2}$, $Y_{ij}=\mu+\alpha_{i}+\varepsilon_{ij}$, $Y_{i\bullet}$, $\varepsilon \sim {\cal N} ( 0 ; 1)$ 
+
+* formule mise en avant en dehors d'une phrase :
+\begin{eqnarray*}
+\text{log} \frac{\pi(x)}{1-\pi(x)} & = & \beta_{0} + \beta_{1} x , \\
+\text{log} \frac{\pi_{i}(x)}{1-\pi_{i}(x)} & = & \mu + \alpha_{i} + \beta_{1} x .
+\end{eqnarray*}
+
+La problématique exposée ci-dessus consiste donc à construire un outil prédisant si un événement est une bactérie ou un blanc à partir des caractéristiques géométriques de l'événement.
+
+**Question 2**
+
+*Dans la problématique présentée ci-dessus, quelle est la variable réponse et quelles sont les variables explicatives ? Donnez la nature, quantitative ou catégorielle, de ces variables (si catégorielle, quelles modalités ?).*
+
+**Réponse**
+
+**Question 3**
+
+*Proposez un modèle adapté à cette problématique. Quel est le nombre de paramètres de ce modèle ?*
+
+**Réponse**
+
+Le modèle est estimé par la méthode du maximum de vraisemblance sur l'ensemble des données disponibles.
+
+**Question 4**
+
+*Pour la variable associée à la p-value la plus faible dans la table d'analyse de la déviance de type II du modèle de la question précédente, quelle est la valeur de la statistique du test de rapport de vraisemblance ? De quels modèles cette statistique est-elle la différence des deux déviances résiduelles ?*
+
+**Réponse**
+
+Au vu de la table d'analyse de la déviance de type II évoqué dans la question précédente, on décide dans un premier temps de se limiter au sous-modèle du modèle complet construit avec **une seule variable explicative**.
+
+**Question 5**
+
+*Quelle variable explicative choisissez-vous ? En quoi est-elle meilleure que les autres ?*
+
+**Réponse**
+
+**Question 6**
+
+*Donnez une valeur estimée de la proportion de bons classements (que l'on appelle l'accuracy) lorsque l'on applique la règle de Bayes sur les probabilités qu'un événement soit une bactérie estimées par le modèle avec la meilleure variable explicative (telle que proposée dans la question 5).*
+
+**Question 7**
+
+*Donnez une valeur estimée de la proportion de bons classements lorsque l'on applique la règle de Bayes sur les probabilités qu'un événement soit une bactérie estimées par le modèle avec toutes les variables explicatives.*
+
+**Réponse**
+
+La valeur élévée de l'accuracy obtenue à la question précédente est discutable car elle est calculée en appliquant une règle de prédiction ajustée sur des données d'apprentissage à ces mêmes données d'apprentissage. 
+
+**Question 8**
+
+*En implémentant une méthode de validation croisée à 10 segments, donnez une nouvelle valeur estimée de l'accuracy, plus réaliste, des performances de prédiction de la règle de Bayes appliquée au probabiités estimées par le modèle complet qu'un événement soit une bactérie.*
+
+**Réponse**
+
+Cette nouvelle estimation étant bien inférieure à celle obtenue à la question 7, on choisit de procéder à la sélection du meilleur sous-modèle.
+
+**Question 9**
+
+*Donnez la liste des variables explicatives retenues dans le meilleur sous-modèle ? En quoi ce sous-modèle est-il meilleur qu'un autre ?*
+
+**Réponse**
+
+**Question 10**
+
+*En implémentant une méthode de validation croisée à 10 segments, donnez une valeur estimée de la sensibilité et de la spécificité de la règle de Bayes appliquée aux probabilités qu'un événement soit une bactérie.*
+
+**Réponse**
+
+

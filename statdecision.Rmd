@@ -15,6 +15,11 @@ The following documents are provided for each session:
 * a video lecture: R tutorial whose slides, data and R script are provided;   
 * an Rmd file containing in-class exercises.   
 
+*Past exams*: 
+
+* 2020: [Rmd](./teaching/Scripts/SADexam20.Rmd), [Data](./teaching/data/bact.txt)
+* 2021: [Rmd](./teaching/Scripts/SADexam21.Rmd), [Data](./teaching/data/abalone.txt)
+
 To start with Rmarkdown: [brief introduction](https://youtu.be/rmBk6ECKdqQ). 
 
 ## Session 1
