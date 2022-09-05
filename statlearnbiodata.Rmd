@@ -19,7 +19,7 @@ The following documents are provided for each session:
 
 *Objective*: Setting a statistical framework for linear prediction of a real-valued or a k-class response variable. 
 
-* [Video lecture](https://youtu.be/5KLMYWWWcsE) with [slides](./teaching/PDFs/SLBDsession1.pdf), [R script](./teaching/scripts/SLBDsession1.R) and data ([1](./teaching/data/SLBDinvasive.txt) and [2](./teaching/data/SLBDcoffee.txt));   
+* [Video lecture](https://youtu.be/5KLMYWWWcsE) with [slides](./teaching/PDFs/SLBDsession1.pdf), [R script](./teaching/scripts/SLBDsession1.R) and data ([1](./teaching/data/SLBDinvasive.txt), [2](./teaching/data/SLBDcoffee.txt) and [sleep](./teaching/data/sleep.csv));   
 * In-class activities:  [exercise](./teaching/pdfs/SLBDexercicesession1.pdf) and [data](./teaching/data/SLBDscanner.txt).
 
 ## Session 2
