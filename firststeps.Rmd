@@ -18,7 +18,7 @@ The following documents are provided for each session:
 
 2021-2022: all in-class activities (practical sessions) [here](https://agrocampusds.github.io/demarche_statistique/).
 
-2020 examination: [exam](./teaching/PDFs/DS20examSession1.pdf) 
+2021 examination: [exam](./teaching/PDFs/DS21examSession1.pdf) 
 
 Assignments: see instructions [here](./teaching/PDFs/evaluation.pdf).
 

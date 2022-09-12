@@ -24,3 +24,6 @@ Contact me by [email].
 
 * June 29 - July 1, 2022 [Intelligence artificielle et santé : approches interdisciplinaires](https://www.lebesgue.fr/fr/conf_IA_sante2022)
 * July 10-15, 2022, [31st International Biometric Conference](https://www.ibc2022.org/home)
+* October 20-21, 2022, [Emerging challenges in implementing the exposome](https://exposomesymposium.org/)
+* December 8-9, 2022, [DIGIT-BIO seminar](https://www6.inrae.fr/digitbio/Page-d-accueil/Actualites/DIGIT-BIO-vous-invite-a-son-1er-seminaire-a-Lyon-les-8-et-9-decembre)
+* December 17-19, 2022, [15th International Conference of the ERCIM WG on Computational and Methodological Statistics (CMStatistics2022)](http://www.cmstatistics.org/CMStatistics2022/publications.php)
