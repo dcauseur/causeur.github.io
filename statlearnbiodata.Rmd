@@ -34,7 +34,7 @@ The following documents are provided for each session:
 *Objective*: Using penalized estimation procedures to estimate high-dimensional regression and classification models.
 
 * [Video lecture](https://youtu.be/hW616AL1qNM) with [slides](./teaching/PDFs/SLBDsession3.pdf), [R script](./teaching/scripts/SLBDsession3.R) and data ([1](./teaching/data/SLBDscanner.txt) and [2](./teaching/data/SLBDcoffee.txt));   
-* In-class activities: exercise and data (1 and 2).
+* In-class activities: [exercise](./teaching/pdfs/SLBDExerciceSession3.pdf) and data ([1](./teaching/data/SLBDbacttrain.txt) and [2](./teaching/data/SLBDbacttest.txt)).
 
 ## Session 4
 
