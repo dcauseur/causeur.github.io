@@ -35,7 +35,6 @@ Assignments: see instructions [here](./teaching/PDFs/evaluation.pdf).
 
 * [Video lecture](https://youtu.be/cGkuIZM_-AE) with [slides](./teaching/PDFs/DS20Session2.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session2.R);   
 * Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation2.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation2.R);
-* In-class activities: session [1](./teaching/pdfs/ds20TD1.pdf) and [2](./teaching/pdfs/ds20TD2.pdf).
 
 ## Session 3
 
@@ -43,7 +42,6 @@ Assignments: see instructions [here](./teaching/PDFs/evaluation.pdf).
 
 * [Video lecture](https://youtu.be/5GrlbSspeic) with [slides](./teaching/PDFs/DS20Session3.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session3.R);   
 * Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation3.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation3.R);
-* In-class activities: session [1](./teaching/pdfs/ds20TD3.pdf) and [2](./teaching/pdfs/ds20TD4.pdf).
 
 ## Session 4
 
@@ -51,7 +49,6 @@ Assignments: see instructions [here](./teaching/PDFs/evaluation.pdf).
 
 * [Video lecture](https://youtu.be/r6evkckZ1y8) with [slides](./teaching/PDFs/DS20Session4.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session4.R);   
 * Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation4.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation4.R);
-* In-class activities: session [1](./teaching/pdfs/ds20TD5.pdf) and [2](./teaching/pdfs/ds20TD6.pdf).
 
 ## Session 5
 
@@ -59,5 +56,3 @@ Assignments: see instructions [here](./teaching/PDFs/evaluation.pdf).
 
 * [Video lecture](https://youtu.be/tV7H3tpJvsQ) with [slides](./teaching/PDFs/DS20Session5.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session5.R);   
 * Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation5.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation5.R);
-* In-class activities: session [1](./teaching/pdfs/ds20TD7.pdf) and [2](./teaching/pdfs/ds20TD8.pdf).
-
