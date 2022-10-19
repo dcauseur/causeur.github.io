@@ -13,11 +13,11 @@ knitr::opts_chunk$set(collapse = TRUE)
 The following documents are provided for each session:
 
 * a video lecture: R tutorial whose slides, data and R script are provided;   
-* an Rmd file containing in-class exercises. 
+* a Rmd file containing in-class exercises. 
 
-[Exam in 2021](./teaching/ADBExam2021pdf)
+[Exam in 2021](./teaching/PDFs/ADBExam2021.pdf)
 
-[Exam in 2020](./teaching/ADBExam2020pdf)
+[Exam in 2020](./teaching/PDFs/ADBExam2020.pdf)
 
 ## Session 1
 
