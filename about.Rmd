@@ -20,6 +20,10 @@ Contact me by [email].
 
 [email]: mailto:david.causeur@agrocampus-ouest.fr
 
+## Job offer
+
+[6-month internship (master thesis)](Offre_de_stage_M2_EpiPredict.pdf)
+
 ## Upcoming conferences
 
 * June 29 - July 1, 2022 [Intelligence artificielle et santé : approches interdisciplinaires](https://www.lebesgue.fr/fr/conf_IA_sante2022)
