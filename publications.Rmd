@@ -4,15 +4,16 @@ title: "Publications"
 
 ## 2022
 
-1. Hébert, F., Causeur, D. and Emily, M.. (2022) Adaptive Handling of Dependence in Regression Modeling. To appear in **Journal of Computational and Graphical Statistics**.
+1. Hébert, F., Causeur, D. and Emily, M.. (2022) Adaptive Handling of Dependence in Regression Modeling. **Journal of Computational and Graphical Statistics**. DOI: 10.1080/10618600.2022.2076687
 
 2. Hébert, F., Causeur, D. and Emily, M. (2022) Omnibus Testing Approach for Gene-Based Gene-Gene Interaction. **Statistics in Medicine**. doi: 10.1002/sim.9389.
 
+3. Prado, E., Eklouh-Molinier, C., Enez, F., Causeur, D., Blay, C., Dupont-Nivet, M., Labbé, L., Petit, V., Moreac, A., Taupier, G., Haffray, P., Bugeon, J., Corraze, G. and Nazabal, V. (2022) Prediction of fatty acids composition in the rainbow trout Oncorhynchus mykiss by using Raman micro-spectroscopy. **Analytica Chimica Acta**. Volume 1191,
+https://doi.org/10.1016/j.aca.2021.339212.
+
 ## 2021
 
-3. Prado, E., Eklouh-Molinier, C., Enez, F., Causeur, D., Blay, C., Dupont-Nivet, M., Labbé, L., Petit, V., Moreac, A., Taupier, G., Haffray, P., Bugeon, J., Corraze, G. and Nazabal, V. (2021) Prediction of fatty acids composition in the rainbow trout Oncorhynchus mykiss by using Raman micro-spectroscopy. To appear in **Analytica Chimica Acta**.
-
-4. Blay, C., Haffray P., D’Ambrosio, J., Prado, E., Dechamp, N., Nazabal, V., Bugeon, J., Enez, F., Causeur, D., Eklouh-Molinier, C., Petit, V., Phocas, F., Corraze, G. and Dupont-Nivet, M. (2021) Genetic Architecture and Genomic Selection of Fatty Acid Composition Predicted by Raman Spectrocopy in Rainbow Trout. To appear in **BMC Genomics**. 
+4. Blay, C., Haffray P., D’Ambrosio, J., Prado, E., Dechamp, N., Nazabal, V., Bugeon, J., Enez, F., Causeur, D., Eklouh-Molinier, C., Petit, V., Phocas, F., Corraze, G. and Dupont-Nivet, M. (2021) Genetic Architecture and Genomic Selection of Fatty Acid Composition Predicted by Raman Spectrocopy in Rainbow Trout. **BMC Genomics**. 22, 788. https://doi.org/10.1186/s12864-021-08062-7 
 
 5. Comfort, W.E.,  Nunes  de  Andrade, B., Wingenbach, T.S.H, Causeur, D., Boggio, P.S. (2021). Implicit Responses in the Judgement of Attractiveness in Faces with Differing Levels of Makeup. **Psychology of Aesthetics, Creativity, and the Arts**.
 Advance online publication. https://doi.org/10.1037/aca0000408

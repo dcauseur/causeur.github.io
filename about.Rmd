@@ -14,7 +14,7 @@ I'm a research fellow at [IRMAR, UMR 6625 CNRS](https://irmar.univ-rennes1.fr/)
 
 I'm the current President of the [French region](https://sfb.pages.math.cnrs.fr/asso/) of the [International Biometric Society](https://www.biometricsociety.org/home).
 
-For more check out my [resume](DC-CV.pdf).
+For more check out my [resume](DC-CV_short.pdf).
 
 Contact me by [email].
 
@@ -31,3 +31,5 @@ Contact me by [email].
 * October 20-21, 2022, [Emerging challenges in implementing the exposome](https://exposomesymposium.org/)
 * December 8-9, 2022, [DIGIT-BIO seminar](https://www6.inrae.fr/digitbio/Page-d-accueil/Actualites/DIGIT-BIO-vous-invite-a-son-1er-seminaire-a-Lyon-les-8-et-9-decembre)
 * December 17-19, 2022, [15th International Conference of the ERCIM WG on Computational and Methodological Statistics (CMStatistics2022)](http://www.cmstatistics.org/CMStatistics2022/publications.php)
+* January, 19, 2023, [Journée Jeunes Chercheur.e.s de la SFB](https://sfb-jjc2023.sciencesconf.org), L'Institut Agro Rennes Angers, Rennes.
+* July 3-7, 2023, JdS2023, 54èmes Journées de Statistique de la SFdS, Université Libre de Bruxelles, Belgique.
