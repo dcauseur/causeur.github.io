@@ -19,6 +19,7 @@ The following documents are provided for each session:
 
 * 2020: [Rmd](./teaching/Scripts/SADexam20.Rmd), [Data](./teaching/data/bact.txt)
 * 2021: [Rmd](./teaching/Scripts/SADexam21.Rmd), [Data](./teaching/data/abalone.txt)
+* 2022: [PDF](./teaching/pdfs/SADexam2022.pdf)
 
 To start with Rmarkdown: [brief introduction](https://youtu.be/rmBk6ECKdqQ). 
 
