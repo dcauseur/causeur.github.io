@@ -1,0 +1,169 @@
+---
+title: Statistique et Aide à la Décision 2023
+author: David Causeur
+date: ''
+output:
+  pdf_document:
+    fig_caption: yes
+    fig_height: 6.181
+    fig_width: 10
+    highlight: haddock
+    number_sections: yes
+  word_document: default
+  html_document:
+    df_print: paged
+header-includes:
+- \onehalfspacing
+- \usepackage{floatpag}
+- \floatpagestyle{empty}
+- \usepackage{wrapfig}
+- \usepackage{subcaption}
+- \usepackage{caption}
+- \usepackage[font=small,labelfont=bf]{caption}
+linestretch: 0.8
+geometry: margin = 0.8in
+fontsize: 12pt
+vignette: null
+---
+
+\fontsize{12}{15}
+
+\sf
+
+```{r, setup, include = FALSE}
+options(digits = 6, show.signif.stars = TRUE)
+knitr::opts_chunk$set(
+  tidy = FALSE,     # display code as typed
+  tidy.opts = list(blank = FALSE, width.cutoff = 60),
+  size = "small",   # slightly smaller font for code
+  comment = "",
+  fig.align = "center",
+  cache = TRUE,
+  message = FALSE,
+  warning = FALSE)
+```
+
+```{r functions, include=FALSE}
+# A function for captioning and referencing images
+fig <- local({
+    i <- 0
+    ref <- list()
+    list(
+        cap=function(refName, text) {
+            i <<- i + 1
+            ref[[refName]] <<- i
+            paste("Figure ", i, ": ", text, sep="")
+        },
+        ref=function(refName) {
+            ref[[refName]]
+        })
+})
+``` 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+Install_and_Load <- function(packages) {
+  k <- packages[!(packages %in% installed.packages()[, "Package"])];
+  if(length(k)) {
+    install.packages(k, repos = "https://cran.rstudio.com/");
+  }
+  for(package_name in packages) {
+    library(package_name, character.only = TRUE, quietly = TRUE);
+  }
+}
+Install_and_Load(c("aod","car","RcmdrMisc","nnet","groupdata2",
+                   "tidyverse"))
+```
+  
+**Analyse comparative des voeux confirmés sur Parcoursup en 2022 et 2023**
+
+\bigskip
+
+Dans un contexte de forte évolution de la formation scientifique au lycée, On cherche à comparer les profils des élèves ayant confirmé leur voeu de candidater au cursus d'ingénieur en alimentation de l'Institut Agro Rennes Angers en 2022 et en 2023.
+
+On dispose pour cela de données extraites de ParcourSup, donnant un grand nombre d'informations pour chacun.e de ces élèves candidat.e.s. On restreint la liste des élèves à celles et ceux en classe de terminale dans la filère générale :
+```{r}
+postbac = read.table("https://dcauseur.netlify.app/teaching/data/postbac.txt",
+                     header=TRUE,
+                     stringsAsFactors = TRUE)
+# Conversion de la variable Annee en variable catégorielle
+postbac$Annee = factor(postbac$Annee)
+# Classement des modalités de la variable Specialites (Autres en dernier)
+specialites = levels(postbac$Specialites)
+postbac$Specialites = ordered(postbac$Specialites,
+                              levels=specialites[c(2,3,4,1)])
+# Résumé des données
+summary(postbac)
+```
+
+Toutes les variables du tableau sont catégorielles. La variable `Spécialites` donne le choix de la doublette de spécialités choisie par chaque élève candidat.e.
+
+A partir de ces données, on cherche en particulier à répondre à la question suivante : **la répartition des élèves candidat.e.s selon leurs choix de spécialités est-elle la même en 2022 et en 2023 ?**
+
+\newpage
+
+Dans un premier temps, on calcule les proportions par année d'élèves ayant choisi chacune des doublettes de spécialités.
+
+La table de contingence suivante contient toutes les informations permettant d'étudier le lien entre le choix des spécialités et l'année :
+```{r}
+tab <- table(postbac$Annee,postbac$Specialites)
+tab
+```
+
+La fonction `rowPercents` du package `RcmdrMisc` permet de transformer cette table de contingence de sorte que chaque ligne contienne les proportions des élèves ayant choisi chacune des doublettes de spécialités par année : 
+
+```{r}
+prop <- RcmdrMisc::rowPercents(tab)
+prop
+```
+
+De manière équivalente, on peut utiliser le package `tidyverse` pour extraire les mêmes informations :
+```{r}
+prop_tidy <- postbac %>% select(Annee,Specialites) %>%
+  group_by(Annee) %>%
+  count(Specialites) %>%
+  mutate(Pourcentages=100*n/sum(n))
+prop_tidy
+```
+
+On peut apprécier visuellement les différences de répartition des choix de spécialités entre année à partir du graphe suivant :
+
+```{r,out.width = "75%"}
+barplot(prop[,1:4],beside=TRUE,
+        col=c("darkgray","orange"),
+        legend.text=c("2022","2023"),
+        main="Répartition des candidat.e.s par choix de spécialités")
+```
+
+On peut générer le même type de graphique en utilisant le package `tidyverse` :
+
+```{r,out.width = "75%"}
+prop_tidy %>% ggplot() +
+  aes(fill=Annee,y=Pourcentages,x=Specialites) +
+  geom_bar(position="dodge",stat="identity") +
+  scale_fill_manual(values=c("darkgray", "orange")) +
+  ggtitle("Répartition des candidat.e.s par choix de spécialités")
+```
+
+\newpage
+
+Pour tester si la différence de répartition des élèves par choix de spécialités entre 2022 et 2023 est significative, on utilise un test du $\chi^{2}$ de Pearson :
+
+```{r}
+chisq.test(tab)
+```
+
+Au seuil de 5%, on décide donc que les répartitions des élèves par choix de spécialités en 2022 et 2023 sont significativement différentes. Afin d'aller plus loin dans l'interprétation de ce résultat, on analyse les contributions de chaque cellule du tableau de contingence à la statistique du test :
+
+```{r}
+chisq.test(tab)$residuals
+```
+
+On observe que la principale différence entre 2022 et 2023 est la diminution de la proportion d'élèves ayant choisi les spécialités Physique-Chimie et Sciences de la vie et de la terre.
+
+On peut exprimer la contribution de cette différence à la statistique de test par la transformation en pourcentages suivante du tableau des carrés des résidus :
+
+```{r}
+100*chisq.test(tab)$residuals^2/chisq.test(tab)$statistic
+```
+
+La différence observée ci-dessus et concernant le choix des spécialités Physique-Chimie et Sciences de la vie et de la terre contribue à 45.65% à la statistique de test.

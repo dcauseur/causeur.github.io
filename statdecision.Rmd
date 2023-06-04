@@ -29,7 +29,9 @@ To start with Rmarkdown: [brief introduction](https://youtu.be/rmBk6ECKdqQ).
 The session introduces a statistical method to compare groups of items regarding their exposition to a given risk. 
 
 * [Video lecture](https://youtu.be/ybyboAX5TT8) with [slides](./teaching/PDFs/SADslides1.pdf) and [R script](./teaching/scripts/SADsession1.R);   
-* In-class activities:  [exercise](./teaching/scripts/SADexercice1.Rmd), [data](./teaching/data/biscuits.txt). [data2023](./teaching/data/postbac.txt) 
+* In-class activities:  [exercise](./teaching/scripts/SADexercice1.Rmd), [data](./teaching/data/biscuits.txt),  [data2023](./teaching/data/postbac.txt),
+[data2023_Rmd](./teaching/scripts/postbac.Rmd),
+[data2023_pdf](./teaching/pdfs/SADpostbac.pdf).
 
 ## Session 2
 
