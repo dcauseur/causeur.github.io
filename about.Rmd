@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "About me"
 ---
 
 &nbsp; &nbsp;
@@ -12,20 +12,20 @@ at [Institut Agro](https://www.institut-agro-rennes-angers.fr/), Rennes, France.
 
 I'm a research fellow at [IRMAR, UMR 6625 CNRS](https://irmar.univ-rennes1.fr/)
 
-I'm the current President of the [French region](https://sfb.pages.math.cnrs.fr/asso/) of the [International Biometric Society](https://www.biometricsociety.org/home).
+I'm the former President of the [French region](https://sfb.pages.math.cnrs.fr/asso/) of the [International Biometric Society](https://www.biometricsociety.org/home).
 
 For more check out my [resume](DC-CV_short.pdf).
 
 Contact me by [email].
 
-[email]: mailto:david.causeur@agrocampus-ouest.fr
+[email]: mailto:david.causeur@institu-agro.fr
 
 ## Job offer
 
-[6-month internship (master thesis)](Offre_de_stage_M2_EpiPredict.pdf)
+[Phd 2024-2027 in genomic data analysis](https://ged.univ-rennes1.fr/nuxeo/site/esupversions/11d4d3df-a0cf-46dd-97a4-9be53557ceb7?inline)
+[Assistant professor in Staistics at l'Institut Agro Rennes-Angers](file:///C:/Users/causeur/Downloads/poste_mcc_institut_agro_stats-2.pdf)
 
 ## Upcoming conferences
 
-* December 17-19, 2022, [15th International Conference of the ERCIM WG on Computational and Methodological Statistics (CMStatistics2022)](http://www.cmstatistics.org/CMStatistics2022/publications.php)
-* January, 19, 2023, [Journée Jeunes Chercheur.e.s de la SFB](https://sfb-jjc2023.sciencesconf.org), L'Institut Agro Rennes Angers, Rennes.
-* July 3-7, 2023, JdS2023, 54èmes Journées de Statistique de la SFdS, Université Libre de Bruxelles, Belgique.
+* May 27-31, 2024, [JdS2024](https://jds2024.sciencesconf.org/), 55èmes Journées de Statistique de la SFdS, Bordeaux.
+* September, 3-6, 2024, [AgroStat2024](http://agrostat2024.esa.ipb.pt/welcome/), Bragança, Portugal.
