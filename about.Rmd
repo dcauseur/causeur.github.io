@@ -18,15 +18,13 @@ For more check out my [resume](DC-CV_short.pdf).
 
 Contact me by [email].
 
-[email]: mailto:david.causeur@institu-agro.fr
+[email]: mailto:david.causeur@institut-agro.fr
 
 ## Job offer
 
-[Phd 2024-2027 in statistical genomics](https://ged.univ-rennes1.fr/nuxeo/site/esupversions/11d4d3df-a0cf-46dd-97a4-9be53557ceb7?inline)
-
-[Assistant professor in Statistics at l'Institut Agro Rennes-Angers](file:///C:/Users/causeur/Downloads/poste_mcc_institut_agro_stats-2.pdf)
 
 ## Upcoming conferences
 
 * May 27-31, 2024, [JdS2024](https://jds2024.sciencesconf.org/), 55èmes Journées de Statistique de la SFdS, Bordeaux.
 * September, 3-6, 2024, [AgroStat2024](http://agrostat2024.esa.ipb.pt/welcome/), Bragança, Portugal.
+* November, 21-22, 2024, [Journées de biostatistique 2024](https://www.sfds.asso.fr/newsletter-2100-66391cf9e0e235205ef8913e36e62411), Paris.

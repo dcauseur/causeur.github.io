@@ -16,9 +16,9 @@ The following documents are provided for each session:
 * a PDF file containing a self-directed learning exercise; 
 * two PDF files with in-class exercises.  
 
-2021-2022: all in-class activities (practical sessions) [here](https://agrocampusds.github.io/demarche_statistique/).
+All in-class activities (practical sessions) [here](https://agrocampusds.github.io/demarche_statistique/).
 
-2021 examination: [exam](./teaching/PDFs/DS21examSession1.pdf) 
+An example of examination: [exam](./teaching/PDFs/DS21examSession1.pdf) 
 
 Assignments: see instructions [here](./teaching/PDFs/evaluation.pdf).
 

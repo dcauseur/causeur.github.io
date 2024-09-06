@@ -28,7 +28,7 @@ library(png)
 
 <div class="column-left">
 <p>
-<i class="fas fa-map-marker-alt fa-1x" style="color:dodgerblue"></i> L'Institut Agro Rennes Angers
+<i class="fas fa-map-marker-alt fa-1x" style="color:dodgerblue"></i> [L'Institut Agro Rennes Angers](https://www.institut-agro-rennes-angers.fr/)
  
 Département Statistique et Informatique
  
@@ -38,7 +38,7 @@ Département Statistique et Informatique
 
 &nbsp;
 
-<i class="fas fa-envelope fa-1x" style="color:dodgerblue"></i> david [dot] causeur [at] agrocampus-ouest [dot] fr 
+<i class="fas fa-envelope fa-1x" style="color:dodgerblue"></i> david [dot] causeur [at] institut-agro [dot] fr 
  
 &nbsp;
 
