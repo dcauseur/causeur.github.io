@@ -15,9 +15,13 @@ The following documents are provided for each session:
 * a video lecture: R tutorial whose slides, data and R script are provided;   
 * a Rmd file containing in-class exercises. 
 
-[Exam in 2021](./teaching/PDFs/ADBExam2021.pdf)
+[Exam in 2024](./teaching/PDFs/SLBDExam2024.pdf)
 
-[Exam in 2020](./teaching/PDFs/ADBExam2020.pdf)
+[Exam in 2023](./teaching/PDFs/SLBDExam2023.pdf)
+
+## Introducing case study
+
+* [Data](./teaching/data/nirscafe.txt) and a brief [R script](./teaching/scripts/nirs_coffee_web.R) 
 
 ## Session 1
 
