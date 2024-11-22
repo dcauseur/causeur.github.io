@@ -20,6 +20,8 @@ All in-class activities (practical sessions) [here](https://agrocampusds.github.
 
 An example of examination: [exam](./teaching/PDFs/DS21examSession1.pdf) 
 
+Examination 2024 - 1st session : [exam](./teaching/PDFs/ExamDS20241.pdf), [data](./teaching/data/hedo-sucre.txt)
+
 Assignments: see instructions [here](./teaching/PDFs/evaluation.pdf).
 
 ## Session 1
