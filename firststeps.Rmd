@@ -18,7 +18,10 @@ The following documents are provided for each session:
 
 All in-class activities (practical sessions) [here](https://agrocampusds.github.io/demarche_statistique/).
 
-An example of examination: [exam](./teaching/PDFs/DS21examSession1.pdf) 
+Examples of recent examination: 
+
+* [exam](./teaching/PDFs/DS21examSession1.pdf) 
+* [exam](./teaching/PDFs/DS_Exercice_Souche.pdf), [data](./teaching/data/souche.txt)
 
 Examination 2024 - 1st session : [exam](./teaching/PDFs/ExamDS20241.pdf), [data](./teaching/data/hedo-sucre.txt)
 
