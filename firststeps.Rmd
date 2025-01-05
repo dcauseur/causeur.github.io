@@ -61,3 +61,10 @@ Assignments: see instructions [here](./teaching/PDFs/evaluation.pdf).
 
 * [Video lecture](https://youtu.be/tV7H3tpJvsQ) with [slides](./teaching/PDFs/DS20Session5.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session5.R);   
 * Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation5.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation5.R);
+
+## Session 6
+
+*Objective*: Choosing the explanatory variables to be included in a linear model, when the issue focuses on a particular effect of interest (with possibly confusing or interaction effects) or, on the contrary, when all explanatory variables are equivalently candidate to enter the model (model selection, information criterion).
+
+* [slides](./teaching/PDFs/DS25Session6.pdf), [data](./teaching/data/pig10.txt) and [R script](./teaching/scripts/slide6.R);   
+* Self-directed learning [exercise](./teaching/pdfs/Exerciceautoevaluation6.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation5.R);
