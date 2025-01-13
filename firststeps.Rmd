@@ -8,11 +8,11 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 *Course objective*: Introducing basic statistical methods for testing the existence of an effect at a population level using data collected on a representative sample. 
 
-*Organization*: The course is divided into five sessions. Each session is made of a lecture and (at least) two practical classes. In those in-class practical classes, students are given the opportunity to tackle problem-solving exercises, with or without the use of R.  
+*Organization*: The course is divided into six sessions. Each session is made of a lecture and (at least) two practical classes. In those in-class practical classes, students are given the opportunity to tackle problem-solving exercises, with or without the use of R.  
 
 The following documents are provided for each session:
 
-* a 1h-video lecture: a R tutorial whose slides, data and R script are provided;   
+* a 1h-video lecture: a R tutorial whose slides, data and R script are provided (for session 6, only slides, data and R script);   
 * a PDF file containing a self-directed learning exercise; 
 * two PDF files with in-class exercises.  
 
@@ -68,3 +68,10 @@ Assignments: see instructions [here](./teaching/PDFs/evaluation.pdf).
 
 * [slides](./teaching/PDFs/DS25Session6.pdf), [data](./teaching/data/pig10.txt) and [R script](./teaching/scripts/Session6.R);   
 * Self-directed learning [exercise](./teaching/pdfs/Exerciceautoevaluation6.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation5.R);
+
+## Session 7
+
+*Objective*: describing multivariate profiles by a limited number of latent scores (Principal Component Analysis).
+
+* [slides](./teaching/PDFs/DS25Session7.pdf), [data](./teaching/data/pig10.txt) and [R script](./teaching/scripts/Session7.R);   
+* Self-directed learning [exercise](./teaching/pdfs/Exerciceautoevaluation7.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation5.R);
