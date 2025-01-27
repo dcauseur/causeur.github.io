@@ -23,6 +23,8 @@ navbar:
           href: genomicdata.html
         - text: "Statistical learning of biological data"
           href: statlearnbiodata.html
+        - text: "Lifelong learning"
+          href: Lifelong.html
     - text: "Research"
       icon: fa-calculator 
       href: research.html

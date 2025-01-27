@@ -1,0 +1,43 @@
+---
+title: "R, premiers pas"
+subtitle: "28-29 janvier 2025"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+&nbsp;
+
+**Objectifs**: 
+
+* Acquérir une autonomie dans la mise en oeuvre de
+démarches d'analyse adaptées à différentes
+problématiques rencontrées en situation professionnelle
+* Mettre en oeuvre ces démarches d'analyse dans R et Rstudio
+* Editer des rapports d'analyse de données avec Rmarkdown
+
+**Organisation de la session** : 
+
+* *Explorer, manipuler, visualiser des données* : cette première étape vise a orienter la synthèse de données vers la vérification ou la recherche d'hypothèses de travail sur la répartition de valeurs numériques, ou sur les liens supposés entre les valeurs de variables d'intérêt ;
+* *Tester* : l'objectif est ici de confronter une hypothèse de travail aux données pour affirmer finalement qu'un lien existe entre une variable et des covariables d'intérêt ; 
+
+L'ensemble de la formation insiste moins sur les aspects formels et mathématiques des méthodes présentées que sur la confrontation à des situations pratiques et sur les recommandations en matière de choix d'une méthode. 
+
+L'environnement R et l'interface de développement Rstudio sont choisis pour construire ces compétences. L'édition de rapports d'analyse de données par l'utilisation de Rmarkdown est également présentée.  
+
+## Partie 1 - Intervenant : Jean-Louis Marchand
+
+* Matériel pédagogique 
+
+## Partie 2 - Intervenant : David Causeur
+
+* Analyse en Composantes Principales
+  + [Présentation](./teaching/pdfs/slidesPCA.pdf) 
+  + [Données](./teaching/data/FC/pig10.txt)
+  + [Rmd script](./teaching/scripts/ScriptsPCA.R)   
+
+* Tests, modèle linéaire
+  + [Présentation](./teaching/pdfs/slides_PCA_tests.pdf) 
+  + [Données](./teaching/data/FC/fruit.txt)
+  + [Rmd script](./teaching/scripts/ScriptsTests.R)   
