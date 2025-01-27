@@ -35,9 +35,9 @@ L'environnement R et l'interface de développement Rstudio sont choisis pour con
 * Analyse en Composantes Principales
   + [Présentation](./teaching/pdfs/slidesPCA.pdf) 
   + [Données](./teaching/data/FC/pig10.txt)
-  + [Rmd script](./teaching/scripts/ScriptsPCA.R)   
+  + [R script](./teaching/scripts/ScriptsPCA.R)   
 
 * Tests, modèle linéaire
-  + [Présentation](./teaching/pdfs/slides_PCA_tests.pdf) 
+  + [Présentation](./teaching/pdfs/slides_tests.pdf) 
   + [Données](./teaching/data/FC/fruit.txt)
-  + [Rmd script](./teaching/scripts/ScriptsTests.R)   
+  + [R script](./teaching/scripts/ScriptsTests.R)   
