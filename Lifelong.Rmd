@@ -28,7 +28,7 @@ L'environnement R et l'interface de développement Rstudio sont choisis pour con
 
 ## Partie 1 - Intervenant : Jean-Louis Marchand
 
-* Matériel pédagogique 
+* [Support de présentation](https://jlmarchand.github.io/initiationR/IntroR.html) 
 
 ## Partie 2 - Intervenant : David Causeur
 
