@@ -30,25 +30,26 @@ To start with Rmarkdown: [brief introduction](https://youtu.be/rmBk6ECKdqQ).
 The session introduces a statistical method to compare groups of items regarding their exposition to a given risk. 
 
 * [Video lecture](https://youtu.be/ybyboAX5TT8) with [slides](./teaching/PDFs/SADslides1.pdf) and [R script](./teaching/scripts/SADsession1.R);   
-* In-class activities:  [exercise](./teaching/scripts/SADexercice1.Rmd), [data](./teaching/data/biscuits.txt),  [data2023](./teaching/data/postbac.txt),
-[data2023_Rmd](./teaching/scripts/postbac.Rmd),
-[data2023_pdf](./teaching/pdfs/SADpostbac.pdf), [data2024](./teaching/data/sdve_sad.txt).
+* In-class activities:  
+  + [exercise](./teaching/scripts/SADexercice1.Rmd), [data](./teaching/data/biscuits.txt),
+  + [data2023](./teaching/data/postbac.txt), [data2023_Rmd](./teaching/scripts/postbac.Rmd), [data2023_pdf](./teaching/pdfs/SADpostbac.pdf), 
+  + [data2024](./teaching/data/sdve_sad.txt).
 
 ## Session 2
 
 *Objective*: How to use colorimetry to evaluate the maturity of a fruit? The session introduces a mathematical framework and related statistical methods to address this issue. 
 
 * [Video lecture](https://youtu.be/QmINzUDho8Q) with [slides](./teaching/PDFs/SADslides2.pdf), [data](./teaching/data/maturity.txt) and [R script](./teaching/scripts/SADsession2.R);   
-* In-class activities:  
-  + [exercise](./teaching/Scripts/SADexercice2.Rmd) and [data](./teaching/data/prefparfum.txt).
-  + [exercise](./teaching/Scripts/sdve_sad.Rmd), [PDF](./teaching/pdfs/sdve_sad.pdf) and [data](./teaching/data/sdve_sad.txt)
-
+* In-class activities: [exercise](./teaching/Scripts/SADexercice2.Rmd) and [data](./teaching/data/prefparfum.txt).
+  
 ## Session 3
 
 *Objective*: Are the components of a colorimetry profile all equally important to predict the maturity of a fruit? The session introduces the test for the significance of effects in the general setup for modeling class probabilities introduced in Session 2.
 
 * [Video lecture](https://youtu.be/NiXNpXNtJPQ) with [slides](./teaching/PDFs/SADslides3.pdf), [data](./teaching/data/maturity.txt) and [R script](./teaching/scripts/SADsession3.R);   
-* In-class activities:  [exercise](./teaching/Scripts/SADexercice3.Rmd) and [data](./teaching/data/tournesol.txt).
+* In-class activities:  
+  + [exercise](./teaching/Scripts/SADexercice3.Rmd) and [data](./teaching/data/tournesol.txt).
+  + [exercise](./teaching/Scripts/sdve_sad.Rmd), [PDF](./teaching/pdfs/sdve_sad.pdf) and [data](./teaching/data/sdve_sad.txt)
 
 ## Session 4
 
