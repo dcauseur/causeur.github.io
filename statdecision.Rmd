@@ -39,7 +39,9 @@ The session introduces a statistical method to compare groups of items regarding
 *Objective*: How to use colorimetry to evaluate the maturity of a fruit? The session introduces a mathematical framework and related statistical methods to address this issue. 
 
 * [Video lecture](https://youtu.be/QmINzUDho8Q) with [slides](./teaching/PDFs/SADslides2.pdf), [data](./teaching/data/maturity.txt) and [R script](./teaching/scripts/SADsession2.R);   
-* In-class activities:  [exercise](./teaching/Scripts/SADexercice2.Rmd) and [data](./teaching/data/prefparfum.txt).
+* In-class activities:  
+  + [exercise](./teaching/Scripts/SADexercice2.Rmd) and [data](./teaching/data/prefparfum.txt).
+  + [exercise](./teaching/Scripts/sdve_sad.Rmd), [PDF](./teaching/pdfs/sdve_sad.pdf) and [data](./teaching/data/sdve_sad.txt)
 
 ## Session 3
 

@@ -1,0 +1,116 @@
+---
+title: Enquête SDVE auprès des étudiant.e.s de l'Institut Agro 
+author: ""
+date: "`r Sys.Date()`"
+output:
+  pdf_document:
+    toc: no
+    toc_depth: '3'
+    latex_engine: xelatex
+  html_document:
+    highlight: pygments
+    theme: readable
+    toc: yes
+    toc_depth: 2
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+header-includes:
+  - \usepackage{fontspec}
+  - \setmainfont{Arial}
+  - \usepackage{booktabs}
+  - \usepackage{tabu}
+  - \usepackage{float}
+  - \usepackage{xcolor}
+  - \usepackage{tcolorbox}
+  - \usepackage{colortbl} 
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+\fontsize{12}{15}
+
+```{r, setup, include = FALSE}
+options(digits = 6, show.signif.stars = TRUE)
+knitr::opts_chunk$set(
+  tidy = FALSE,     # display code as typed
+  tidy.opts = list(blank = FALSE, width.cutoff = 60),
+  size = "small",   # slightly smaller font for code
+  comment = "",
+  fig.align = "center",
+  cache = TRUE,
+  message = FALSE,
+  warning = FALSE)
+```
+
+```{r functions, include=FALSE}
+# A function for captioning and referencing images
+fig <- local({
+    i <- 0
+    ref <- list()
+    list(
+        cap=function(refName, text) {
+            i <<- i + 1
+            ref[[refName]] <<- i
+            paste("Figure ", i, ": ", text, sep="")
+        },
+        ref=function(refName) {
+            ref[[refName]]
+        })
+})
+``` 
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+Install_and_Load <- function(packages) {
+  k <- packages[!(packages %in% installed.packages()[, "Package"])];
+  if(length(k)) {
+    install.packages(k, repos = "https://cran.rstudio.com/");
+  }
+  for(package_name in packages) {
+    library(package_name, character.only = TRUE, quietly = TRUE);
+  }
+}
+Install_and_Load(c("nnet","AER","RcmdrMisc"))
+```
+
+
+Une enquête a été réalisée en 2024 afin de mesurer la perception qu'ont les étudiant.e.s de l'Institut Agro de
+leurs conditions d'apprentissage. Un extrait des données est fourni dans le tableau `sdve_sad.txt`.
+
+Le résumé ci-après décrit de manière élémentaire le tableau de données, rassemblant les réponses de 791
+étudiant.e.s pour 10 items caractéristiques de leur vie étudiante (Implantaion du campus, Accueil des étudiant.e.s lors de la rentrée, Qualité de la formation, ...). Ces items sont évalués par une échelle allant de 'Insatisfait' à 'Très satisfait'.
+   
+```{r}
+sdve <- read.table("https://dcauseur.netlify.app/teaching/data/sdve_sad.txt",
+                   header=TRUE,stringsAsFactors=TRUE,
+                   fileEncoding = "utf8")
+summary(sdve[,1:8])
+```
+
+Certaines catégories de réponses sont fortement sous-représentées (la catégorie 'Non renseigné' pour le genre, 
+la catégorie 'Florac' pour le campus, ou la catégorie 'Insatisfait' pour les réponses aux différents items évalués).
+Cette sous-représentation pouvant dégrader la qualité des tests statistiques qui seront réalisés 
+dans la suite, on supprime les catégories sous-représentées de l'échantillon et on regroupe les modalités 'Insatisfait' et 'Peu satisfait' :
+
+```{r}
+sdve$Genre <- factor(sdve$Genre,levels=c("Femme","Homme"))
+sdve$Campus <- factor(sdve$Campus,levels=c("Angers","Dijon","La Gaillarde",
+                                           "Lavalette","Rennes"))
+
+for (k in 7:16) {
+  sdve[which(sdve[,k]=="Peu satisfait"),k] <- "Insatisfait"
+  sdve[,k] <- factor(sdve[,k],levels=c("Insatisfait","Satisfait",
+                                       "Très satisfait"))
+}
+
+sdve <- droplevels(sdve)
+summary(sdve[,1:8])
+```
+
+On souhaite répondre aux questions suivantes : la vie sur le campus (item 'Vie.campus') est elle appréciée de la même manière par les étudiant.e.s de tous les campus de l'Institut Agro ? Dans le ca contraire, les différences de perception entre campus sont-elles les mêmes pour les femmes et pour les hommes ?
+
+
+
+ 
