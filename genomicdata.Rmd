@@ -12,7 +12,7 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 *Organization*: The course is a one-day tutorial dedicated to the selection of genes whose expression depends on experimental conditions using RNA-Seq data. It introduces to the R package EdgeR.   
 
-* [slides](./teaching/html/ADGEdgeR.pdf), [data](./teaching/data/DataTest_foie.txt) and [Rmd file](./teaching/scripts/ADGEdgeR.Rmd);   
+* [slides](./teaching/pdfs/ADGEdgeR.pdf), [data](./teaching/data/DataTest_foie.txt) and [Rmd file](./teaching/scripts/ADGEdgeR.Rmd);   
 
 # 2022
 
