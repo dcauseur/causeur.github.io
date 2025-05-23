@@ -1,0 +1,497 @@
+---
+title: "Analyse de données génomiques"
+subtitle: "Sélection de gènes"
+author:
+- David Causeur\newline
+- Institut Agro Rennes Angers\newline
+- IRMAR UMR 6625 CNRS
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+make149: true
+output:
+  beamer_presentation: 
+    slide_level: 3
+  slidy_presentation:
+    highlight: tango
+  pdf_document:
+    highlight: tango
+    df_print: kable
+  ioslides_presentation:
+    toc: yes
+    toc_depth: 3
+    transition: faster
+    widescreen: yes
+    number_sections: no
+    highlight: tango
+    df_print: kable
+  html_document:
+    toc: yes
+    toc_depth: '3'
+    df_print: paged
+header-includes:
+- \usepackage{booktabs}
+- \usepackage{wrapfig}
+- \usepackage{subcaption}
+- \usepackage{multirow}
+- \usepackage[font=small,labelfont=bf,labelformat=empty]{caption}
+- \usepackage{amsmath}
+- \usepackage[T1]{fontenc}
+- \usepackage{fancyhdr}
+- \usepackage{bm}
+- \usepackage{tcolorbox}
+- \pagestyle{fancy}
+- \fancyhead{}
+- \fancyfoot{}
+- \fancyfoot[R]{\thepage}
+- \setbeamertemplate{footline}{\thepage}
+- \def\begincols{\begin{columns}}
+- \def\endcols{\begin{columns}}
+- \def\begincol{\begin{column}}
+- \def\endcol{\begin{column}}
+linestretch: 0.8
+fontsize: 8pt
+vignette: null
+---
+
+```{r knitr_init, echo = FALSE, cache = FALSE}
+## Global options
+options(show.signif.stars = FALSE, width = 300)
+knitr::opts_chunk$set(echo = TRUE,
+                      cache = TRUE,
+                      prompt = FALSE,
+                      tidy = FALSE,
+                      comment = NA,
+                      message = FALSE,
+                      warning = FALSE,
+                      fig.align = 'center',
+                      fig.width = 7,
+                      fig.height = 4.33,
+                      size = "tiny",
+                      fig.path='pics/', 
+                      fig.show='asis')
+```
+
+```{r functions, include=FALSE}
+# A function for captioning and referencing images
+fig <- local({
+    i <- 0
+    ref <- list()
+    list(
+        cap=function(refName, text) {
+            i <<- i + 1
+            ref[[refName]] <<- i
+            paste("Figure ", i, ": ", text, sep="")
+        },
+        ref=function(refName) {
+            ref[[refName]]
+        })
+})
+``` 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+Install_and_Load <- function(packages) {
+  k <- packages[!(packages %in% installed.packages()[, "Package"])];
+  if(length(k)) {
+    install.packages(k, repos = "https://cran.rstudio.com/");
+  }
+  for(package_name in packages) {
+    library(package_name, character.only = TRUE, quietly = TRUE);
+  }
+}
+# install.packages("BiocManager")
+# BiocManager::install(c("edgeR","limma"))   ## Bioconductor packages
+Install_and_Load(c("kableExtra","emmeans","ggpubr","car","fdrtool",
+                   "leaps","RcmdrMisc","FactoMineR","ggplot2",
+                   "wesanderson","tidyverse","dplyr","GGally",
+                   "ggcorrplot","edgeR","limma","RColorBrewer","venn"))
+```
+
+### Objectifs
+
+- **Acquérir des compétences d'analyse de données génomiques**
+
+\medskip
+
+  + Méthodes (normalisation, tests à l'effet du génome, contrôle des faux positifs)
+  + Démarches (comment choisir une méthode d'analyse ?)
+  
+\bigskip  
+  
+- **Se familiariser avec R et Rstudio**
+
+\medskip
+
+  + Mettre en oeuvre (limma, DESeq2)
+  + Editer des rapports (Rmarkdown)
+  
+\bigskip
+
+\textcolor{orange}{\textbf{Modalités pédagogiques}}
+
+- Apprentissage par mise en situation (tutoriel)
+- Programme modulable selon questions
+
+## Environnement R et Rstudio
+
+### R
+
+\includegraphics[scale=0.05]{image/Rlogo.png} : environnement pour l'analyse de données et la visualisation
+
+\medskip
+
+- R est un logiciel libre
+
+\medskip
+
+- Web : <https://www.r-project.org>
+
+\medskip
+
+- 22 000 packages (Mai 2025) <https://cran.r-project.org/>
+
+\medskip
+
+- Communautés R : 
+  + <https://www.r-bloggers.com/>, 
+  + <https://rladies.org/>, 
+  + <https://r-toulouse.netlify.app/>
+  + <https://stackoverflow.com/questions/>
+  + <https://r-graph-gallery.com/>
+  
+### Rstudio
+
+\includegraphics[scale=0.01]{image/Rstudiologo.png} : interface pour R (IDE : Integrated Development Environment)
+
+\medskip
+
+- Web : <https://www.rstudio.com/>
+
+\medskip
+
+- Environnement ergonomique pour l'analyse de données
+
+\medskip
+
+- Outils pour l'édition de rapport d'études
+  + Rmarkdown : <http://rmarkdown.rstudio.com/> 
+
+\medskip
+  
+- <span style="color: orange;">Préparation de la session de travail</span>
+  + <span style="color: orange;">Créez un projet pour l'analyse des données RNA-seq</span>
+  
+### Plan
+
+* 1 - Préparation des données RNA-seq
+
+\medskip
+
+* 2 - Tests à l'échelle du génome
+  + 2.1 - Normalisation des données
+  + 2.2 - Modèles pour données de comptage
+
+\medskip
+
+* 3 - Sélection de gènes
+  + Contrôle des faux positifs
+  + Procédures de sélection
+
+## Préparation des données
+
+### Importation des données dans la session de travail R
+
+```{r}
+dta <- read.delim("./data/DataTest_foie.txt",
+                  header=TRUE, 
+                  stringsAsFactors=FALSE)
+```
+
+**`dta`** - tableau de données d'expression :
+```{r}
+head(dta[,1:8])
+```
+
+**`dta`** - dimensions :
+```{r}
+dim(dta)
+```
+
+### Plan expérimental
+
+**Groupes expérimentaux** (noms des colonnes) :
+```{r}
+labs <- colnames(dta)
+head(labs)
+```
+**Plan 2x2 (Génotype x Régime)** :
+```{r}
+group <- substring(labs,first=5,last=7)
+geno <- substring(labs,first=5,last=5) 
+diet <- substring(labs,first=7,last=7) 
+table(geno,diet,dnn=list("Génotype","Régime"))
+```
+
+**Association d'une Couleur à chaque groupe expérimental**
+```{r}
+colors <- as.factor(group)   
+levels(colors) <- wes_palette(4, name = "GrandBudapest2")
+colors <- as.character(colors)
+```
+
+### Format DGE (Differential Gene Expression, R package edgeR)
+
+**Création d'un objet DGE**
+```{r}
+dge <- DGEList(counts=dta,group=group) 
+names(dge)
+```
+**Composante `counts`**
+```{r}
+head(dge$counts[,1:8],n=3)
+```
+
+**Composante `samples`**
+```{r}
+head(dge$samples,n=3)
+```
+
+## Normalisation des données
+
+### Profondeur de séquençage
+
+**Profondeur de séquençage** : nombre de *reads* séquencés par échantillon biologique
+
+```{r,out.width='75%'}
+seq_depth <- colSums(dta)
+barplot(seq_depth[order(seq_depth,decreasing=TRUE)],
+        col=colors,main= "Library sizes, by sample", las=3)
+```
+
+### Facteurs de correction pour la normalisation
+
+**Données RNA-seq** : abondance relative de *reads* séquencés
+ 
+**Dans un échantillon** : si un petit nombre de gènes monopolise un grand nombre de reads, l'expression des autres est sous-évaluée
+
+**Normalisation** : corriger les profondeurs de séquençages pour garantir des niveaux moyens d'expression similaires entre échantillons pour les gènes les moins exprimés
+
+**TMM** : trimmed mean of M-values (Robinson and Oshlack, 2010)
+
+```{r}
+dge <- normLibSizes(dge,method="TMM")
+head(dge$samples[1:5,])  
+```
+
+## Analyse différentielle
+
+### Sélection de gènes
+
+**Objectif** : identifier les gènes dont l'expression moyenne dépend des conditions expérimentales (lignée, régime, ...)
+
+\bigskip
+
+**Méthode** : tests d'un même effet sur chaque gène
+
+### Exemple du gène LPCAT3
+
+```{r, echo = TRUE, out.width='75%'}
+boxplot(dge$counts["LPCAT3",,drop=TRUE]~group,col="orange",
+  xlab="Groupes expérimentaux",ylab="Nombre de reads",
+  main="Répartition de l'expression selon le groupe expérimental")
+mtext("Gène LPCAT3")
+grid()
+```
+
+### Surdispersion des données de comptage
+
+**Surdispersion** : Relation entre variance et moyenne d'expression
+
+\begin{eqnarray*}
+\frac{\sigma^{2}}{\mu} & = & 1 + \alpha \mu > 1
+\end{eqnarray*}
+
+**Exemple dans le groupe G_B**
+
+```{r,out.width='75%',echo=FALSE}
+gene_means <- apply(dge[,group=="G_B"],MARGIN=1,FUN=mean)
+gene_vars <- apply(dge[,group=="G_B"],MARGIN=1,FUN=var)
+mod <- lm(y~-1+x,data=data.frame(x=gene_means,y=gene_vars/gene_means-1))
+alpha <- coef(mod)
+plot(gene_means,gene_vars/gene_means,pch=16,
+     xlab=expression(mu),ylab=expression(sigma^2/mu),bty="l",
+     main="Surdispersion des données d'expression")
+mtext("Génotype G, Régime B")
+abline(a=0,b=alpha,lwd=2,col="orange")
+text(0,3e+05,bquote(frac(sigma^2,mu)==1+.(round(alpha,4))*mu),adj=0)
+grid()
+```
+
+### Modèle de régression pour données surdispersées
+
+$Y$ : expression d'un gène (nombre de *reads* séquencés)  
+
+\begin{eqnarray*}
+Y & \sim & \text{BN} ( \mu ; \alpha ) , ~~~~~~~~~~~~~~~~~~ \textcolor{orange}{[\text{BN : Binomiale Négative}]}
+\end{eqnarray*}
+où 
+
+* $\mu \geq 0$ : expression moyenne
+* $\alpha > 0$ : coefficient de surdispersion
+
+\bigskip
+
+**Modèle linéaire généralisé (GLM)**
+
+\begin{eqnarray*}
+\text{log} \ \mu ( x ) & = & \beta_{0} + \beta_{1} x_{1} + \ldots + \beta_{p} x_{p}   \\
+\text{log} \ \mu_{ij} & = & \mu + \alpha_{i} + \beta_{j} + (\alpha \beta)_{ij}   \\
+ & \vdots &
+\end{eqnarray*}
+
+### Sur-dispersion à l'échelle du génome
+
+**Estimation des coefficients de surdispersion pour chaque gène**
+```{r,out.width='75%'}
+design <- model.matrix(~diet+geno,data=data.frame(diet=factor(diet),
+                                                  geno=factor(geno)))
+dge <- estimateDisp(dge,design) 
+hist(dge$tagwise.dispersion,nclass=50,col="orange",
+     main="Répartition des coefficients de surdispersion",
+     xlab=expression(alpha),ylab="Nombre de gènes")
+grid()
+```
+### GLM à l'échelle du génome 
+
+**Modèles** : Pour le $k$ème gène, dans le régime $i$, $Y^{(k)}_{i} \sim \text{BN} ( \mu^{(k)} + \alpha^{(k)}_{i} ; \alpha^{(k)} )$
+
+$\alpha^{(k)}_{2}$ : log-fold change (log-ratio des expressions moyennes par régime)
+
+\medskip
+
+```{r}
+fit <- glmFit(dge, design)
+```
+
+**Tests de l'effet régime** : Pour le $k$ème gène, on teste $H^{(k)}_{0} : \alpha^{(k)}_{2} = 0$
+
+\medskip
+
+```{r}
+tests <- glmLRT(fit, coef=2)
+head(tests$table)
+```
+
+\bigskip
+
+Si $H^{(k)}_{0}$ n'est pas vraie, on dit que le $k$ème gène est \textit{differentially expressed} (DE)
+
+Si $H^{(k)}_{0}$ est rejetée, on dit que le $k$ème gène est \textit{positif}
+
+
+### Proportion de gènes différentiellement exprimés 
+
+
+```{r}
+pval <- tests$table$PValue 
+pi0 <- pval.estimate.eta0(pval,diagnostic.plot=FALSE)
+```
+
+```{r,out.width='70%'}
+hist(pval,nclass=50,col="orange",proba=TRUE,
+     main="Répartition des p-values",
+     xlab=expression(alpha),ylab="Nombre de gènes")
+mtext("Effet régime")
+abline(h=pi0,lwd=2,col="darkgray")
+text(0.6,2,bquote(pi[0]==.(round(pi0,digits=3))))
+grid()
+```
+
+### Identification des gènes positifs
+
+**Combien de gènes positifs ?**
+
+\medskip
+
+```{r}
+positives_LRT <- pval<=0.05
+select <- which(positives_LRT)
+P <- length(select)
+P
+```
+\bigskip 
+
+**Combien de gènes positifs si l'expression moyenne de tous les gènes était la même dans les deux régimes ?**
+
+### Faux positifs
+
+**Définition** : un gène est **faux positif** si la procédure de test conclut que l'effet testé est significatif (p-value $\leq t$), alors que cet effet n'existe pas.
+
+- Nombre de gènes positifs : $\mbox{P}_{t}$
+- Nombre de gènes faux positifs : $\mbox{V}_{t}$ (non-observable)
+- Proportion de faux positifs : $\mbox{FDP}_{t} = \frac{V_{t}}{P_{t}}$ (non-observable)
+
+**Taux de faux positifs (False Discovery Rate)** : $\mbox{FDR}_{t}=\mathbb{E} ( \mbox{FDP}_{t})$
+
+**Comment choisir le seuil $t$ pour garantir $\mbox{FDR}_{t} \leq 0.05$ ?**
+
+### Estimation du FDR
+
+Supposons $m_{0} \leq m$ gènes non DE dans ${\cal M}_{0} = \left\{ k = 1, \ldots , m, \ H^{(k)}_{0} \text{ est vraie } \right\}$.
+
+Pour chacun de ces $m_{0}$ gènes, $\mathbb{P} ( p_{k} \leq t) = t$
+
+Comme $V_{t} = \# \left\{ k \in {\cal M}_{0}, \ p_{k} \leq t \right\}$, $\mathbb{E} ( V_{t} ) = m_{0} t$.
+
+\bigskip
+
+**Estimation du FDR** : $\widehat{FDR}_{t} = \frac{m_{0}t}{P_{t}}=\pi_{0}\frac{mt}{P_{t}}$
+
+**Exemple avec $t=0.05$**
+```{r}
+m <- length(pval)
+P <- sum(pval <= 0.05)
+FDR <- pi0*m*0.05/P ; FDR
+```
+### Méthode de Benjamini-Hochberg
+
+**Principe** : le seuil $t$ est le plus grand possible pour lequel $\widehat{\mbox{FDR}}_{t} \leq 0.05$
+
+**Sélection pour un contrôle du FDR au seuil de 0.05**
+```{r}
+fdr <- pi0*p.adjust(pval,method="BH")
+sum(fdr <= 0.05)
+```
+
+**Seuil de décision**
+```{r}
+p_sort <- sort(pval)
+fdr <- pi0*m*p_sort/(1:m)
+seuil <- max(p_sort[fdr<=0.05]) ; seuil
+```
+
+### Sélection multi-critères
+
+Deux critères de sélection : 
+
+* p-value corrigée (BH) inférieure au seuil choisi pour le contrôle du FDR
+* différence d'expression (log-fold change) suffisament grande  
+
+\bigskip
+
+```{r,fig.height=4.5}
+res_tests <- decideTests.DGELRT(tests,adjust.method="BH",
+                                p.value=0.05,
+                                lfc=1)
+summary(res_tests)
+```
+
+### Volcano plot
+
+```{r,out.width='75%'}
+log_fc <- tests$table$logFC
+plot(log_fc,-log10(pval),pch=16,xlab="log fold change",
+     ylab="p-values (Manhattan)",main="Volcano plot",col="darkgray")
+mtext("Effet régime")
+abline(h=-log10(seuil),v=c(-1,1),lwd=2,col="orange")
+points(log_fc[res_tests!=0],-log10(pval[res_tests!=0]),pch=16)
+grid()
+```

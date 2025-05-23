@@ -8,6 +8,12 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 *Course objective*: Introducing statistical methods for high-throughput gene expression data analysis focusing on the search for genes whose expression is related to variations in experimental covariates. 
 
+# 2025
+
+*Organization*: The course is a one-day tutorial dedicated to the selection of genes whose expression depends on experimental conditions using RNA-Seq data. It introduces to the R package EdgeR.   
+
+* [slides](./teaching/html/ADGEdgeR.pdf), [data](./teaching/data/DataTest_foie.txt) and [Rmd file](./teaching/scripts/ADGEdgeR.Rmd);   
+
 # 2022
 
 *Organization*: The course is a one-day tutorial dedicated to the selection of genes whose expression depends on experimental conditions using RNA-Seq data. It introduces to the R packages DESeq2 and limma.   
