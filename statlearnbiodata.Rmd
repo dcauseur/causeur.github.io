@@ -15,6 +15,8 @@ The following documents are provided for each session:
 * a video lecture: R tutorial whose slides, data and R script are provided;   
 * a Rmd file containing in-class exercises. 
 
+[Exam in 2025](./teaching/PDFs/ADBExam2024.pdf)
+
 [Exam in 2024](./teaching/PDFs/SLBDExam2024.pdf)
 
 [Exam in 2023](./teaching/PDFs/SLBDExam2023.pdf)
