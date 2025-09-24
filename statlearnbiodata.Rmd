@@ -52,6 +52,7 @@ The following documents are provided for each session:
 
 * [Video lecture](https://youtu.be/MC1MoYx576c) with [slides](./teaching/PDFs/SLBDsession4.pdf), [R script](./teaching/scripts/SLBDsession4.R) and data ([1](./teaching/data/SLBDscanner.txt) and [2](./teaching/data/SLBDoysters.txt));   
 * In-class activities:  [exercise](./teaching/pdfs/SLBDexercicesession4.pdf) and ([1](./teaching/data/SLBDnirstozeur.txt) and data [2](./teaching/data/SLBDcarbontozeur.txt)).
+* In-class activities: [2025 data](./teaching/data/dta_blind.txt)
 
 ## Session 5
 
