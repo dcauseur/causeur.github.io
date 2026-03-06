@@ -24,6 +24,7 @@ knitr::opts_chunk$set(collapse = TRUE)
 ```{r load_packages, message=FALSE, warning=FALSE, include=FALSE} 
 library(fontawesome)
 library(png)
+library(jpeg)
 ```
 
 <div class="column-left">
@@ -60,7 +61,7 @@ Département Statistique et Informatique
 
 <div class="column-right">
 ```{r echo = FALSE, fig.width=5, fig.height=3.1}
-img <- readPNG("./img/profile.png")
+img <- readJPEG("./img/dc2.jpg")
 grid::grid.raster(img)
 ```
 </div>

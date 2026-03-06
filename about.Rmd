@@ -20,11 +20,16 @@ Contact me by [email].
 
 [email]: mailto:david.causeur@institut-agro.fr
 
-## Job offer
+## News
 
+Scancar, B. and Causeur, D. (2026). Les fausses publications scientifiques menacent de submerger
+la recherche contre le cancer. **The Conversation**. 10.64628/AAK.csean3fs3 [Open access](https://theconversation.com/les-fausses-publications-scientifiques-menacent-de-submerger-la-recherche-contre-le-cancer-276465)
+
+Scancar, B., Byrne, J., Causeur, D. and Barnett, A. (2026). Machine learning based screening
+of potential paper mill publications in cancer research: methodological and cross sectional study.
+**British Medical Journal**, Vol. 392. [Open access](https://www.bmj.com/content/392/bmj-2025-087581)
 
 ## Upcoming conferences
 
-* May 27-31, 2024, [JdS2024](https://jds2024.sciencesconf.org/), 55èmes Journées de Statistique de la SFdS, Bordeaux.
-* September, 3-6, 2024, [AgroStat2024](http://agrostat2024.esa.ipb.pt/welcome/), Bragança, Portugal.
-* November, 21-22, 2024, [Journées de biostatistique 2024](https://www.sfds.asso.fr/newsletter-2100-66391cf9e0e235205ef8913e36e62411), Paris.
+* March, 19-20, 2026 [JSTAR 2026](https://jstar2026.sciencesconf.org/), Rennes.
+* June, 23-26, 2026, [Statistics, Exposome and Environmental Health](https://www.lebesgue.fr/fr/StatExpoHealth26), Rennes.
