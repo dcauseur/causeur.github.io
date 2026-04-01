@@ -16,7 +16,7 @@ All courses take the form of `r fa("r-project", fill = "dodgerblue")` tutorials.
  
  **Keywords**: Hypothesis testing, Estimation, One-way Analysis of variance, F-test, t-test, Simple linear regression model
  
- `r fa("pencil-alt", fill = "dodgerblue")` [Statistics for decision making](statdecision.html)
+ `r fa("pencil-alt", fill = "dodgerblue")` [Introduction to statistical learning](statdecision.html)
  
  **Short description**: In many situations, especially in biological applications, data analysis aims at understanding why some profiles have a higher probability than others to belong to a class of interest. Typically, which clinical profiles are more likely to be affected by a disease? The course introduces statistical models to answer such questions and the following sub-questions: Does a covariate significantly explain variations between class probabilities? How to select a minimal and sufficient subset of covariates explaining the variations between class probabilities? How to use a profile of covariates to predict the membership to a given class?
  

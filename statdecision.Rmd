@@ -1,14 +1,14 @@
 ---
-title: "Statistics for decision making"
+title: "Introduction to statistical learning"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 ```
 
-*Course objective*: Introducing the logistic linear regression model for two or more class probabilities. The scope of methods covers the maximum-likelihood estimation of the model, the tests for significance of effects, the search for the best subset of explanatory variables and the prediction of a class label using the model.   
+*Course objective*: This course introduces the fundamental concepts of statistical learning, with a focus on building classification models starting from logistic regression. It covers key methodological aspects, including maximum likelihood estimation, statistical tests for assessing the significance of predictors, and strategies for selecting the most relevant subset of explanatory variables. Participants will also learn how to use the model to predict class labels and evaluate classification performance using appropriate metrics.   
 
-*Organization*: The course is divided into five sessions. Each session is made of a lecture and practical classes. In those in-class practical classes, students are given the opportunity to tackle problem-solving exercises using R.  
+*Organization*: The course is structured into five sessions, each comprising a lecture and a practical component. During the in-class practical sessions, students engage in hands-on problem-solving exercises using R, allowing them to apply the concepts introduced in the lectures.  
 
 The following documents are provided for each session:
 
@@ -17,9 +17,9 @@ The following documents are provided for each session:
 
 *Past exams*: 
 
-* 2022: [PDF](./teaching/pdfs/SADexam2022.pdf)
 * 2023: [PDF](./teaching/pdfs/SADexam2023.pdf), [data](./teaching/data/handedness.txt)
 * 2024: [PDF](./teaching/pdfs/SADexam2024.pdf), [data](./teaching/data/SAD_conceptions_app.csv)
+* 2025: [PDF](./teaching/pdfs/SADexam2025.pdf), [data](./teaching/data/emmental.txt)
 
 To start with Rmarkdown: [brief introduction](https://youtu.be/rmBk6ECKdqQ). 
 
