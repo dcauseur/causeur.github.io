@@ -23,6 +23,11 @@ The following documents are provided for each session:
 
 To start with Rmarkdown: [brief introduction](https://youtu.be/rmBk6ECKdqQ). 
 
+## 2026 topic:  
+
+* Paper mill publications in cancer research ([BMJ 2026](https://www.bmj.com/content/392/bmj-2025-087581), [The Conversation 2026](https://theconversation.com/les-fausses-publications-scientifiques-menacent-de-submerger-la-recherche-contre-le-cancer-276465))
+* [Data](./teaching/data/papermill.csv)
+
 ## Session 1
 
 *Objective*: A post on the blog of a French radio channel reports that the risk of being infected by COVID19 is 33% lower in people with blood type O. What does this assertion means?
