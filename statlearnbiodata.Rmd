@@ -16,6 +16,7 @@ The following documents are provided for each session:
 * a Rmd file containing in-class exercises. 
 
 [Exam in 2025](./teaching/PDFs/ADBExam2025.pdf), [Chemical data](./teaching/data/spectozeur.csv) [NIRS data](./teaching/data/nirstozeur.csv) 
+
 [Exam in 2024](./teaching/PDFs/ADBExam2024.pdf), [Data](./teaching/data/trappmir.txt)
 
 [Exam in 2023](./teaching/PDFs/SLBDExam2024.pdf)
