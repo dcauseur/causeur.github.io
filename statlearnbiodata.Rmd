@@ -15,15 +15,18 @@ The following documents are provided for each session:
 * a video lecture: R tutorial whose slides, data and R script are provided;   
 * a Rmd file containing in-class exercises. 
 
-[Exam in 2025](./teaching/PDFs/ADBExam2024.pdf), [Data](./teaching/data/trappmir.txt)
+[Exam in 2025](./teaching/PDFs/ADBExam2025.pdf), [Chemical data](./teaching/data/spectozeur.csv) [NIRS data](./teaching/data/nirstozeur.csv) 
+[Exam in 2024](./teaching/PDFs/ADBExam2024.pdf), [Data](./teaching/data/trappmir.txt)
 
-[Exam in 2024](./teaching/PDFs/SLBDExam2024.pdf)
+[Exam in 2023](./teaching/PDFs/SLBDExam2024.pdf)
 
-[Exam in 2023](./teaching/PDFs/SLBDExam2023.pdf)
+## Case study
 
-## Introducing case study
-
-* [Data](./teaching/data/nirscafe.txt) and a brief [R script](./teaching/scripts/nirs_coffee_web.R) 
+* 2026-2027:
+  - Paper mill publications in cancer research ([BMJ 2026](https://www.bmj.com/content/392/bmj-2025-087581), [The Conversation 2026](https://theconversation.com/les-fausses-publications-scientifiques-menacent-de-submerger-la-recherche-contre-le-cancer-276465))
+  - [Data](./teaching/data/papermill.csv)
+  - [Slides](./teaching/PDFs/papermillsslides.pdf)
+* 2025-2026: [Data](./teaching/data/nirscafe.txt) and a brief [R script](./teaching/scripts/nirs_coffee_web.R) 
 
 ## Session 1
 
