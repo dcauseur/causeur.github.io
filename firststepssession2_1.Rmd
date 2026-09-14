@@ -1,0 +1,47 @@
+---
+title: "Analyse sensorielle de jus d’orange"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+\sf
+
+Une analyse sensorielle a été organisée pour comparer 12 jus d’orange. Cinq juges ont évalué ces jus d’orange 2 fois lors de deux séances de dégustations. Ils ont évalué plusieurs descripteurs sensoriels (saveur sucrée, amère, acide) ainsi que leur appréciation du produit en mettant des notes entre 0 et 10. L’objectif d’une telle analyse est de comparer les produits les uns par rapport aux autres.
+
+1. *Décrivez la structure du tableau des données recueillies : quelles sont les variables (colonnes) ? Quelle est la nature de ces variables ? Quels sont les individus (lignes) ?* 
+
+\bigskip
+
+Les données sont accessibles dans [ce fichier](https://agrocampusds.github.io/demarche_statistique/alimentaire/data/jusorange.csv).
+
+On cherche dans un premier temps à savoir si les produits se différencient par leurs appréciations hédoniques. 
+
+\bigskip
+
+2. *Dans la problématique ci-dessus, quelle est la variable à expliquer et quelle est ou quelles sont la ou les variables explicatives ?*
+
+\bigskip
+
+3. *Proposez un modèle adapté à la problématique. Comment s'appelle ce modèle ? Combien de paramètres sont introduits dans ce modèle ?*
+
+\bigskip
+
+4. *Proposez une écriture de l'hypothèse nulle du test associé à cette problématique qui repose sur les paramètres du modèle de la question 3.*
+
+\bigskip
+
+5. *Combien vaut la statistique de test associée à cette problématique ? Quelle est la distribution de cette statistique de test sous l'hypothèse nulle ?*
+
+\bigskip
+
+6. *Finalement, quelle réponse apportez-vous à la problématique, au regard des données disponibles ?*
+
+\bigskip
+
+7. *Quel est ou quels sont les produits les plus appréciés ?*
+
+\bigskip
+
+8. *Selon quel descripteur sensoriel les produits se différencient-ils le plus ?*

@@ -1,9 +1,15 @@
 ---
 title: "First steps in data analysis with R"
+header-includes:
+  - \usepackage{fontawesome}
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
+```
+
+```{r load_packages, message=FALSE, warning=FALSE, include=FALSE} 
+library(fontawesome)
 ```
 
 *Course objective*: Introducing basic statistical methods for assessing and visualizing effects of explanatory variables on responses (linear model, Principal Component Analysis and Design of experiments). 
@@ -43,6 +49,8 @@ Assignments: see instructions [here](./teaching/PDFs/evaluation.pdf).
 
 * [Video lecture](https://youtu.be/cGkuIZM_-AE) with [slides](./teaching/PDFs/DS20Session2.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session2.R);   
 * Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation2.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation2.R);
+
+`r fa("pencil-alt", fill = "dodgerblue")` [In-class activity](firststepssession2_1.html)
 
 ## Session 3
 

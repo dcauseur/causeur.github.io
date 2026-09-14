@@ -6,15 +6,14 @@ title: "Publications"
 
 1. Barbot, H., Blum, Y., Richard, M. and Causeur, D. (2026). Inferring cellular heterogeneity with mixture models for DNA methylation rates. [*arXiv*](https://arxiv.org/abs/2606.04175). 
 
-2. Scancar, B., Byrne, J., Causeur, D. and Barnett, A. (2026). Revealing the Paper Mill Iceberg: AI-Based Screening of Cancer Research Publications. [*bioRxiv*](https://www.biorxiv.org/content/10.1101/2025.08.29.673016v2)
+2. Scancar, B., Byrne, J., Causeur, D. and Barnett, A. (2026). Suspected distortion of citations in high-impact cancer journals. [*bioRxiv*](https://www.biorxiv.org/content/10.64898/2026.05.25.727627v1)
 
-3. Scancar, B. and Causeur, D. (2026). Un cancer au coeur de la recherche contre le cancer : la menace grandissante des fabriques à articles scientifiques. *Submitted to Médecine/Sciences*. 
+3. Scancar, B. and Causeur, D. (2026). Un cancer au coeur de la recherche contre le cancer : la menace grandissante des fabriques à articles scientifiques.
+**Med Sci** (Paris) 42 (8-9) 739-743 - DOI: 10.1051/medsci/2026131. [Open access](https://www.medecinesciences.org/fr/component/makeref/?task=show&type=html&doi=10.1051/medsci/2026131) 
 
-4. Scancar, B. and Causeur, D. (2026). Les fausses publications scientifiques menacent de submerger
-la recherche contre le cancer. **The Conversation**. 10.64628/AAK.csean3fs3 [Open access](https://theconversation.com/les-fausses-publications-scientifiques-menacent-de-submerger-la-recherche-contre-le-cancer-276465)
+4. Scancar, B. and Causeur, D. (2026). Les fausses publications scientifiques menacent de submerger la recherche contre le cancer. **The Conversation**. 10.64628/AAK.csean3fs3 [Open access](https://theconversation.com/les-fausses-publications-scientifiques-menacent-de-submerger-la-recherche-contre-le-cancer-276465)
 
-5. Scancar, B., Byrne, J., Causeur, D. and Barnett, A. (2026). Machine learning based screening
-of potential paper mill publications in cancer research: methodological and cross sectional study.
+5. Scancar, B., Byrne, J., Causeur, D. and Barnett, A. (2026). Machine learning based screening of potential paper mill publications in cancer research: methodological and cross sectional study.
 **British Medical Journal**, Vol. 392. [Open access](https://www.bmj.com/content/392/bmj-2025-087581)
 
 ## 2025
