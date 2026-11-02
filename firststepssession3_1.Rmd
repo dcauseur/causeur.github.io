@@ -1,0 +1,27 @@
+---
+title: "Garantir une teneur en matière grasse minimum"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+\sf
+
+Une entreprise agro-alimentaire qui fabrique des produits laitiers souhaite vérifier que la crème qu'elle produit a bien, au minimum, les 15~\% de matière grasse annoncés sur l'étiquette. En effet, lors de la fabrication de cette crème, les quantités d'eau et de lait mélangées sont de plusieurs dizaines de milliers de litres et le
+débit et l'arrêt des vannes sont gérés manuellement. Ainsi, un retard dans la fermeture des vannes entraîne un surplus de l'un ou l'autre des ingrédients.
+
+Vingt échantillons de crème sont prélevés et la teneur en matière grasse est mesurée. Les données sont accessibles dans [ce fichier](./teaching/data/mg_cream.txt).
+
+1. *Diriez-vous que les crèmes produites par cette entreprise ont une teneur en matière grasse au moins égale à 15\%?* 
+
+\bigskip
+
+On souhaite que la méthode statistique utilisée dans la question précédente soit en capacité de détecter un écart de 0.25% de matière grasse par rapport à l'objectif. Plus précisément, si la teneur moyenne en matière grasse est égale ou plus faible que 14.75%, la probabilité que le test soit significatif doit être au moins égale à 0.95.
+
+2. *Cet objectif est-il atteint avec le dispositif expériemental utilisé ?* 
+
+\bigskip
+
+3. *Quelle taille d'échantillon est nécessaire pour atteindre cet objectif ?*
+

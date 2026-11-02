@@ -59,6 +59,8 @@ Assignments: see instructions [here](./teaching/PDFs/evaluation.pdf).
 * [Video lecture](https://youtu.be/5GrlbSspeic) with [slides](./teaching/PDFs/DS20Session3.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session3.R);   
 * Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation3.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation3.R);
 
+`r fa("pencil-alt", fill = "dodgerblue")` [In-class activity](firststepssession3_1.html)
+
 ## Session 4
 
 *Objective*: Introducing the paired t-test for the two-group mean comparison and the simple linear regression model.
