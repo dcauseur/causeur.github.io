@@ -68,6 +68,8 @@ Assignments: see instructions [here](./teaching/PDFs/evaluation.pdf).
 * [Video lecture](https://youtu.be/r6evkckZ1y8) with [slides](./teaching/PDFs/DS20Session4.pdf), [data](./teaching/data/pig.txt) and [R script](./teaching/scripts/session4.R);   
 * Self-directed learning [exercise](./teaching/pdfs/ds20exerciceautoevaluation4.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation4.R);
 
+`r fa("pencil-alt", fill = "dodgerblue")` [In-class activity](firststepssession4_1.html)
+
 ## Session 5
 
 *Objective*: Introducing the F-test in the simple linear regression model and the prediction issue. The lecture ends with the implementation of an F-test to conclude about group differences between linear effects (an example of interaction effect).

@@ -1,0 +1,17 @@
+---
+title: "Analyse sensorielle de compotes"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+\sf
+
+On cherche à évaluer comment sont perçues les saveurs de pomme crue de 6 compotes de pommes. Un test de dégustation est mis en place et 6 juges vont déguster chacune des 6 compotes. Les notes sont attribuées sur une échelle allant de 0 à 10. La question est donc de savoir si certaines compotes sont en moyenne perçues comme ayant une plus forte saveur de pomme crue. Les données sont disponibles dans [ce fichier](https://agrocampusds.github.io/demarche_statistique/alimentaire/data/compote.csv).
+
+1. *La saveur de pomme crue est-elle perçue différemment selon la compote ? (préciser le modèle, les hypothèses, H$_0$, la distribution de la statistique de test sous H$_0$)* 
+
+\bigskip
+
+2. *Décrire les différences de perception de la saveur pomme crue entre les compotes.*
