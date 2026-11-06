@@ -1,0 +1,74 @@
+---
+title: "Temps de floculation du lait"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+\sf
+
+Le service Recherche d’une usine de fabrication d’emmental veut étudier **l’effet du choix de la souche de ferments lactiques sur le temps de floculation du lait**. Pour ce faire, une expérience est réalisée, consistant en l’ensemencement à intervalles réguliers d’un lait standardisé réparti dans des petits récipients.
+
+\medskip
+
+Les ensemencements ont été réalisés successivement d’abord avec une première souche (10 premiers récipients) puis une seconde souche (10 récipients suivants) et enfin une troisième souche (10 derniers récipients).
+
+\medskip
+
+Après le remplissage de 17 récipients d’une même cuve, cette cuve étant vide, une autre cuve a été
+utilisée pour les 13 derniers récipients. Ceci explique la présence dans le tableau de données d’une
+variable nommée Cuve, désignant la cuve utilisée pour chaque récipient, avec la modalité C1 pour les 17
+premiers récipients et C2 pour les 13 derniers.
+
+\medskip
+
+Les données sont disponibles dans [ce fichier](./teaching/data/souche.txt).
+
+\bigskip
+
+1. *Dans la problématique énoncée en caractères gras dans la 1ère phrase de l’énoncé, quelles sont les variables réponse et explicative ? Quelle est la nature de ces variables ?* 
+
+\bigskip
+
+2. *Donnez l’expression mathématique du modèle permettant de tester l’effet de la souche sur le temps de floculation. Combien de paramètres compte ce modèle ?*
+
+\bigskip
+
+3. *Le temps de floculation est-il différent selon la souche choisie ? Donnez la valeur estimée de la variance des résidus du modèle de la question 2 ?*
+
+\bigskip
+
+4. *Quel est le temps moyen estimé de floculation du lait ensemencé avec la souche 3 ?*
+
+\bigskip
+
+5. *Ce temps moyen est-il significativement différent de celui d’un lait ensemencé avec la souche 1 au seuil de 5% ?*
+*Pour justifier votre réponse, vous donnerez :*
+* *la valeur de la statistique de test sur laquelle vous appuyez votre réponse ;*
+* *la distribution de la statistique de test sous l’hypothèse nulle (le nom de la loi de probabilité et le ou les degrés de liberté associés) ;*
+* *la p-value du test.*
+
+\bigskip
+
+6. *Donnez l’expression mathématique d’un nouveau modèle statistique permettant de prendre en compte à la fois l’effet de la souche et aussi de la cuve sur le temps de floculation. Combien de paramètres compte ce nouveau modèle ?*
+
+\bigskip
+
+7. *Quelle est la valeur estimée de la variance des résidus du nouveau modèle ?*
+
+\bigskip
+
+8. *Le temps moyen de floculation du lait de la cuve 1 est-il significativement différent de celui de la cuve 2 au seuil de 5% ? Pour justifier votre réponse, vous donnerez :*
+• *la valeur de la statistique de test sur laquelle vous appuyez votre réponse ;*
+• *la distribution de la statistique de test sous l’hypothèse nulle (le nom de la loi de probabilité et le ou les degrés de liberté associés) ;*
+• *la p-value du test.*
+
+\bigskip
+
+9. *D’après les valeurs estimées avec le nouveau modèle, quel est le temps moyen de floculation d’un lait ensemencé avec la souche 3 ? Comment expliquez vous la différence entre ce temps moyen et celui donné en réponse à la question 4 ?*
+
+\bigskip
+
+10. *Au regard des tests de l’effet de la souche sur le temps de floculation fondés sur les deux modèles introduits dans les questions précédentes, peut-on dire finalement qu’une des souches de ferment lactique est associée à un temps de floculation significativement plus court que pour les deux autres souches ? Si oui, laquelle ?*
+

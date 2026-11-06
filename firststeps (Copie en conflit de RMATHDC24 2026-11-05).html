@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>First steps in data analysis with R</title>
+
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">David Causeur</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-user"></span>
+     
+    About
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-pencil-alt"></span>
+     
+    Teaching
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="teaching.html">Overview</a>
+    </li>
+    <li>
+      <a href="firststeps.html">First steps in data analysis</a>
+    </li>
+    <li>
+      <a href="statdecision.html">Introduction to statistical learning</a>
+    </li>
+    <li>
+      <a href="genomicdata.html">First steps in genomic data analysis</a>
+    </li>
+    <li>
+      <a href="statlearnbiodata.html">Statistical learning of biological data</a>
+    </li>
+    <li>
+      <a href="Lifelong.html">Lifelong learning</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="fa fa-calculator"></span>
+     
+    Research
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="research.html">Research topics</a>
+    </li>
+    <li>
+      <a href="publications.html">Publications</a>
+    </li>
+    <li>
+      <a href="talks.html">Talks</a>
+    </li>
+    <li>
+      <a href="packages.html">Packages</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:david.causeur@agrocampus-ouest.fr">
+    <span class="fa fa-at"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">First steps in data analysis with R</h1>
+
+</div>
+
+
+<p><em>Course objective</em>: Introducing basic statistical methods for
+assessing and visualizing effects of explanatory variables on responses
+(linear model, Principal Component Analysis and Design of
+experiments).</p>
+<p><em>Organization</em>: The course is divided into eight sessions.
+Each session is made of a lecture and (at least) two practical classes.
+In those in-class practical classes, students are given the opportunity
+to tackle problem-solving exercises, with or without the use of R.</p>
+<p>The following documents are provided for each session:</p>
+<ul>
+<li>a 1h-video lecture: a R tutorial whose slides, data and R script are
+provided (only for sessions 1 to 5);<br />
+</li>
+<li>a PDF file containing a self-directed learning exercise;</li>
+<li>two PDF files with in-class exercises.</li>
+</ul>
+<p>All in-class activities (practical sessions) <a
+href="https://agrocampusds.github.io/demarche_statistique/">here</a>.</p>
+<p>Examples of recent examination:</p>
+<ul>
+<li><a href="./teaching/PDFs/DS25exampart1.pdf">exam 2025 - Part 1</a>,
+<a href="./teaching/PDFs/DS25exampart2.pdf">exam 2025 - Part 2</a></li>
+<li><a href="./teaching/PDFs/DS24exampart1.pdf">exam 2024 - Part 1</a>,
+<a href="./teaching/data/hedo-sucre.txt">data</a>, <a
+href="./teaching/PDFs/DS24exampart2.pdf">exam 2024 - Part 2</a></li>
+</ul>
+<p>Before 2025 exams:</p>
+<ul>
+<li><a href="./teaching/PDFs/DS21examSession1.pdf">exam</a></li>
+<li><a href="./teaching/PDFs/DS_Exercice_Souche.pdf">exam</a>, <a
+href="./teaching/data/souche.txt">data</a></li>
+</ul>
+<p>Assignments: see instructions <a
+href="./teaching/PDFs/evaluation.pdf">here</a>.</p>
+<div id="session-1" class="section level2">
+<h2>Session 1</h2>
+<p><em>Objective</em>: Introducing the principles of statistical
+inference and especially hypothesis testing. What does the question “Is
+there an effect of this on that?” mean in practice?</p>
+<ul>
+<li><a href="https://youtu.be/vHiRSJGq53M">Video lecture</a> with <a
+href="./teaching/PDFs/DS20Session1.pdf">slides</a>, <a
+href="./teaching/data/pig.txt">data</a> and <a
+href="./teaching/scripts/session1.R">R script</a>;<br />
+</li>
+<li>Self-directed learning <a
+href="./teaching/pdfs/ds20exerciceautoevaluation1.pdf">exercise</a>, <a
+href="./teaching/data/coffee.txt">data</a> and <a
+href="./teaching/Scripts/ExerciceAutoEvaluation1.R">R script</a>;</li>
+</ul>
+</div>
+<div id="session-2" class="section level2">
+<h2>Session 2</h2>
+<p><em>Objective</em>: Introducing the F-test for the group mean
+comparison.</p>
+<ul>
+<li><a href="https://youtu.be/cGkuIZM_-AE">Video lecture</a> with <a
+href="./teaching/PDFs/DS20Session2.pdf">slides</a>, <a
+href="./teaching/data/pig.txt">data</a> and <a
+href="./teaching/scripts/session2.R">R script</a>;<br />
+</li>
+<li>Self-directed learning <a
+href="./teaching/pdfs/ds20exerciceautoevaluation2.pdf">exercise</a>, <a
+href="./teaching/data/coffee.txt">data</a> and <a
+href="./teaching/scripts/exerciceautoevaluation2.R">R script</a>;</li>
+</ul>
+<p><svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:dodgerblue;overflow:visible;position:relative;"><path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"/></svg>
+<a href="firststepssession2_1.html">In-class activity</a></p>
+</div>
+<div id="session-3" class="section level2">
+<h2>Session 3</h2>
+<p><em>Objective</em>: Introducing the t-test for the two-group mean
+comparison, the power of a t-test, the Bonferroni correction for the
+multiplicity of simultaneous tests.</p>
+<ul>
+<li><a href="https://youtu.be/5GrlbSspeic">Video lecture</a> with <a
+href="./teaching/PDFs/DS20Session3.pdf">slides</a>, <a
+href="./teaching/data/pig.txt">data</a> and <a
+href="./teaching/scripts/session3.R">R script</a>;<br />
+</li>
+<li>Self-directed learning <a
+href="./teaching/pdfs/ds20exerciceautoevaluation3.pdf">exercise</a>, <a
+href="./teaching/data/coffee.txt">data</a> and <a
+href="./teaching/scripts/exerciceautoevaluation3.R">R script</a>;</li>
+</ul>
+<p><svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:dodgerblue;overflow:visible;position:relative;"><path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"/></svg>
+<a href="firststepssession3_1.html">In-class activity</a></p>
+</div>
+<div id="session-4" class="section level2">
+<h2>Session 4</h2>
+<p><em>Objective</em>: Introducing the paired t-test for the two-group
+mean comparison and the simple linear regression model.</p>
+<ul>
+<li><a href="https://youtu.be/r6evkckZ1y8">Video lecture</a> with <a
+href="./teaching/PDFs/DS20Session4.pdf">slides</a>, <a
+href="./teaching/data/pig.txt">data</a> and <a
+href="./teaching/scripts/session4.R">R script</a>;<br />
+</li>
+<li>Self-directed learning <a
+href="./teaching/pdfs/ds20exerciceautoevaluation4.pdf">exercise</a>, <a
+href="./teaching/data/coffee.txt">data</a> and <a
+href="./teaching/scripts/exerciceautoevaluation4.R">R script</a>;</li>
+</ul>
+</div>
+<div id="session-5" class="section level2">
+<h2>Session 5</h2>
+<p><em>Objective</em>: Introducing the F-test in the simple linear
+regression model and the prediction issue. The lecture ends with the
+implementation of an F-test to conclude about group differences between
+linear effects (an example of interaction effect).</p>
+<ul>
+<li><a href="https://youtu.be/tV7H3tpJvsQ">Video lecture</a> with <a
+href="./teaching/PDFs/DS20Session5.pdf">slides</a>, <a
+href="./teaching/data/pig.txt">data</a> and <a
+href="./teaching/scripts/session5.R">R script</a>;<br />
+</li>
+<li>Self-directed learning <a
+href="./teaching/pdfs/ds20exerciceautoevaluation5.pdf">exercise</a>, <a
+href="./teaching/data/coffee.txt">data</a> and <a
+href="./teaching/scripts/exerciceautoevaluation5.R">R script</a>;</li>
+</ul>
+</div>
+<div id="session-6" class="section level2">
+<h2>Session 6</h2>
+<p><em>Objective</em>: Choosing the explanatory variables to be included
+in a linear model, when the issue focuses on a particular effect of
+interest (with possibly confusing or interaction effects) or, on the
+contrary, when all explanatory variables are equivalently candidate to
+enter the model (model selection, information criterion).</p>
+<ul>
+<li><a href="./teaching/PDFs/DS25Session6.pdf">slides</a>, <a
+href="./teaching/data/pig10.txt">data</a> and <a
+href="./teaching/scripts/Session6.R">R script</a>;<br />
+</li>
+<li>Self-directed learning <a
+href="./teaching/pdfs/Exerciceautoevaluation6.pdf">exercise</a>, <a
+href="./teaching/data/coffee.txt">data</a> and <a
+href="./teaching/scripts/exerciceautoevaluation5.R">R script</a>;</li>
+</ul>
+</div>
+<div id="session-7" class="section level2">
+<h2>Session 7</h2>
+<p><em>Objective</em>: describing multivariate profiles by a limited
+number of latent scores (Principal Component Analysis).</p>
+<ul>
+<li><a href="./teaching/PDFs/DS25Session7.pdf">slides</a>, <a
+href="./teaching/data/pig10.txt">data</a> and <a
+href="./teaching/scripts/Session7.R">R script</a>;<br />
+</li>
+<li>Self-directed learning <a
+href="./teaching/pdfs/Exerciceautoevaluation7.pdf">exercise</a>, <a
+href="./teaching/data/coffee.txt">data</a> and <a
+href="./teaching/scripts/exerciceautoevaluation5.R">R script</a>;</li>
+</ul>
+</div>
+<div id="session-8" class="section level2">
+<h2>Session 8</h2>
+<p><em>Objective</em>: introducing the basic principles of experimental
+designs (fractional factorial designs).</p>
+<ul>
+<li><a href="./teaching/PDFs/DS25Session8.pdf">slides</a> and <a
+href="./teaching/scripts/Session8.R">R script</a>;<br />
+</li>
+<li>Self-directed learning <a
+href="./teaching/pdfs/Exerciceautoevaluation8.pdf">exercise</a>;</li>
+</ul>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
