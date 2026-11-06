@@ -60,9 +60,9 @@ Les données sont disponibles dans [ce fichier](./teaching/data/souche.txt).
 \bigskip
 
 8. *Le temps moyen de floculation du lait de la cuve 1 est-il significativement différent de celui de la cuve 2 au seuil de 5% ? Pour justifier votre réponse, vous donnerez :*
-• *la valeur de la statistique de test sur laquelle vous appuyez votre réponse ;*
-• *la distribution de la statistique de test sous l’hypothèse nulle (le nom de la loi de probabilité et le ou les degrés de liberté associés) ;*
-• *la p-value du test.*
+* *la valeur de la statistique de test sur laquelle vous appuyez votre réponse ;*
+* *la distribution de la statistique de test sous l’hypothèse nulle (le nom de la loi de probabilité et le ou les degrés de liberté associés) ;*
+* *la p-value du test.*
 
 \bigskip
 
