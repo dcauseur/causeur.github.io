@@ -72,6 +72,8 @@ Assignments: see instructions [here](./teaching/PDFs/evaluation.pdf).
 
 `r fa("pencil-alt", fill = "dodgerblue")` [In-class activity 2](firststepssession4_2.html)
 
+`r fa("pencil-alt", fill = "dodgerblue")` [In-class activity 3](firststepssession4_3.html)
+
 ## Session 5
 
 *Objective*: Introducing the F-test in the simple linear regression model and the prediction issue. The lecture ends with the implementation of an F-test to conclude about group differences between linear effects (an example of interaction effect).

@@ -1,0 +1,75 @@
+---
+title: "Prédiction du taux de fructose par colorimétrie"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+\sf
+
+On cherche à savoir si les indices de colorimétrie peuvent être utilisés pour renseigner sur la concentration en fructose d’un abricot, voire pour la prédire.
+
+\medskip
+
+On dispose pour aborder cette problématique de [données](./teaching/data/abricots.txt) de colorimétrie et de concentrations en fructose portant sur 435 abricots de quatre variétés différentes, nommées *37*, *bl*, *go* et *mo*. 
+
+\medskip
+
+Parmi les indices de colorimétrie (L, a et b), on s’intéresse en particulier à l’indice a, qui prend des valeurs d’autant plus faibles que l’abricot est vert et fortes que l’abricot est rouge.
+
+\medskip
+
+1. *Déduire de la matrice de corrélation des indices de colorimétrie et de la concentration de fructose une interprétation des liens entre ces variables.* 
+
+\bigskip
+
+On s'intéresse en particulier à la problématique suivante : **l’indice de colorimétrie a peut-il être utilisé pour renseigner sur la concentration en fructose d’un abricot, voire pour la prédire ?**
+
+\bigskip
+
+2. *Dans la problématique présentée ci-dessus, quelle est la variable réponse et quelle(s) est (sont) la (les) variable(s) explicative(s) ? Donnez la nature, quantitative ou catégorielle, de ces variables (si catégorielle, quelles modalités ?).* 
+
+\bigskip
+
+3. *Donnez l’expression mathématique et le nom usuel d'un modèle adapté à cette problématique. Quel est le nombre de paramètres de ce modèle ?*
+
+\bigskip
+
+4. *Peut-on dire que l'indice a apporte une information sur la concentration en fructose d'un abricot ?*
+
+\bigskip
+
+5. *D’après le tableau d'analyse de la variance du modèle de la question 2, quel est le R$^{2}$ du modèle ? (donnez le détail du calcul)*
+
+\bigskip
+
+6. *A partir de ce tableau d'analyse de la variance, donnez l’estimation de l’écart-type résiduel du modèle de la question 2 ? (donnez le détail du calcul)*
+
+\bigskip
+
+7. *Quelle est la valeur prédite de la concentration en fructose d'un abricot dont l'indice a vaut -5 ? Donnez un intervalle de confiance de niveau de confiance 95\% autour de cette valeur.*
+
+\bigskip
+
+On se demande maintenant si le lien entre la concentration en fructose et l’indice a est le même pour toutes les variétés d’abricot.
+
+\bigskip
+
+8. *Dans cette nouvelle problématique, quelle est la variable réponse et quelle(s) est (sont) la (les) variable(s) explicative(s) ? Donnez la nature, quantitative ou catégorielle, de ces variables (si catégorielle, quelles modalités ?).*
+
+\bigskip
+
+9. *Proposez un nouveau modèle adapté à cette problématique. Quel est le nombre de paramètres de ce modèle ?*
+
+\bigskip
+
+10. *Pour quelle variété d’abricot la valeur estimée du coefficient directeur de la droite de régression liant la concentration en fructose à l’indice a est-elle la plus grande ? (donnez cette valeur estimée)*
+
+\bigskip
+
+11. *La relation entre la concentration en fructose et l’indice a est-elle la même pour toutes les variétés ?*
+
+\bigskip
+
+12. *Quelle est la valeur du R$^{2}$ du modèle de la question 9 ?*
