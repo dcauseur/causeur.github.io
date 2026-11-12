@@ -1,0 +1,26 @@
+---
+title: "Influence du déboisement sur le transfert de chaleur entre l'air et l'eau"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+\sf
+
+On cherche à étudier l'influence du déboisement d'une rivière sur la relation entre la température de l'eau et la température de l'air. On dispose pour cela de mesures conjointes de la température d'eau dans la Flume et de la température de l'air effectuées avant le déboisement et après le déboisement. L'unité expérimentale est une décade et les mesures de températures sont en fait des maxima sur une décade.
+
+Le tableau des [données](./teaching/data/deboisement.txt) contient 56 lignes correspondant aux 28 décades d'observation avant le déboisement et aux 28 décades d'observation après le déboisement.
+
+\medskip
+
+1. *Décrire graphiquement l'impact du déboisement sur la relation entre la température de l'eau et celle de l'air.* 
+
+\bigskip
+
+2. *A partir de modèles construits séparement sur les données avant et après déboisement, décrivez l'impact du déboisement sur la relation entre la température de l'eau et celle de l'air.* 
+
+\bigskip
+
+3. *Peut-on affirmer le le déboisement a modifié le transfert de chaleur entre l'air et l'eau ?* 
+
