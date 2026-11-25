@@ -90,6 +90,8 @@ Assignments: see instructions [here](./teaching/PDFs/evaluation.pdf).
 * [slides](./teaching/PDFs/DS25Session6.pdf), [data](./teaching/data/pig10.txt) and [R script](./teaching/scripts/Session6.R);   
 * Self-directed learning [exercise](./teaching/pdfs/Exerciceautoevaluation6.pdf), [data](./teaching/data/coffee.txt) and [R script](./teaching/scripts/exerciceautoevaluation5.R);
 
+`r fa("pencil-alt", fill = "dodgerblue")` [In-class activity](firststepssession6_1.html)
+
 ## Session 7
 
 *Objective*: describing multivariate profiles by a limited number of latent scores (Principal Component Analysis).

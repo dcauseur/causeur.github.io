@@ -1,0 +1,34 @@
+---
+title: "Etude comparative de conditions d'incubation sur la croissance de poussins"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+\sf
+
+Lors de leur mise en incubateur, 45 oeufs de poules ont été répartis de façon
+aléatoire en trois lots de 15. Trois traitements (températures d'incubation différentes) ont ensuite été appliqués aux différents lots. Nous supposons
+qu'après éclosion, les poussins ont tous été élevés dans des
+conditions identiques, puis pesés à un même âge de référence. Les
+poids considérés, exprimés en décagrammes sont fournis dans ce [fichier](./teaching/data/poussin.txt).
+
+On souhaite savoir si une température d'incubation favorise la croissance des poussins.
+
+\medskip
+
+1. *Décrivez les différences moyennes de croissance des poussins entre températures d'incubation et entre sexe.* 
+
+\bigskip
+
+2. *Peut-on considérer que la température d'incubation influence la croissance des poussins ?* 
+
+\bigskip
+
+3. *L'impact de la température d'incubation sur la croissance des poussins est-il le même pour les mâles et les femelles ?* 
+
+\bigskip
+
+4. *Quelle température favorise la croissance ?* 
+
